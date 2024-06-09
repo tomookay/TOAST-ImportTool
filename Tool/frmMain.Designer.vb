@@ -26,10 +26,11 @@ Partial Class frmMain
         Me.OpenTOASTprojectDialog = New System.Windows.Forms.OpenFileDialog()
         Me.lblProjectPath = New System.Windows.Forms.Label()
         Me.grpBoxSelectProject = New System.Windows.Forms.GroupBox()
+        Me.btnCloseProject = New System.Windows.Forms.Button()
         Me.lblRawProjectPath = New System.Windows.Forms.Label()
-        Me.lstbxStation1Files = New System.Windows.Forms.ListBox()
-        Me.lstbxRowData = New System.Windows.Forms.ListBox()
         Me.grpboxMotionRow = New System.Windows.Forms.GroupBox()
+        Me.lblRowNumber = New System.Windows.Forms.Label()
+        Me.lblStnNumber = New System.Windows.Forms.Label()
         Me.btnAdv = New System.Windows.Forms.Button()
         Me.btnRet = New System.Windows.Forms.Button()
         Me.lblMotionNameSym = New System.Windows.Forms.Label()
@@ -42,17 +43,50 @@ Partial Class frmMain
         Me.lblAdvanceCoilSym = New System.Windows.Forms.Label()
         Me.lblAdvanceDepthAbs = New System.Windows.Forms.Label()
         Me.lblAdvanceCoilAbs = New System.Windows.Forms.Label()
-        Me.lblStnNumber = New System.Windows.Forms.Label()
-        Me.lblRowNumber = New System.Windows.Forms.Label()
+        Me.cbS1 = New System.Windows.Forms.CheckBox()
+        Me.cbS2 = New System.Windows.Forms.CheckBox()
+        Me.cbS3 = New System.Windows.Forms.CheckBox()
+        Me.cbS4 = New System.Windows.Forms.CheckBox()
+        Me.cbS5 = New System.Windows.Forms.CheckBox()
+        Me.cbS6 = New System.Windows.Forms.CheckBox()
+        Me.cbAllStns = New System.Windows.Forms.CheckBox()
+        Me.tabContStationLoading = New System.Windows.Forms.TabControl()
+        Me.Station1 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation1Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow1Data = New System.Windows.Forms.ListBox()
+        Me.Station2 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation2Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow2Data = New System.Windows.Forms.ListBox()
+        Me.Station3 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation3Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow3Data = New System.Windows.Forms.ListBox()
+        Me.Station4 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation4Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow4Data = New System.Windows.Forms.ListBox()
+        Me.Station5 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation5Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow5Data = New System.Windows.Forms.ListBox()
+        Me.Station6 = New System.Windows.Forms.TabPage()
+        Me.lstbxStation6Files = New System.Windows.Forms.ListBox()
+        Me.lstbxRow6Data = New System.Windows.Forms.ListBox()
+        Me.grpboxParse = New System.Windows.Forms.GroupBox()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
+        Me.tabContStationLoading.SuspendLayout()
+        Me.Station1.SuspendLayout()
+        Me.Station2.SuspendLayout()
+        Me.Station3.SuspendLayout()
+        Me.Station4.SuspendLayout()
+        Me.Station5.SuspendLayout()
+        Me.Station6.SuspendLayout()
+        Me.grpboxParse.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOpenProject
         '
-        Me.btnOpenProject.Location = New System.Drawing.Point(28, 24)
+        Me.btnOpenProject.Location = New System.Drawing.Point(9, 19)
         Me.btnOpenProject.Name = "btnOpenProject"
-        Me.btnOpenProject.Size = New System.Drawing.Size(97, 35)
+        Me.btnOpenProject.Size = New System.Drawing.Size(97, 29)
         Me.btnOpenProject.TabIndex = 0
         Me.btnOpenProject.Text = "Open Project"
         Me.btnOpenProject.UseVisualStyleBackColor = True
@@ -66,51 +100,44 @@ Partial Class frmMain
         'lblProjectPath
         '
         Me.lblProjectPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblProjectPath.Location = New System.Drawing.Point(156, 24)
+        Me.lblProjectPath.Location = New System.Drawing.Point(113, 19)
         Me.lblProjectPath.Name = "lblProjectPath"
-        Me.lblProjectPath.Size = New System.Drawing.Size(491, 34)
+        Me.lblProjectPath.Size = New System.Drawing.Size(491, 29)
         Me.lblProjectPath.TabIndex = 1
         Me.lblProjectPath.Text = "No Project Selected....."
         Me.lblProjectPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'grpBoxSelectProject
         '
+        Me.grpBoxSelectProject.Controls.Add(Me.btnCloseProject)
         Me.grpBoxSelectProject.Controls.Add(Me.lblProjectPath)
         Me.grpBoxSelectProject.Controls.Add(Me.btnOpenProject)
-        Me.grpBoxSelectProject.Location = New System.Drawing.Point(53, 14)
+        Me.grpBoxSelectProject.Controls.Add(Me.lblRawProjectPath)
+        Me.grpBoxSelectProject.Location = New System.Drawing.Point(12, 12)
         Me.grpBoxSelectProject.Name = "grpBoxSelectProject"
-        Me.grpBoxSelectProject.Size = New System.Drawing.Size(672, 81)
+        Me.grpBoxSelectProject.Size = New System.Drawing.Size(682, 96)
         Me.grpBoxSelectProject.TabIndex = 2
         Me.grpBoxSelectProject.TabStop = False
         Me.grpBoxSelectProject.Text = "Select Project...."
         '
+        'btnCloseProject
+        '
+        Me.btnCloseProject.Location = New System.Drawing.Point(9, 52)
+        Me.btnCloseProject.Name = "btnCloseProject"
+        Me.btnCloseProject.Size = New System.Drawing.Size(97, 29)
+        Me.btnCloseProject.TabIndex = 2
+        Me.btnCloseProject.Text = "Close Project"
+        Me.btnCloseProject.UseVisualStyleBackColor = True
+        '
         'lblRawProjectPath
         '
         Me.lblRawProjectPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblRawProjectPath.Location = New System.Drawing.Point(81, 108)
+        Me.lblRawProjectPath.Location = New System.Drawing.Point(112, 53)
         Me.lblRawProjectPath.Name = "lblRawProjectPath"
-        Me.lblRawProjectPath.Size = New System.Drawing.Size(491, 34)
+        Me.lblRawProjectPath.Size = New System.Drawing.Size(491, 28)
         Me.lblRawProjectPath.TabIndex = 2
         Me.lblRawProjectPath.Text = "No Raw Project Path...."
         Me.lblRawProjectPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lstbxStation1Files
-        '
-        Me.lstbxStation1Files.FormattingEnabled = True
-        Me.lstbxStation1Files.Location = New System.Drawing.Point(81, 162)
-        Me.lstbxStation1Files.Name = "lstbxStation1Files"
-        Me.lstbxStation1Files.ScrollAlwaysVisible = True
-        Me.lstbxStation1Files.Size = New System.Drawing.Size(576, 56)
-        Me.lstbxStation1Files.TabIndex = 4
-        '
-        'lstbxRowData
-        '
-        Me.lstbxRowData.FormattingEnabled = True
-        Me.lstbxRowData.Location = New System.Drawing.Point(81, 240)
-        Me.lstbxRowData.Name = "lstbxRowData"
-        Me.lstbxRowData.ScrollAlwaysVisible = True
-        Me.lstbxRowData.Size = New System.Drawing.Size(576, 56)
-        Me.lstbxRowData.TabIndex = 5
         '
         'grpboxMotionRow
         '
@@ -128,27 +155,47 @@ Partial Class frmMain
         Me.grpboxMotionRow.Controls.Add(Me.lblAdvanceCoilSym)
         Me.grpboxMotionRow.Controls.Add(Me.lblAdvanceDepthAbs)
         Me.grpboxMotionRow.Controls.Add(Me.lblAdvanceCoilAbs)
-        Me.grpboxMotionRow.Location = New System.Drawing.Point(53, 328)
+        Me.grpboxMotionRow.Location = New System.Drawing.Point(9, 228)
         Me.grpboxMotionRow.Name = "grpboxMotionRow"
-        Me.grpboxMotionRow.Size = New System.Drawing.Size(672, 160)
+        Me.grpboxMotionRow.Size = New System.Drawing.Size(663, 171)
         Me.grpboxMotionRow.TabIndex = 6
         Me.grpboxMotionRow.TabStop = False
         Me.grpboxMotionRow.Text = "Motion Row Sample"
         '
+        'lblRowNumber
+        '
+        Me.lblRowNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblRowNumber.Location = New System.Drawing.Point(285, 126)
+        Me.lblRowNumber.Name = "lblRowNumber"
+        Me.lblRowNumber.Size = New System.Drawing.Size(91, 27)
+        Me.lblRowNumber.TabIndex = 13
+        Me.lblRowNumber.Text = "RowNum"
+        Me.lblRowNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblStnNumber
+        '
+        Me.lblStnNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblStnNumber.Location = New System.Drawing.Point(285, 94)
+        Me.lblStnNumber.Name = "lblStnNumber"
+        Me.lblStnNumber.Size = New System.Drawing.Size(91, 27)
+        Me.lblStnNumber.TabIndex = 12
+        Me.lblStnNumber.Text = "stnNum"
+        Me.lblStnNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'btnAdv
         '
-        Me.btnAdv.Location = New System.Drawing.Point(6, 19)
+        Me.btnAdv.Location = New System.Drawing.Point(9, 19)
         Me.btnAdv.Name = "btnAdv"
-        Me.btnAdv.Size = New System.Drawing.Size(58, 134)
+        Me.btnAdv.Size = New System.Drawing.Size(58, 138)
         Me.btnAdv.TabIndex = 11
         Me.btnAdv.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnAdv.UseVisualStyleBackColor = True
         '
         'btnRet
         '
-        Me.btnRet.Location = New System.Drawing.Point(598, 20)
+        Me.btnRet.Location = New System.Drawing.Point(588, 20)
         Me.btnRet.Name = "btnRet"
-        Me.btnRet.Size = New System.Drawing.Size(58, 134)
+        Me.btnRet.Size = New System.Drawing.Size(58, 137)
         Me.btnRet.TabIndex = 10
         Me.btnRet.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnRet.UseVisualStyleBackColor = True
@@ -255,40 +302,333 @@ Partial Class frmMain
         Me.lblAdvanceCoilAbs.Text = "Advance Coil abs"
         Me.lblAdvanceCoilAbs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'lblStnNumber
+        'cbS1
         '
-        Me.lblStnNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblStnNumber.Location = New System.Drawing.Point(285, 94)
-        Me.lblStnNumber.Name = "lblStnNumber"
-        Me.lblStnNumber.Size = New System.Drawing.Size(91, 27)
-        Me.lblStnNumber.TabIndex = 12
-        Me.lblStnNumber.Text = "stnNum"
-        Me.lblStnNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.cbS1.AutoSize = True
+        Me.cbS1.Checked = True
+        Me.cbS1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS1.Location = New System.Drawing.Point(37, 19)
+        Me.cbS1.Name = "cbS1"
+        Me.cbS1.Size = New System.Drawing.Size(68, 17)
+        Me.cbS1.TabIndex = 7
+        Me.cbS1.Text = "Station 1"
+        Me.cbS1.UseVisualStyleBackColor = True
         '
-        'lblRowNumber
+        'cbS2
         '
-        Me.lblRowNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblRowNumber.Location = New System.Drawing.Point(285, 126)
-        Me.lblRowNumber.Name = "lblRowNumber"
-        Me.lblRowNumber.Size = New System.Drawing.Size(91, 27)
-        Me.lblRowNumber.TabIndex = 13
-        Me.lblRowNumber.Text = "RowNum"
-        Me.lblRowNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.cbS2.AutoSize = True
+        Me.cbS2.Checked = True
+        Me.cbS2.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS2.Location = New System.Drawing.Point(111, 19)
+        Me.cbS2.Name = "cbS2"
+        Me.cbS2.Size = New System.Drawing.Size(68, 17)
+        Me.cbS2.TabIndex = 8
+        Me.cbS2.Text = "Station 2"
+        Me.cbS2.UseVisualStyleBackColor = True
+        '
+        'cbS3
+        '
+        Me.cbS3.AutoSize = True
+        Me.cbS3.Checked = True
+        Me.cbS3.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS3.Location = New System.Drawing.Point(185, 19)
+        Me.cbS3.Name = "cbS3"
+        Me.cbS3.Size = New System.Drawing.Size(68, 17)
+        Me.cbS3.TabIndex = 9
+        Me.cbS3.Text = "Station 3"
+        Me.cbS3.UseVisualStyleBackColor = True
+        '
+        'cbS4
+        '
+        Me.cbS4.AutoSize = True
+        Me.cbS4.Checked = True
+        Me.cbS4.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS4.Location = New System.Drawing.Point(259, 19)
+        Me.cbS4.Name = "cbS4"
+        Me.cbS4.Size = New System.Drawing.Size(68, 17)
+        Me.cbS4.TabIndex = 10
+        Me.cbS4.Text = "Station 4"
+        Me.cbS4.UseVisualStyleBackColor = True
+        '
+        'cbS5
+        '
+        Me.cbS5.AutoSize = True
+        Me.cbS5.Checked = True
+        Me.cbS5.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS5.Location = New System.Drawing.Point(333, 19)
+        Me.cbS5.Name = "cbS5"
+        Me.cbS5.Size = New System.Drawing.Size(68, 17)
+        Me.cbS5.TabIndex = 11
+        Me.cbS5.Text = "Station 5"
+        Me.cbS5.UseVisualStyleBackColor = True
+        '
+        'cbS6
+        '
+        Me.cbS6.AutoSize = True
+        Me.cbS6.Checked = True
+        Me.cbS6.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbS6.Location = New System.Drawing.Point(407, 19)
+        Me.cbS6.Name = "cbS6"
+        Me.cbS6.Size = New System.Drawing.Size(68, 17)
+        Me.cbS6.TabIndex = 12
+        Me.cbS6.Text = "Station 6"
+        Me.cbS6.UseVisualStyleBackColor = True
+        '
+        'cbAllStns
+        '
+        Me.cbAllStns.AutoSize = True
+        Me.cbAllStns.Location = New System.Drawing.Point(545, 19)
+        Me.cbAllStns.Name = "cbAllStns"
+        Me.cbAllStns.Size = New System.Drawing.Size(78, 17)
+        Me.cbAllStns.TabIndex = 13
+        Me.cbAllStns.Text = "All Stations"
+        Me.cbAllStns.UseVisualStyleBackColor = True
+        '
+        'tabContStationLoading
+        '
+        Me.tabContStationLoading.Controls.Add(Me.Station1)
+        Me.tabContStationLoading.Controls.Add(Me.Station2)
+        Me.tabContStationLoading.Controls.Add(Me.Station3)
+        Me.tabContStationLoading.Controls.Add(Me.Station4)
+        Me.tabContStationLoading.Controls.Add(Me.Station5)
+        Me.tabContStationLoading.Controls.Add(Me.Station6)
+        Me.tabContStationLoading.Location = New System.Drawing.Point(9, 42)
+        Me.tabContStationLoading.Name = "tabContStationLoading"
+        Me.tabContStationLoading.SelectedIndex = 0
+        Me.tabContStationLoading.Size = New System.Drawing.Size(663, 180)
+        Me.tabContStationLoading.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
+        Me.tabContStationLoading.TabIndex = 14
+        '
+        'Station1
+        '
+        Me.Station1.Controls.Add(Me.lstbxStation1Files)
+        Me.Station1.Controls.Add(Me.lstbxRow1Data)
+        Me.Station1.Location = New System.Drawing.Point(4, 22)
+        Me.Station1.Name = "Station1"
+        Me.Station1.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station1.Size = New System.Drawing.Size(655, 154)
+        Me.Station1.TabIndex = 0
+        Me.Station1.Text = "Station 1"
+        Me.Station1.UseVisualStyleBackColor = True
+        '
+        'lstbxStation1Files
+        '
+        Me.lstbxStation1Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation1Files.FormattingEnabled = True
+        Me.lstbxStation1Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation1Files.Name = "lstbxStation1Files"
+        Me.lstbxStation1Files.ScrollAlwaysVisible = True
+        Me.lstbxStation1Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation1Files.TabIndex = 8
+        '
+        'lstbxRow1Data
+        '
+        Me.lstbxRow1Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow1Data.FormattingEnabled = True
+        Me.lstbxRow1Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow1Data.Name = "lstbxRow1Data"
+        Me.lstbxRow1Data.ScrollAlwaysVisible = True
+        Me.lstbxRow1Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow1Data.TabIndex = 9
+        '
+        'Station2
+        '
+        Me.Station2.Controls.Add(Me.lstbxStation2Files)
+        Me.Station2.Controls.Add(Me.lstbxRow2Data)
+        Me.Station2.Location = New System.Drawing.Point(4, 22)
+        Me.Station2.Name = "Station2"
+        Me.Station2.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station2.Size = New System.Drawing.Size(655, 154)
+        Me.Station2.TabIndex = 1
+        Me.Station2.Text = "Station 2"
+        Me.Station2.UseVisualStyleBackColor = True
+        '
+        'lstbxStation2Files
+        '
+        Me.lstbxStation2Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation2Files.FormattingEnabled = True
+        Me.lstbxStation2Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation2Files.Name = "lstbxStation2Files"
+        Me.lstbxStation2Files.ScrollAlwaysVisible = True
+        Me.lstbxStation2Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation2Files.TabIndex = 6
+        '
+        'lstbxRow2Data
+        '
+        Me.lstbxRow2Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow2Data.FormattingEnabled = True
+        Me.lstbxRow2Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow2Data.Name = "lstbxRow2Data"
+        Me.lstbxRow2Data.ScrollAlwaysVisible = True
+        Me.lstbxRow2Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow2Data.TabIndex = 7
+        '
+        'Station3
+        '
+        Me.Station3.Controls.Add(Me.lstbxStation3Files)
+        Me.Station3.Controls.Add(Me.lstbxRow3Data)
+        Me.Station3.Location = New System.Drawing.Point(4, 22)
+        Me.Station3.Name = "Station3"
+        Me.Station3.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station3.Size = New System.Drawing.Size(655, 154)
+        Me.Station3.TabIndex = 2
+        Me.Station3.Text = "Station 3"
+        Me.Station3.UseVisualStyleBackColor = True
+        '
+        'lstbxStation3Files
+        '
+        Me.lstbxStation3Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation3Files.FormattingEnabled = True
+        Me.lstbxStation3Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation3Files.Name = "lstbxStation3Files"
+        Me.lstbxStation3Files.ScrollAlwaysVisible = True
+        Me.lstbxStation3Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation3Files.TabIndex = 6
+        '
+        'lstbxRow3Data
+        '
+        Me.lstbxRow3Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow3Data.FormattingEnabled = True
+        Me.lstbxRow3Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow3Data.Name = "lstbxRow3Data"
+        Me.lstbxRow3Data.ScrollAlwaysVisible = True
+        Me.lstbxRow3Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow3Data.TabIndex = 7
+        '
+        'Station4
+        '
+        Me.Station4.Controls.Add(Me.lstbxStation4Files)
+        Me.Station4.Controls.Add(Me.lstbxRow4Data)
+        Me.Station4.Location = New System.Drawing.Point(4, 22)
+        Me.Station4.Name = "Station4"
+        Me.Station4.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station4.Size = New System.Drawing.Size(655, 154)
+        Me.Station4.TabIndex = 3
+        Me.Station4.Text = "Station 4"
+        Me.Station4.UseVisualStyleBackColor = True
+        '
+        'lstbxStation4Files
+        '
+        Me.lstbxStation4Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation4Files.FormattingEnabled = True
+        Me.lstbxStation4Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation4Files.Name = "lstbxStation4Files"
+        Me.lstbxStation4Files.ScrollAlwaysVisible = True
+        Me.lstbxStation4Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation4Files.TabIndex = 6
+        '
+        'lstbxRow4Data
+        '
+        Me.lstbxRow4Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow4Data.FormattingEnabled = True
+        Me.lstbxRow4Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow4Data.Name = "lstbxRow4Data"
+        Me.lstbxRow4Data.ScrollAlwaysVisible = True
+        Me.lstbxRow4Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow4Data.TabIndex = 7
+        '
+        'Station5
+        '
+        Me.Station5.Controls.Add(Me.lstbxStation5Files)
+        Me.Station5.Controls.Add(Me.lstbxRow5Data)
+        Me.Station5.Location = New System.Drawing.Point(4, 22)
+        Me.Station5.Name = "Station5"
+        Me.Station5.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station5.Size = New System.Drawing.Size(655, 154)
+        Me.Station5.TabIndex = 4
+        Me.Station5.Text = "Station 5"
+        Me.Station5.UseVisualStyleBackColor = True
+        '
+        'lstbxStation5Files
+        '
+        Me.lstbxStation5Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation5Files.FormattingEnabled = True
+        Me.lstbxStation5Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation5Files.Name = "lstbxStation5Files"
+        Me.lstbxStation5Files.ScrollAlwaysVisible = True
+        Me.lstbxStation5Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation5Files.TabIndex = 6
+        '
+        'lstbxRow5Data
+        '
+        Me.lstbxRow5Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow5Data.FormattingEnabled = True
+        Me.lstbxRow5Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow5Data.Name = "lstbxRow5Data"
+        Me.lstbxRow5Data.ScrollAlwaysVisible = True
+        Me.lstbxRow5Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow5Data.TabIndex = 7
+        '
+        'Station6
+        '
+        Me.Station6.Controls.Add(Me.lstbxStation6Files)
+        Me.Station6.Controls.Add(Me.lstbxRow6Data)
+        Me.Station6.Location = New System.Drawing.Point(4, 22)
+        Me.Station6.Name = "Station6"
+        Me.Station6.Padding = New System.Windows.Forms.Padding(3)
+        Me.Station6.Size = New System.Drawing.Size(655, 154)
+        Me.Station6.TabIndex = 5
+        Me.Station6.Text = "Station 6"
+        Me.Station6.UseVisualStyleBackColor = True
+        '
+        'lstbxStation6Files
+        '
+        Me.lstbxStation6Files.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxStation6Files.FormattingEnabled = True
+        Me.lstbxStation6Files.Location = New System.Drawing.Point(5, 5)
+        Me.lstbxStation6Files.Name = "lstbxStation6Files"
+        Me.lstbxStation6Files.ScrollAlwaysVisible = True
+        Me.lstbxStation6Files.Size = New System.Drawing.Size(644, 82)
+        Me.lstbxStation6Files.TabIndex = 6
+        '
+        'lstbxRow6Data
+        '
+        Me.lstbxRow6Data.BackColor = System.Drawing.SystemColors.Control
+        Me.lstbxRow6Data.FormattingEnabled = True
+        Me.lstbxRow6Data.Location = New System.Drawing.Point(5, 94)
+        Me.lstbxRow6Data.Name = "lstbxRow6Data"
+        Me.lstbxRow6Data.ScrollAlwaysVisible = True
+        Me.lstbxRow6Data.Size = New System.Drawing.Size(644, 56)
+        Me.lstbxRow6Data.TabIndex = 7
+        '
+        'grpboxParse
+        '
+        Me.grpboxParse.Controls.Add(Me.tabContStationLoading)
+        Me.grpboxParse.Controls.Add(Me.grpboxMotionRow)
+        Me.grpboxParse.Controls.Add(Me.cbAllStns)
+        Me.grpboxParse.Controls.Add(Me.cbS1)
+        Me.grpboxParse.Controls.Add(Me.cbS6)
+        Me.grpboxParse.Controls.Add(Me.cbS2)
+        Me.grpboxParse.Controls.Add(Me.cbS5)
+        Me.grpboxParse.Controls.Add(Me.cbS3)
+        Me.grpboxParse.Controls.Add(Me.cbS4)
+        Me.grpboxParse.Location = New System.Drawing.Point(12, 114)
+        Me.grpboxParse.Name = "grpboxParse"
+        Me.grpboxParse.Size = New System.Drawing.Size(682, 405)
+        Me.grpboxParse.TabIndex = 15
+        Me.grpboxParse.TabStop = False
+        Me.grpboxParse.Text = "Parse Result"
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 522)
-        Me.Controls.Add(Me.grpboxMotionRow)
-        Me.Controls.Add(Me.lstbxRowData)
-        Me.Controls.Add(Me.lstbxStation1Files)
-        Me.Controls.Add(Me.lblRawProjectPath)
+        Me.ClientSize = New System.Drawing.Size(711, 530)
+        Me.Controls.Add(Me.grpboxParse)
         Me.Controls.Add(Me.grpBoxSelectProject)
         Me.Name = "frmMain"
         Me.Text = "TOAST Text Export Tool"
         Me.grpBoxSelectProject.ResumeLayout(False)
         Me.grpboxMotionRow.ResumeLayout(False)
+        Me.tabContStationLoading.ResumeLayout(False)
+        Me.Station1.ResumeLayout(False)
+        Me.Station2.ResumeLayout(False)
+        Me.Station3.ResumeLayout(False)
+        Me.Station4.ResumeLayout(False)
+        Me.Station5.ResumeLayout(False)
+        Me.Station6.ResumeLayout(False)
+        Me.grpboxParse.ResumeLayout(False)
+        Me.grpboxParse.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -298,8 +638,6 @@ Partial Class frmMain
     Friend WithEvents lblProjectPath As Label
     Friend WithEvents grpBoxSelectProject As GroupBox
     Friend WithEvents lblRawProjectPath As Label
-    Friend WithEvents lstbxStation1Files As ListBox
-    Friend WithEvents lstbxRowData As ListBox
     Friend WithEvents grpboxMotionRow As GroupBox
     Public WithEvents lblAdvanceCoilAbs As Label
     Public WithEvents lblAdvanceDepthAbs As Label
@@ -315,4 +653,32 @@ Partial Class frmMain
     Public WithEvents lblMotionNameSym As Label
     Public WithEvents lblStnNumber As Label
     Public WithEvents lblRowNumber As Label
+    Friend WithEvents cbS1 As CheckBox
+    Friend WithEvents cbS2 As CheckBox
+    Friend WithEvents cbS3 As CheckBox
+    Friend WithEvents cbS4 As CheckBox
+    Friend WithEvents cbS5 As CheckBox
+    Friend WithEvents cbS6 As CheckBox
+    Friend WithEvents cbAllStns As CheckBox
+    Friend WithEvents tabContStationLoading As TabControl
+    Friend WithEvents Station1 As TabPage
+    Friend WithEvents Station2 As TabPage
+    Friend WithEvents lstbxStation2Files As ListBox
+    Friend WithEvents lstbxRow2Data As ListBox
+    Friend WithEvents Station3 As TabPage
+    Friend WithEvents lstbxStation3Files As ListBox
+    Friend WithEvents lstbxRow3Data As ListBox
+    Friend WithEvents Station4 As TabPage
+    Friend WithEvents lstbxStation4Files As ListBox
+    Friend WithEvents lstbxRow4Data As ListBox
+    Friend WithEvents Station5 As TabPage
+    Friend WithEvents lstbxStation5Files As ListBox
+    Friend WithEvents lstbxRow5Data As ListBox
+    Friend WithEvents Station6 As TabPage
+    Friend WithEvents lstbxStation6Files As ListBox
+    Friend WithEvents lstbxRow6Data As ListBox
+    Public WithEvents lstbxStation1Files As ListBox
+    Public WithEvents lstbxRow1Data As ListBox
+    Friend WithEvents btnCloseProject As Button
+    Friend WithEvents grpboxParse As GroupBox
 End Class
