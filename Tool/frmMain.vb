@@ -1,8 +1,7 @@
-﻿Imports System.IO
-Imports System.Net.Security
-Imports System.Xml
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.FileIO
+﻿
+
+
+
 
 Public Class frmMain
     Dim tc3progLocationFiler As String
@@ -26,6 +25,12 @@ Public Class frmMain
     'from PLC
     Dim gNumberElementsPerRow As Integer
 
+    Dim ProcessArray1() As String
+    Dim ProcessArry1Num As Integer
+
+
+    Dim ProcessArray2() As String
+    Dim ProcessArry2Num As Integer
 
 
     Private Sub BtnOpenProject_Click(sender As Object, e As EventArgs) Handles btnOpenProject.Click
@@ -179,10 +184,17 @@ Public Class frmMain
         Dim splittingSeperators() As String = {vbCr}
         splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
+        'init pointer to array
+        ProcessArry1Num = 0
+
+        ReDim ProcessArray1(splitStringResult.Length)
+
         For i = 0 To splitStringResult.Length - 1
             'check if text matches textid header
             If splitStringResult(i).Contains("TextID") Then
                 ' Console.WriteLine("found TextID header")
+                ProcessArray1(ProcessArry1Num) = splitStringResult(i)
+                ProcessArry1Num = ProcessArry1Num + 1
             Else
                 'Console.WriteLine("did not find TextID header")
             End If
