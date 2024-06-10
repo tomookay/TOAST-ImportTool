@@ -1,4 +1,10 @@
-﻿Public Class frmMain
+﻿Imports System.IO
+Imports System.Net.Security
+Imports System.Xml
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.FileIO
+
+Public Class frmMain
     Dim tc3progLocationFiler As String
     Dim RawProjectPath As String
 
@@ -15,6 +21,11 @@
     Const motionfooter_gt As String = "&gt;"
 
     Dim IsLoadingData As Boolean = False
+
+
+    'from PLC
+    Dim gNumberElementsPerRow As Integer
+
 
 
     Private Sub BtnOpenProject_Click(sender As Object, e As EventArgs) Handles btnOpenProject.Click
@@ -41,6 +52,15 @@
         lblRawProjectPath.Text = RawProjectPathLastSlash
         lblRawProjectPath.Text = lblProjectPath.Text.Remove(RawProjectPathLastSlash)
 
+        'load CONSTS files
+        LoadCONSTsFile()
+
+
+        'load string language files
+        LoadMotionStringsFile()
+
+
+
 
         'load .TcPoU file into list
         LoadMotionListsFromStation()
@@ -50,6 +70,126 @@
 
 
         IsLoadingData = False
+
+
+    End Sub
+
+    Sub LoadCONSTsFile()
+        'load file that contains offset ammount (typ. 20)
+        '
+        'C:\transline\TwinCAT Project1\PLC1\HMI1\Data\gHMIDataConst.TcGVL
+        Dim HMIDataCONSTSlocation As String
+
+        HMIDataCONSTSlocation = lblRawProjectPath.Text & "\PLC1\HMI1\Data\gHMIDataConst.TcGVL"
+
+        lblCONTsPathName.Text = HMIDataCONSTSlocation
+
+        Dim fileSize As Long
+        fileSize = My.Computer.FileSystem.GetFileInfo(HMIDataCONSTSlocation).Length
+
+        lblCONSTsFileSize.Text = fileSize & " bytes"
+
+        'load file to memory
+        Dim fileContents As String
+        fileContents = My.Computer.FileSystem.ReadAllText(lblCONTsPathName.Text)
+        Dim splitStringResult() As String
+        Dim splittingSeperators() As String = {vbCr}
+        splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
+
+        Dim ReturnedPLCDeclaredValue As String
+        'loop around all values and check if value contains specified data
+        For i = 0 To splitStringResult.Length - 1
+
+
+            If splitStringResult(i).Contains("gNumberElementsPerRow") Then
+                gNumberElementsPerRow = FindParamInTcDelcare(splitStringResult(i), "gNumberElementsPerRow")
+                lblgNumberElementsPerRow.Text = "gNumberElementsPerRow:=" & gNumberElementsPerRow
+            End If
+
+        Next
+
+
+    End Sub
+
+    Function FindParamInTcDelcare(ByVal InputStr As String, ByVal SearchStr As String) As String
+        Dim ProcString As String
+        Dim ProcString2 As String
+        Dim ProcString3 As String
+        Dim delimchar As String = ":="
+        Dim delimLen As Integer = delimchar.Length
+        Dim delimLocation As Integer
+
+        Dim TC3delimchar As String = ";"
+        Dim TC3delimcharLocation As Integer
+
+        Dim TC3SpaceChar As String = " "
+        Dim TC3SpaceCharLocation As Integer
+        Dim ProcString4 As String = "Unknown"
+
+        ProcString3 = "unknown"
+
+        'vbLf & vbTab & "gNumberElementsPerRow:UINT := 20;  //number of _things_ in each row, buttons, indicators, etc"
+        ''convert string value to output value
+        If InputStr.Contains(SearchStr) Then
+            'MsgBox("Value detected: " & SearchStr)
+            delimLocation = InputStr.IndexOf(delimchar)
+
+
+            ProcString = InputStr.ToString.Substring(delimLocation)
+            ProcString2 = ProcString.Remove(0, delimLen)
+
+            TC3delimcharLocation = ProcString2.IndexOf(TC3delimchar)
+            If TC3delimcharLocation >= 1 Then
+                ProcString3 = ProcString2.Remove(TC3delimcharLocation)
+            End If
+
+            TC3SpaceCharLocation = ProcString3.IndexOf(TC3SpaceChar)
+            If TC3SpaceCharLocation >= 0 Then
+                ProcString4 = ProcString3.Remove(TC3SpaceCharLocation, 1)
+            End If
+
+            Return ProcString4
+        Else
+            'MsgBox("Value not detected")
+            Exit Function
+
+        End If
+
+
+    End Function
+
+    Sub LoadMotionStringsFile()
+        'C:\transline\TwinCAT Project1\PLC1\HMI1\Data\MotionRowText.TcTLO
+        Dim MotionStringsFileLocation As String
+
+        MotionStringsFileLocation = lblRawProjectPath.Text & "\PLC1\HMI1\Data\MotionRowText.TcTLO"
+
+        lblMotionTextsPathName.Text = MotionStringsFileLocation
+
+        Dim fileSize As Long
+        fileSize = My.Computer.FileSystem.GetFileInfo(MotionStringsFileLocation).Length
+
+        lblMotionTextsFileSize.Text = fileSize & " bytes"
+
+
+        'load file to memory
+        Dim fileContents As String
+        fileContents = My.Computer.FileSystem.ReadAllText(lblMotionTextsPathName.Text)
+        Dim splitStringResult() As String
+        Dim splittingSeperators() As String = {vbCr}
+        splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
+
+        For i = 0 To splitStringResult.Length - 1
+            'check if text matches textid header
+            If splitStringResult(i).Contains("TextID") Then
+                ' Console.WriteLine("found TextID header")
+            Else
+                'Console.WriteLine("did not find TextID header")
+            End If
+        Next
+
+
+
 
 
     End Sub
@@ -599,6 +739,8 @@
         lblRawProjectPath.Text = "No Raw Project Path...."
         ClearDownOnStart()
 
+
+
     End Sub
 
 
@@ -659,5 +801,7 @@
 
     End Sub
 
+    Private Sub lblContsPathName_Click(sender As Object, e As EventArgs) Handles lblMotionTextsPathName.Click
 
+    End Sub
 End Class

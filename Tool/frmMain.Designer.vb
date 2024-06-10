@@ -70,6 +70,11 @@ Partial Class frmMain
         Me.lstbxStation6Files = New System.Windows.Forms.ListBox()
         Me.lstbxRow6Data = New System.Windows.Forms.ListBox()
         Me.grpboxParse = New System.Windows.Forms.GroupBox()
+        Me.lblMotionTextsPathName = New System.Windows.Forms.Label()
+        Me.lblMotionTextsFileSize = New System.Windows.Forms.Label()
+        Me.lblCONSTsFileSize = New System.Windows.Forms.Label()
+        Me.lblCONTsPathName = New System.Windows.Forms.Label()
+        Me.lblgNumberElementsPerRow = New System.Windows.Forms.Label()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -609,11 +614,61 @@ Partial Class frmMain
         Me.grpboxParse.TabStop = False
         Me.grpboxParse.Text = "Parse Result"
         '
+        'lblMotionTextsPathName
+        '
+        Me.lblMotionTextsPathName.AutoSize = True
+        Me.lblMotionTextsPathName.Location = New System.Drawing.Point(27, 534)
+        Me.lblMotionTextsPathName.Name = "lblMotionTextsPathName"
+        Me.lblMotionTextsPathName.Size = New System.Drawing.Size(140, 13)
+        Me.lblMotionTextsPathName.TabIndex = 16
+        Me.lblMotionTextsPathName.Text = "Motion Texts File Not Found"
+        '
+        'lblMotionTextsFileSize
+        '
+        Me.lblMotionTextsFileSize.AutoSize = True
+        Me.lblMotionTextsFileSize.Location = New System.Drawing.Point(573, 534)
+        Me.lblMotionTextsFileSize.Name = "lblMotionTextsFileSize"
+        Me.lblMotionTextsFileSize.Size = New System.Drawing.Size(43, 13)
+        Me.lblMotionTextsFileSize.TabIndex = 17
+        Me.lblMotionTextsFileSize.Text = "FileSize"
+        '
+        'lblCONSTsFileSize
+        '
+        Me.lblCONSTsFileSize.AutoSize = True
+        Me.lblCONSTsFileSize.Location = New System.Drawing.Point(573, 547)
+        Me.lblCONSTsFileSize.Name = "lblCONSTsFileSize"
+        Me.lblCONSTsFileSize.Size = New System.Drawing.Size(43, 13)
+        Me.lblCONSTsFileSize.TabIndex = 19
+        Me.lblCONSTsFileSize.Text = "FileSize"
+        '
+        'lblCONTsPathName
+        '
+        Me.lblCONTsPathName.AutoSize = True
+        Me.lblCONTsPathName.Location = New System.Drawing.Point(27, 547)
+        Me.lblCONTsPathName.Name = "lblCONTsPathName"
+        Me.lblCONTsPathName.Size = New System.Drawing.Size(121, 13)
+        Me.lblCONTsPathName.TabIndex = 18
+        Me.lblCONTsPathName.Text = "CONSTs File Not Found"
+        '
+        'lblgNumberElementsPerRow
+        '
+        Me.lblgNumberElementsPerRow.AutoSize = True
+        Me.lblgNumberElementsPerRow.Location = New System.Drawing.Point(531, 560)
+        Me.lblgNumberElementsPerRow.Name = "lblgNumberElementsPerRow"
+        Me.lblgNumberElementsPerRow.Size = New System.Drawing.Size(143, 13)
+        Me.lblgNumberElementsPerRow.TabIndex = 20
+        Me.lblgNumberElementsPerRow.Text = "gNumberElementsPerRow=?"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(711, 530)
+        Me.ClientSize = New System.Drawing.Size(711, 628)
+        Me.Controls.Add(Me.lblgNumberElementsPerRow)
+        Me.Controls.Add(Me.lblCONSTsFileSize)
+        Me.Controls.Add(Me.lblCONTsPathName)
+        Me.Controls.Add(Me.lblMotionTextsFileSize)
+        Me.Controls.Add(Me.lblMotionTextsPathName)
         Me.Controls.Add(Me.grpboxParse)
         Me.Controls.Add(Me.grpBoxSelectProject)
         Me.Name = "frmMain"
@@ -630,6 +685,7 @@ Partial Class frmMain
         Me.grpboxParse.ResumeLayout(False)
         Me.grpboxParse.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -681,4 +737,9 @@ Partial Class frmMain
     Public WithEvents lstbxRow1Data As ListBox
     Friend WithEvents btnCloseProject As Button
     Friend WithEvents grpboxParse As GroupBox
+    Friend WithEvents lblMotionTextsPathName As Label
+    Friend WithEvents lblMotionTextsFileSize As Label
+    Friend WithEvents lblCONSTsFileSize As Label
+    Friend WithEvents lblCONTsPathName As Label
+    Friend WithEvents lblgNumberElementsPerRow As Label
 End Class
