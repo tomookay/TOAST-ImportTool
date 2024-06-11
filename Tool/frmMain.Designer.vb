@@ -75,6 +75,14 @@ Partial Class frmMain
         Me.lblCONSTsFileSize = New System.Windows.Forms.Label()
         Me.lblCONTsPathName = New System.Windows.Forms.Label()
         Me.lblgNumberElementsPerRow = New System.Windows.Forms.Label()
+        Me.tabControlTasks = New System.Windows.Forms.TabControl()
+        Me.tabImport = New System.Windows.Forms.TabPage()
+        Me.tabViewData = New System.Windows.Forms.TabPage()
+        Me.lblMotionFilesPath = New System.Windows.Forms.Label()
+        Me.lblPLCdataFilePath = New System.Windows.Forms.Label()
+        Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
+        Me.lstBoxImportData = New System.Windows.Forms.ListBox()
+        Me.tabExportData = New System.Windows.Forms.TabPage()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -85,6 +93,9 @@ Partial Class frmMain
         Me.Station5.SuspendLayout()
         Me.Station6.SuspendLayout()
         Me.grpboxParse.SuspendLayout()
+        Me.tabControlTasks.SuspendLayout()
+        Me.tabImport.SuspendLayout()
+        Me.tabViewData.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOpenProject
@@ -107,7 +118,7 @@ Partial Class frmMain
         Me.lblProjectPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblProjectPath.Location = New System.Drawing.Point(113, 19)
         Me.lblProjectPath.Name = "lblProjectPath"
-        Me.lblProjectPath.Size = New System.Drawing.Size(491, 29)
+        Me.lblProjectPath.Size = New System.Drawing.Size(589, 29)
         Me.lblProjectPath.TabIndex = 1
         Me.lblProjectPath.Text = "No Project Selected....."
         Me.lblProjectPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -120,7 +131,7 @@ Partial Class frmMain
         Me.grpBoxSelectProject.Controls.Add(Me.lblRawProjectPath)
         Me.grpBoxSelectProject.Location = New System.Drawing.Point(12, 12)
         Me.grpBoxSelectProject.Name = "grpBoxSelectProject"
-        Me.grpBoxSelectProject.Size = New System.Drawing.Size(682, 96)
+        Me.grpBoxSelectProject.Size = New System.Drawing.Size(724, 96)
         Me.grpBoxSelectProject.TabIndex = 2
         Me.grpBoxSelectProject.TabStop = False
         Me.grpBoxSelectProject.Text = "Select Project...."
@@ -139,7 +150,7 @@ Partial Class frmMain
         Me.lblRawProjectPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRawProjectPath.Location = New System.Drawing.Point(112, 53)
         Me.lblRawProjectPath.Name = "lblRawProjectPath"
-        Me.lblRawProjectPath.Size = New System.Drawing.Size(491, 28)
+        Me.lblRawProjectPath.Size = New System.Drawing.Size(590, 28)
         Me.lblRawProjectPath.TabIndex = 2
         Me.lblRawProjectPath.Text = "No Raw Project Path...."
         Me.lblRawProjectPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -607,7 +618,7 @@ Partial Class frmMain
         Me.grpboxParse.Controls.Add(Me.cbS5)
         Me.grpboxParse.Controls.Add(Me.cbS3)
         Me.grpboxParse.Controls.Add(Me.cbS4)
-        Me.grpboxParse.Location = New System.Drawing.Point(12, 114)
+        Me.grpboxParse.Location = New System.Drawing.Point(26, 7)
         Me.grpboxParse.Name = "grpboxParse"
         Me.grpboxParse.Size = New System.Drawing.Size(682, 405)
         Me.grpboxParse.TabIndex = 15
@@ -617,7 +628,7 @@ Partial Class frmMain
         'lblMotionTextsPathName
         '
         Me.lblMotionTextsPathName.AutoSize = True
-        Me.lblMotionTextsPathName.Location = New System.Drawing.Point(27, 534)
+        Me.lblMotionTextsPathName.Location = New System.Drawing.Point(28, 576)
         Me.lblMotionTextsPathName.Name = "lblMotionTextsPathName"
         Me.lblMotionTextsPathName.Size = New System.Drawing.Size(140, 13)
         Me.lblMotionTextsPathName.TabIndex = 16
@@ -626,7 +637,7 @@ Partial Class frmMain
         'lblMotionTextsFileSize
         '
         Me.lblMotionTextsFileSize.AutoSize = True
-        Me.lblMotionTextsFileSize.Location = New System.Drawing.Point(573, 534)
+        Me.lblMotionTextsFileSize.Location = New System.Drawing.Point(574, 576)
         Me.lblMotionTextsFileSize.Name = "lblMotionTextsFileSize"
         Me.lblMotionTextsFileSize.Size = New System.Drawing.Size(43, 13)
         Me.lblMotionTextsFileSize.TabIndex = 17
@@ -635,7 +646,7 @@ Partial Class frmMain
         'lblCONSTsFileSize
         '
         Me.lblCONSTsFileSize.AutoSize = True
-        Me.lblCONSTsFileSize.Location = New System.Drawing.Point(573, 547)
+        Me.lblCONSTsFileSize.Location = New System.Drawing.Point(574, 589)
         Me.lblCONSTsFileSize.Name = "lblCONSTsFileSize"
         Me.lblCONSTsFileSize.Size = New System.Drawing.Size(43, 13)
         Me.lblCONSTsFileSize.TabIndex = 19
@@ -644,7 +655,7 @@ Partial Class frmMain
         'lblCONTsPathName
         '
         Me.lblCONTsPathName.AutoSize = True
-        Me.lblCONTsPathName.Location = New System.Drawing.Point(27, 547)
+        Me.lblCONTsPathName.Location = New System.Drawing.Point(28, 589)
         Me.lblCONTsPathName.Name = "lblCONTsPathName"
         Me.lblCONTsPathName.Size = New System.Drawing.Size(121, 13)
         Me.lblCONTsPathName.TabIndex = 18
@@ -653,23 +664,102 @@ Partial Class frmMain
         'lblgNumberElementsPerRow
         '
         Me.lblgNumberElementsPerRow.AutoSize = True
-        Me.lblgNumberElementsPerRow.Location = New System.Drawing.Point(531, 560)
+        Me.lblgNumberElementsPerRow.Location = New System.Drawing.Point(532, 602)
         Me.lblgNumberElementsPerRow.Name = "lblgNumberElementsPerRow"
         Me.lblgNumberElementsPerRow.Size = New System.Drawing.Size(143, 13)
         Me.lblgNumberElementsPerRow.TabIndex = 20
         Me.lblgNumberElementsPerRow.Text = "gNumberElementsPerRow=?"
         '
+        'tabControlTasks
+        '
+        Me.tabControlTasks.Controls.Add(Me.tabImport)
+        Me.tabControlTasks.Controls.Add(Me.tabViewData)
+        Me.tabControlTasks.Controls.Add(Me.tabExportData)
+        Me.tabControlTasks.Location = New System.Drawing.Point(12, 114)
+        Me.tabControlTasks.Name = "tabControlTasks"
+        Me.tabControlTasks.SelectedIndex = 0
+        Me.tabControlTasks.Size = New System.Drawing.Size(728, 447)
+        Me.tabControlTasks.TabIndex = 22
+        '
+        'tabImport
+        '
+        Me.tabImport.Controls.Add(Me.grpboxParse)
+        Me.tabImport.Location = New System.Drawing.Point(4, 22)
+        Me.tabImport.Name = "tabImport"
+        Me.tabImport.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabImport.Size = New System.Drawing.Size(720, 421)
+        Me.tabImport.TabIndex = 0
+        Me.tabImport.Text = "Import Data"
+        Me.tabImport.UseVisualStyleBackColor = True
+        '
+        'tabViewData
+        '
+        Me.tabViewData.Controls.Add(Me.lblMotionFilesPath)
+        Me.tabViewData.Controls.Add(Me.lblPLCdataFilePath)
+        Me.tabViewData.Controls.Add(Me.lstBoxPLCData)
+        Me.tabViewData.Controls.Add(Me.lstBoxImportData)
+        Me.tabViewData.Location = New System.Drawing.Point(4, 22)
+        Me.tabViewData.Name = "tabViewData"
+        Me.tabViewData.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabViewData.Size = New System.Drawing.Size(720, 421)
+        Me.tabViewData.TabIndex = 1
+        Me.tabViewData.Text = "View Data"
+        Me.tabViewData.UseVisualStyleBackColor = True
+        '
+        'lblMotionFilesPath
+        '
+        Me.lblMotionFilesPath.AutoSize = True
+        Me.lblMotionFilesPath.Location = New System.Drawing.Point(260, 12)
+        Me.lblMotionFilesPath.Name = "lblMotionFilesPath"
+        Me.lblMotionFilesPath.Size = New System.Drawing.Size(55, 13)
+        Me.lblMotionFilesPath.TabIndex = 3
+        Me.lblMotionFilesPath.Text = "No Path..."
+        '
+        'lblPLCdataFilePath
+        '
+        Me.lblPLCdataFilePath.AutoSize = True
+        Me.lblPLCdataFilePath.Location = New System.Drawing.Point(21, 12)
+        Me.lblPLCdataFilePath.Name = "lblPLCdataFilePath"
+        Me.lblPLCdataFilePath.Size = New System.Drawing.Size(55, 13)
+        Me.lblPLCdataFilePath.TabIndex = 2
+        Me.lblPLCdataFilePath.Text = "No Path..."
+        '
+        'lstBoxPLCData
+        '
+        Me.lstBoxPLCData.FormattingEnabled = True
+        Me.lstBoxPLCData.Location = New System.Drawing.Point(263, 28)
+        Me.lstBoxPLCData.Name = "lstBoxPLCData"
+        Me.lstBoxPLCData.Size = New System.Drawing.Size(247, 368)
+        Me.lstBoxPLCData.TabIndex = 1
+        '
+        'lstBoxImportData
+        '
+        Me.lstBoxImportData.FormattingEnabled = True
+        Me.lstBoxImportData.Location = New System.Drawing.Point(24, 28)
+        Me.lstBoxImportData.Name = "lstBoxImportData"
+        Me.lstBoxImportData.Size = New System.Drawing.Size(224, 368)
+        Me.lstBoxImportData.TabIndex = 0
+        '
+        'tabExportData
+        '
+        Me.tabExportData.Location = New System.Drawing.Point(4, 22)
+        Me.tabExportData.Name = "tabExportData"
+        Me.tabExportData.Size = New System.Drawing.Size(720, 421)
+        Me.tabExportData.TabIndex = 2
+        Me.tabExportData.Text = "Export Data"
+        Me.tabExportData.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(711, 628)
+        Me.ClientSize = New System.Drawing.Size(749, 628)
+        Me.Controls.Add(Me.tabControlTasks)
         Me.Controls.Add(Me.lblgNumberElementsPerRow)
         Me.Controls.Add(Me.lblCONSTsFileSize)
         Me.Controls.Add(Me.lblCONTsPathName)
         Me.Controls.Add(Me.lblMotionTextsFileSize)
         Me.Controls.Add(Me.lblMotionTextsPathName)
-        Me.Controls.Add(Me.grpboxParse)
         Me.Controls.Add(Me.grpBoxSelectProject)
         Me.Name = "frmMain"
         Me.Text = "TOAST Text Export Tool"
@@ -684,6 +774,10 @@ Partial Class frmMain
         Me.Station6.ResumeLayout(False)
         Me.grpboxParse.ResumeLayout(False)
         Me.grpboxParse.PerformLayout()
+        Me.tabControlTasks.ResumeLayout(False)
+        Me.tabImport.ResumeLayout(False)
+        Me.tabViewData.ResumeLayout(False)
+        Me.tabViewData.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -742,4 +836,12 @@ Partial Class frmMain
     Friend WithEvents lblCONSTsFileSize As Label
     Friend WithEvents lblCONTsPathName As Label
     Friend WithEvents lblgNumberElementsPerRow As Label
+    Friend WithEvents tabImport As TabPage
+    Friend WithEvents tabViewData As TabPage
+    Friend WithEvents lstBoxImportData As ListBox
+    Friend WithEvents tabExportData As TabPage
+    Friend WithEvents lstBoxPLCData As ListBox
+    Friend WithEvents tabControlTasks As TabControl
+    Friend WithEvents lblMotionFilesPath As Label
+    Friend WithEvents lblPLCdataFilePath As Label
 End Class

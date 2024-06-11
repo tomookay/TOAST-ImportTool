@@ -1,23 +1,12 @@
-﻿
-
-
-
-
-Public Class frmMain
+﻿Public Class frmMain
     Dim tc3progLocationFiler As String
     Dim RawProjectPath As String
 
     Dim RawProjectPathLastSlash As Integer
 
-
-
     Dim OpenedFile
 
     Dim arryMotionRowText As String()
-
-
-    Const motionheader_lt As String = "&lt;"
-    Const motionfooter_gt As String = "&gt;"
 
     Dim IsLoadingData As Boolean = False
 
@@ -25,7 +14,7 @@ Public Class frmMain
     'from PLC
     Dim gNumberElementsPerRow As Integer
 
-    Dim ProcessArray1() As String
+    Dim ProcessArray1() As String ''array read from 
     Dim ProcessArry1Num As Integer
 
 
@@ -33,13 +22,27 @@ Public Class frmMain
     Dim ProcessArry2Num As Integer
 
 
+    ''Location of elements in array
+    Const txtReturnRel As Integer = 13
+    Const txtMotionNameRel As Integer = 16
+    Const txtReturnedRel As Integer = 14
+    Const txtAdvanceRel As Integer = 10
+    Const txtAdvancedRel As Integer = 11
+
+    Const txtReturnAbs As Integer = 3
+    Const txtMotionNameAbs As Integer = 6
+    Const txtReturnedAbs As Integer = 4
+    Const txtAdvanceAbs As Integer = 0
+    Const txtAdvancedAbs As Integer = 1
+
+    Dim MotionStringsFileLocation As String
+
     Private Sub BtnOpenProject_Click(sender As Object, e As EventArgs) Handles btnOpenProject.Click
         ''set logic for later use
         IsLoadingData = True
 
         ''clear down the list boxes
         ClearDownOnStart()
-
 
         ''set filter for project locator
         tc3progLocationFiler = "TOAST TwinCAT3 Project (*.tsproj)|*.tsproj"
@@ -60,12 +63,8 @@ Public Class frmMain
         'load CONSTS files
         LoadCONSTsFile()
 
-
         'load string language files
         LoadMotionStringsFile()
-
-
-
 
         'load .TcPoU file into list
         LoadMotionListsFromStation()
@@ -73,8 +72,17 @@ Public Class frmMain
         'load contents of .TcPoU file into parser
         PopulateListBoxMotions()
 
-
         IsLoadingData = False
+
+        tabControlTasks.TabPages.Item(1).Select()
+
+        lblPLCdataFilePath.Text = MotionStringsFileLocation
+        lstBoxImportData.DataSource = ProcessArray1
+
+
+        lstBoxPLCData.DataSource = ProcessArray2
+
+
 
 
     End Sub
@@ -101,10 +109,9 @@ Public Class frmMain
         Dim splittingSeperators() As String = {vbCr}
         splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
-        Dim ReturnedPLCDeclaredValue As String
+        ' Dim ReturnedPLCDeclaredValue As String
         'loop around all values and check if value contains specified data
         For i = 0 To splitStringResult.Length - 1
-
 
             If splitStringResult(i).Contains("gNumberElementsPerRow") Then
                 gNumberElementsPerRow = FindParamInTcDelcare(splitStringResult(i), "gNumberElementsPerRow")
@@ -116,56 +123,11 @@ Public Class frmMain
 
     End Sub
 
-    Function FindParamInTcDelcare(ByVal InputStr As String, ByVal SearchStr As String) As String
-        Dim ProcString As String
-        Dim ProcString2 As String
-        Dim ProcString3 As String
-        Dim delimchar As String = ":="
-        Dim delimLen As Integer = delimchar.Length
-        Dim delimLocation As Integer
 
-        Dim TC3delimchar As String = ";"
-        Dim TC3delimcharLocation As Integer
-
-        Dim TC3SpaceChar As String = " "
-        Dim TC3SpaceCharLocation As Integer
-        Dim ProcString4 As String = "Unknown"
-
-        ProcString3 = "unknown"
-
-        'vbLf & vbTab & "gNumberElementsPerRow:UINT := 20;  //number of _things_ in each row, buttons, indicators, etc"
-        ''convert string value to output value
-        If InputStr.Contains(SearchStr) Then
-            'MsgBox("Value detected: " & SearchStr)
-            delimLocation = InputStr.IndexOf(delimchar)
-
-
-            ProcString = InputStr.ToString.Substring(delimLocation)
-            ProcString2 = ProcString.Remove(0, delimLen)
-
-            TC3delimcharLocation = ProcString2.IndexOf(TC3delimchar)
-            If TC3delimcharLocation >= 1 Then
-                ProcString3 = ProcString2.Remove(TC3delimcharLocation)
-            End If
-
-            TC3SpaceCharLocation = ProcString3.IndexOf(TC3SpaceChar)
-            If TC3SpaceCharLocation >= 0 Then
-                ProcString4 = ProcString3.Remove(TC3SpaceCharLocation, 1)
-            End If
-
-            Return ProcString4
-        Else
-            'MsgBox("Value not detected")
-            Exit Function
-
-        End If
-
-
-    End Function
 
     Sub LoadMotionStringsFile()
         'C:\transline\TwinCAT Project1\PLC1\HMI1\Data\MotionRowText.TcTLO
-        Dim MotionStringsFileLocation As String
+
 
         MotionStringsFileLocation = lblRawProjectPath.Text & "\PLC1\HMI1\Data\MotionRowText.TcTLO"
 
@@ -184,35 +146,60 @@ Public Class frmMain
         Dim splittingSeperators() As String = {vbCr}
         splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
+        Dim procString As String
+        Dim textIDlocation As Integer
+
+        Dim TextIDStrSearch As String = "TextID"
+        Dim TextIDToContentDist As Integer = 9
+
+        Dim ContentFooter As String = "</v>"
+        Dim ContentFooterDist As Integer
+
+
+
         'init pointer to array
         ProcessArry1Num = 0
 
         ReDim ProcessArray1(splitStringResult.Length)
+        ReDim ProcessArray2(splitStringResult.Length)
 
         For i = 0 To splitStringResult.Length - 1
             'check if text matches textid header
-            If splitStringResult(i).Contains("TextID") Then
+            If splitStringResult(i).Contains(TextIDStrSearch) Then
                 ' Console.WriteLine("found TextID header")
-                ProcessArray1(ProcessArry1Num) = splitStringResult(i)
+                procString = splitStringResult(i)
+                textIDlocation = procString.IndexOf(TextIDStrSearch)
+
+                'distance between "TextID" and start of content = 9
+                procString = procString.Remove(0, textIDlocation + TextIDToContentDist)
+
+                'find and remove the footer of "<v>"
+                ContentFooterDist = procString.IndexOf(ContentFooter) - 1
+                procString = procString.Remove(ContentFooterDist, ContentFooter.Length + 1)
+
+
+                ProcessArray1(ProcessArry1Num) = procString
                 ProcessArry1Num = ProcessArry1Num + 1
             Else
                 'Console.WriteLine("did not find TextID header")
             End If
         Next
 
-
-
-
-
     End Sub
 
     Sub PopulateListBoxMotions()
-        PopulateListBox1()
-        PopulateListBox2()
-        PopulateListBox3()
-        PopulateListBox4()
-        PopulateListBox5()
-        PopulateListBox6()
+        Me.tabContStationLoading.SelectedIndex = 0
+        PopulateListBox(cbS1, lstbxStation1Files, lstbxRow1Data)
+        Me.tabContStationLoading.SelectedIndex = 1
+        PopulateListBox(cbS2, lstbxStation2Files, lstbxRow2Data)
+        Me.tabContStationLoading.SelectedIndex = 2
+        PopulateListBox(cbS3, lstbxStation3Files, lstbxRow3Data)
+        Me.tabContStationLoading.SelectedIndex = 3
+        PopulateListBox(cbS4, lstbxStation4Files, lstbxRow4Data)
+        Me.tabContStationLoading.SelectedIndex = 4
+        PopulateListBox(cbS5, lstbxStation5Files, lstbxRow5Data)
+        Me.tabContStationLoading.SelectedIndex = 5
+        PopulateListBox(cbS6, lstbxStation6Files, lstbxRow6Data)
 
     End Sub
 
@@ -247,267 +234,39 @@ Public Class frmMain
 
     Sub LoadMotionListsFromStation()
         'populate locations of .TCPoU's containing motions to parse later
-        LoadStation1()
-        LoadStation2()
-        LoadStation3()
-        LoadStation4()
-        LoadStation5()
-        LoadStation6()
-
-
+        LoadStationMotionPaths(cbS1, lblRawProjectPath.Text, "1", lstbxStation1Files)
+        LoadStationMotionPaths(cbS2, lblRawProjectPath.Text, "2", lstbxStation2Files)
+        LoadStationMotionPaths(cbS3, lblRawProjectPath.Text, "3", lstbxStation3Files)
+        LoadStationMotionPaths(cbS4, lblRawProjectPath.Text, "4", lstbxStation4Files)
+        LoadStationMotionPaths(cbS5, lblRawProjectPath.Text, "5", lstbxStation5Files)
+        LoadStationMotionPaths(cbS6, lblRawProjectPath.Text, "6", lstbxStation6Files)
     End Sub
 
-    Sub LoadStation1()
+    Sub LoadStationMotionPaths(ByRef CheckboxValue As CheckBox, ByVal RawProjectPath As String, ByVal StationNumber As String, ByRef ListboxStationFiles As ListBox)
 
         Dim stationLocation As String
 
-        If cbS1.Checked Then
+        'cbS1.Checked
+        If CheckboxValue.Checked Then
 
-            tabContStationLoading.TabPages.Item(0).Select()
-
-            ''find station 1
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 1\Motions\"
+            ''find station
+            '
+            stationLocation = RawProjectPath & "\PLC1\PLC\Machine\Station " & StationNumber & "\Motions\"
 
             ''record all uses of motion files
             For Each foundfile As String In My.Computer.FileSystem.GetFiles(
             stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
              "*.TCPoU")
 
-                lstbxStation1Files.Items.Add(foundfile)
+                ListboxStationFiles.Items.Add(foundfile)
             Next
-            '  MsgBox("station 1 List populated")
+            'nowt
         End If
     End Sub
 
-    Sub LoadStation2()
 
-        Dim stationLocation As String
 
-        If cbS2.Checked Then
 
-            tabContStationLoading.TabPages.Item(1).Select()
-
-            ''find station 2
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 2\Motions\"
-
-            ''record all uses of motion files
-            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
-            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
-             "*.TCPoU")
-
-                lstbxStation2Files.Items.Add(foundfile)
-            Next
-
-            'MsgBox("station 2 List populated")
-
-        End If
-
-
-
-    End Sub
-
-    Sub LoadStation3()
-
-        Dim stationLocation As String
-
-        If cbS3.Checked Then
-
-            tabContStationLoading.TabPages.Item(2).Select()
-
-            ''find station 3
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 3\Motions\"
-
-            ''record all uses of motion files
-            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
-            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
-             "*.TCPoU")
-
-                lstbxStation3Files.Items.Add(foundfile)
-            Next
-
-            ' MsgBox("station 3 List populated")
-
-        End If
-
-
-
-    End Sub
-
-    Sub LoadStation4()
-
-        Dim stationLocation As String
-
-        If cbS4.Checked Then
-
-            tabContStationLoading.TabPages.Item(3).Select()
-
-            ''find station 4
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 4\Motions\"
-
-            ''record all uses of motion files
-            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
-            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
-             "*.TCPoU")
-
-                lstbxStation4Files.Items.Add(foundfile)
-            Next
-
-            ' MsgBox("station 4 List populated")
-
-        End If
-
-
-
-    End Sub
-
-    Sub LoadStation5()
-
-        Dim stationLocation As String
-
-        tabContStationLoading.TabPages.Item(4).Select()
-
-        If cbS5.Checked Then
-
-            ''find station 5
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 5\Motions\"
-
-            ''record all uses of motion files
-            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
-            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
-             "*.TCPoU")
-
-                lstbxStation5Files.Items.Add(foundfile)
-            Next
-
-            '  MsgBox("station 5 List populated")
-
-        End If
-
-
-
-    End Sub
-
-    Sub LoadStation6()
-
-        Dim stationLocation As String
-
-        tabContStationLoading.TabPages.Item(5).Select()
-
-        If cbS6.Checked Then
-
-            ''find station 6
-            stationLocation = lblRawProjectPath.Text + "\PLC1\PLC\Machine\Station 6\Motions\"
-
-            ''record all uses of motion files
-            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
-            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
-             "*.TCPoU")
-
-                lstbxStation6Files.Items.Add(foundfile)
-            Next
-
-            ' MsgBox("station 6 List populated")
-
-        End If
-
-
-    End Sub
-
-    Sub PopulateListBox1()
-        If cbS1.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 0
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation1Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow1Data.DataSource = OpenFileToListBox(i, lstbxStation1Files)
-                ParseTextList(lstbxRow1Data)
-
-            Next
-        End If
-    End Sub
-
-    Sub PopulateListBox2()
-        If cbS2.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 1
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation2Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow2Data.DataSource = OpenFileToListBox(i, lstbxStation2Files)
-                ParseTextList(lstbxRow2Data)
-
-            Next
-        End If
-    End Sub
-
-    Sub PopulateListBox3()
-        If cbS3.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 2
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation3Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow3Data.DataSource = OpenFileToListBox(i, lstbxStation3Files)
-                ParseTextList(lstbxRow3Data)
-
-            Next
-        End If
-    End Sub
-
-    Sub PopulateListBox4()
-        If cbS4.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 3
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation4Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow4Data.DataSource = OpenFileToListBox(i, lstbxStation4Files)
-                ParseTextList(lstbxRow4Data)
-
-            Next
-        End If
-    End Sub
-
-    Sub PopulateListBox5()
-        If cbS5.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 4
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation5Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow5Data.DataSource = OpenFileToListBox(i, lstbxStation5Files)
-                ParseTextList(lstbxRow5Data)
-
-            Next
-        End If
-    End Sub
-
-    Sub PopulateListBox6()
-        If cbS6.Checked Then
-            Me.tabContStationLoading.SelectedIndex = 5
-
-            Dim NumListEntries As Integer
-            NumListEntries = lstbxStation6Files.Items.Count
-
-            For i = 0 To NumListEntries - 1
-
-                lstbxRow6Data.DataSource = OpenFileToListBox(i, lstbxStation6Files)
-                ParseTextList(lstbxRow6Data)
-
-            Next
-        End If
-    End Sub
 
     Function OpenFileToListBox(ByVal RowNum As Integer, ByRef stationListing As ListBox) As String()
 
@@ -542,7 +301,7 @@ Public Class frmMain
     End Function
 
 
-    Sub ParseTextList(ByRef RowData As ListBox)
+    Sub ParseTextList(ByRef RowData As ListBox, ByVal ElemsPerRow As Integer)
 
         '&lt;MotionRow&gt; 0
         '&lt;StationNumber&gt;1&lt;/StationNumber&gt; 1
@@ -593,70 +352,70 @@ Public Class frmMain
 
         '&lt;/Motion&gt; 20
         '&lt;/MotionRow&gt 21
+
+        Dim RowNumber As Integer = Conversion.Int(lblRowNumber.Text)
+        Dim StnNumber As Integer = Conversion.Int(lblStnNumber.Text)
+
+        'create location starter for array location
+        Dim ArryLocation As Integer
+        ArryLocation = (gNumberElementsPerRow * RowNumber) - gNumberElementsPerRow
+
+        Dim StationLocator As Integer
+        StationLocator = 10000 * StnNumber
+
+
+        'Const txtReturnRel As Integer = 13
+        'Const txtMotionNameRel As Integer = 16
+        'Const txtReturnedRel As Integer = 14
+        'Const txtAdvanceRel As Integer = 10
+        'Const txtAdvancedRel As Integer = 11
+
+        'Const txtReturnAbs As Integer = 3
+        'Const txtMotionNameAbs As Integer = 6
+        'Const txtReturnedAbs As Integer = 4
+        'Const txtAdvanceAbs As Integer = 0
+        'Const txtAdvancedAbs As Integer = 1
+
+        'move data to array to later write into new xml fille
+        ProcessArray2(ArryLocation + txtAdvanceAbs) = lblAdvanceDepthAbs.Text
+        ProcessArray2(ArryLocation + txtAdvancedAbs) = lblAdvanceCoilAbs.Text
+        ProcessArray2(ArryLocation + txtReturnAbs) = lblReturnCoilAbs.Text
+        ProcessArray2(ArryLocation + txtReturnedAbs) = lblReturnDepthAbs.Text
+        ProcessArray2(ArryLocation + txtMotionNameAbs) = lblMotionNameAbs.Text
+
+        ProcessArray2(ArryLocation + txtAdvanceRel) = lblAdvanceDepthSym.Text
+        ProcessArray2(ArryLocation + txtAdvancedRel) = lblAdvanceCoilSym.Text
+        ProcessArray2(ArryLocation + txtReturnRel) = lblReturnCoilSym.Text
+        ProcessArray2(ArryLocation + txtReturnedRel) = lblReturnDepthSym.Text
+        ProcessArray2(ArryLocation + txtMotionNameRel) = lblMotionNameSym.Text
+
+        For i = 0 To gNumberElementsPerRow
+            If i = txtReturnRel Or
+               i = txtMotionNameRel Or
+               i = txtReturnedRel Or
+               i = txtAdvanceRel Or
+               i = txtAdvancedRel Or
+               i = txtReturnAbs Or
+               i = txtMotionNameAbs Or
+               i = txtReturnedAbs Or
+               i = txtAdvanceAbs Or
+               i = txtAdvancedAbs Then
+                'nowt
+            Else
+
+                ' ProcessArray2(ArryLocation + i) = "NoValue"
+                ProcessArray2(ArryLocation + i) = i
+            End If
+
+        Next
+
+
+
+
     End Sub
 
 
-    Function ParseRow(ByVal InputRow As String, ByVal SearchString As String) As String
 
-        Dim startLocation As Integer
-
-        startLocation = InputRow.IndexOf(motionfooter_gt)
-
-        Dim anotherint As Integer
-
-        ''check if string contains 0, 1 or >1 headers, the xml tags <tag> <tag>
-        ''for a xml row to be checked, there must be 2 or more tags.
-        anotherint = UBound(Split(InputRow, SearchString))
-
-        If anotherint = 0 Then
-            '     MsgBox("no result")'error state
-            Return "Error: StrLen0"
-        End If
-
-        If anotherint = 1 Then
-            'MsgBox("Only found one") 'error state
-            Return "Error: StrLen1"
-        End If
-
-        If anotherint > 1 Then
-            'MsgBox("more than 1.." & anotherint) 'not error state
-        End If
-
-        ''assemble strings to parse against
-        Dim headerStart As String
-        headerStart = motionheader_lt & SearchString & motionfooter_gt
-
-        Dim footerStart As String
-        footerStart = motionheader_lt & "/" & SearchString & motionfooter_gt
-
-        Dim headerStartLocation As Integer
-        headerStartLocation = InputRow.IndexOf(headerStart)
-
-        Dim footerStartLocation As Integer
-        footerStartLocation = InputRow.IndexOf(footerStart)
-
-        Dim headerLength As Integer
-        headerLength = headerStart.Length
-
-        Dim footerLength As Integer
-        footerLength = footerStart.Length
-
-        ''snip footer first
-        Dim processString As String
-        processString = InputRow.Remove(footerStartLocation, footerLength)
-
-        ''snip header second
-        Dim processString2 As String
-        processString2 = processString.Remove(headerStartLocation, headerLength)
-
-        ''snip CR at the start
-        Dim processString3 As String
-        processString3 = processString2.Remove(0, 1)
-
-        Console.Write(vbCrLf)
-        Return processString3
-
-    End Function
 
 
 
@@ -686,7 +445,7 @@ Public Class frmMain
             'populate list box for data
             lstbxRow1Data.DataSource = OpenFileToListBox(lstbxStation1Files.SelectedIndex, lstbxStation1Files)
 
-            ParseTextList(lstbxRow1Data)
+            ParseTextList(lstbxRow1Data, gNumberElementsPerRow)
 
         End If
 
@@ -698,7 +457,7 @@ Public Class frmMain
             'populate list box for data
             lstbxRow2Data.DataSource = OpenFileToListBox(lstbxStation2Files.SelectedIndex, lstbxStation2Files)
 
-            ParseTextList(lstbxRow2Data)
+            ParseTextList(lstbxRow2Data, gNumberElementsPerRow)
 
         End If
     End Sub
@@ -709,7 +468,7 @@ Public Class frmMain
             'populate list box for data
             lstbxRow3Data.DataSource = OpenFileToListBox(lstbxStation3Files.SelectedIndex, lstbxStation3Files)
 
-            ParseTextList(lstbxRow3Data)
+            ParseTextList(lstbxRow3Data, gNumberElementsPerRow)
 
         End If
     End Sub
@@ -720,7 +479,7 @@ Public Class frmMain
             'populate list box for data
             lstbxRow4Data.DataSource = OpenFileToListBox(lstbxStation4Files.SelectedIndex, lstbxStation4Files)
 
-            ParseTextList(lstbxRow4Data)
+            ParseTextList(lstbxRow4Data, gNumberElementsPerRow)
 
         End If
     End Sub
@@ -731,7 +490,7 @@ Public Class frmMain
             'populate list box for data
             lstbxRow5Data.DataSource = OpenFileToListBox(lstbxStation5Files.SelectedIndex, lstbxStation5Files)
 
-            ParseTextList(lstbxRow4Data)
+            ParseTextList(lstbxRow4Data, gNumberElementsPerRow)
 
         End If
     End Sub
@@ -742,15 +501,17 @@ Public Class frmMain
             'populate list box for data
             lstbxRow6Data.DataSource = OpenFileToListBox(lstbxStation6Files.SelectedIndex, lstbxStation6Files)
 
-            ParseTextList(lstbxRow6Data)
+            ParseTextList(lstbxRow6Data, gNumberElementsPerRow)
 
         End If
     End Sub
 
-    Private Sub btnCloseBtn_Click(sender As Object, e As EventArgs) Handles btnCloseProject.Click
+    Private Sub BtnCloseBtn_Click(sender As Object, e As EventArgs) Handles btnCloseProject.Click
         lblRawProjectPath.Text = "No Raw Project Path...."
-        ClearDownOnStart()
 
+        gNumberElementsPerRow = 0
+        lblgNumberElementsPerRow.Text = "gNumberElementsPerRow=:" & gNumberElementsPerRow
+        ClearDownOnStart()
 
 
     End Sub
@@ -813,7 +574,28 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub lblContsPathName_Click(sender As Object, e As EventArgs) Handles lblMotionTextsPathName.Click
+    Private Sub LoadFormProg(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        ''select load tab
+        tabControlTasks.TabPages.Item(0).Select()
+
 
     End Sub
+
+    Sub PopulateListBox(ByRef checkboxValue As CheckBox, ByRef listbxFiles As ListBox, ByRef listbxRowData As ListBox)
+        'populate list box of row data
+        If checkboxValue.Checked Then
+
+            Dim NumListEntries As Integer
+            NumListEntries = listbxFiles.Items.Count
+
+            For i = 0 To NumListEntries - 1
+
+                listbxRowData.DataSource = OpenFileToListBox(i, listbxFiles)
+                ParseTextList(listbxRowData, gNumberElementsPerRow)
+
+            Next
+        End If
+    End Sub
+
 End Class
