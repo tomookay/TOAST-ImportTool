@@ -79,7 +79,7 @@
         lblPLCdataFilePath.Text = MotionStringsFileLocation
         lstBoxImportData.DataSource = ProcessArray1
 
-
+        lblMotionFilesPath.Text = "loaded"
         lstBoxPLCData.DataSource = ProcessArray2
 
 
@@ -363,6 +363,8 @@
         Dim StationLocator As Integer
         StationLocator = 10000 * StnNumber
 
+        ArryLocation = ArryLocation + StationLocator
+
 
         'Const txtReturnRel As Integer = 13
         'Const txtMotionNameRel As Integer = 16
@@ -404,7 +406,7 @@
             Else
 
                 ' ProcessArray2(ArryLocation + i) = "NoValue"
-                ProcessArray2(ArryLocation + i) = i
+                ProcessArray2(ArryLocation + i) = i + ArryLocation
             End If
 
         Next
@@ -490,7 +492,7 @@
             'populate list box for data
             lstbxRow5Data.DataSource = OpenFileToListBox(lstbxStation5Files.SelectedIndex, lstbxStation5Files)
 
-            ParseTextList(lstbxRow4Data, gNumberElementsPerRow)
+            ParseTextList(lstbxRow5Data, gNumberElementsPerRow)
 
         End If
     End Sub
