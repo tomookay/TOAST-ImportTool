@@ -79,6 +79,18 @@
         lblPLCdataFilePath.Text = MotionStringsFileLocation
         lstBoxImportData.DataSource = ProcessArray1
 
+
+
+        ''update null values
+        For i = 0 To ProcessArray2.Length - 1
+            If ProcessArray2(i) = "" Then
+                ''null value, assign dummy string
+                ProcessArray2(i) = "NoDetectedValue"
+            End If
+
+        Next
+
+
         lblMotionFilesPath.Text = "loaded"
         lstBoxPLCData.DataSource = ProcessArray2
 
@@ -599,5 +611,20 @@
             Next
         End If
     End Sub
+
+    Private Sub lstBoxImportData_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstBoxImportData.SelectedIndexChanged
+        Dim arrySelection As Integer
+
+        arrySelection = Conversion.Int(lstBoxImportData.SelectedItem.ToString)
+
+
+        lstBoxPLCData.SelectedIndex = arrySelection
+
+        lblImportBoxSelectionNum.Text = arrySelection
+
+        lblPLCDataNumSelected.Text = lstBoxPLCData.SelectedIndex
+
+    End Sub
+
 
 End Class

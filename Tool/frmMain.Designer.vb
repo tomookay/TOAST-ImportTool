@@ -83,6 +83,8 @@ Partial Class frmMain
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
+        Me.lblImportBoxSelectionNum = New System.Windows.Forms.Label()
+        Me.lblPLCDataNumSelected = New System.Windows.Forms.Label()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -694,6 +696,8 @@ Partial Class frmMain
         '
         'tabViewData
         '
+        Me.tabViewData.Controls.Add(Me.lblPLCDataNumSelected)
+        Me.tabViewData.Controls.Add(Me.lblImportBoxSelectionNum)
         Me.tabViewData.Controls.Add(Me.lblMotionFilesPath)
         Me.tabViewData.Controls.Add(Me.lblPLCdataFilePath)
         Me.tabViewData.Controls.Add(Me.lstBoxPLCData)
@@ -727,16 +731,20 @@ Partial Class frmMain
         'lstBoxPLCData
         '
         Me.lstBoxPLCData.FormattingEnabled = True
+        Me.lstBoxPLCData.IntegralHeight = False
         Me.lstBoxPLCData.Location = New System.Drawing.Point(263, 28)
         Me.lstBoxPLCData.Name = "lstBoxPLCData"
+        Me.lstBoxPLCData.ScrollAlwaysVisible = True
         Me.lstBoxPLCData.Size = New System.Drawing.Size(247, 368)
         Me.lstBoxPLCData.TabIndex = 1
         '
         'lstBoxImportData
         '
         Me.lstBoxImportData.FormattingEnabled = True
+        Me.lstBoxImportData.IntegralHeight = False
         Me.lstBoxImportData.Location = New System.Drawing.Point(24, 28)
         Me.lstBoxImportData.Name = "lstBoxImportData"
+        Me.lstBoxImportData.ScrollAlwaysVisible = True
         Me.lstBoxImportData.Size = New System.Drawing.Size(224, 368)
         Me.lstBoxImportData.TabIndex = 0
         '
@@ -748,6 +756,24 @@ Partial Class frmMain
         Me.tabExportData.TabIndex = 2
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
+        '
+        'lblImportBoxSelectionNum
+        '
+        Me.lblImportBoxSelectionNum.AutoSize = True
+        Me.lblImportBoxSelectionNum.Location = New System.Drawing.Point(21, 399)
+        Me.lblImportBoxSelectionNum.Name = "lblImportBoxSelectionNum"
+        Me.lblImportBoxSelectionNum.Size = New System.Drawing.Size(13, 13)
+        Me.lblImportBoxSelectionNum.TabIndex = 4
+        Me.lblImportBoxSelectionNum.Text = "0"
+        '
+        'lblPLCDataNumSelected
+        '
+        Me.lblPLCDataNumSelected.AutoSize = True
+        Me.lblPLCDataNumSelected.Location = New System.Drawing.Point(260, 399)
+        Me.lblPLCDataNumSelected.Name = "lblPLCDataNumSelected"
+        Me.lblPLCDataNumSelected.Size = New System.Drawing.Size(13, 13)
+        Me.lblPLCDataNumSelected.TabIndex = 5
+        Me.lblPLCDataNumSelected.Text = "0"
         '
         'frmMain
         '
@@ -844,4 +870,6 @@ Partial Class frmMain
     Friend WithEvents tabControlTasks As TabControl
     Friend WithEvents lblMotionFilesPath As Label
     Friend WithEvents lblPLCdataFilePath As Label
+    Friend WithEvents lblImportBoxSelectionNum As Label
+    Friend WithEvents lblPLCDataNumSelected As Label
 End Class
