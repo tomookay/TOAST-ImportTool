@@ -77,7 +77,7 @@ Public Class frmMain
         PopulateListBoxMotions()
 
         'load data into working list array
-        PopulateWorkingList()
+        ' PopulateWorkingList()
 
 
 
@@ -673,6 +673,14 @@ Public Class frmMain
         Dim textdefaultloc As Integer
 
 
+        Dim ProcString3 As String
+
+        Dim removallen As Integer
+
+        Dim indexnumfromPLC As String
+
+
+
 
 
         Dim UpdateRowValue
@@ -715,20 +723,69 @@ Public Class frmMain
                     ProcStringIndex = Conversion.Int(procString.Remove(ContentFooterDist, ContentFooter.Length + 1))
                 End If
 
+                '"10000""</v>"
+                'procString
+                'ContentFooterDist = procString.IndexOf(ContentFooter)
+
+                'indexnumfromPLC = procString.Remove(ContentFooterDist)
+                'procString
+
+
+                'lstBoxImportData.SelectedIndex = ProcStringIndex
+
+                ' lstBoxPLCData.SelectedIndex = locationListBox
+
+
+                'Me.Update()
+                'Me.Refresh()
 
 
 
+                ' TextToUse = lstBoxPLCData.SelectedIndex
 
-                lstBoxPLCData.SelectedIndex = locationListBox
-
-
-                Me.Update()
+                ' Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcessArray2(ProcStringIndex))
 
 
+                ''string insersion
+                ProcString3 = splitStringResult(i + 1)
 
-                TextToUse = lstBoxPLCData.SelectedIndex
+                ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
+                ''converts to
+                ''vbLf & "              <v n=""TextDefault"">""Test Insert""</v>"
 
-                Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcessArray2(ProcStringIndex))
+                ''find the location and length of Text default header
+                textdefaultloc = ProcString3.IndexOf(TextDefaultstr)
+
+
+                'find the footer of "<v>"
+                ContentFooterDist = procString.IndexOf(ContentFooter) - 1
+
+                removallen = ContentFooterDist - textdefaultloc
+
+                'insert at row specified
+                procString = procString.Substring(ContentFooterDist)
+                'ProcStringIndex = Conversion.Int(procString)
+
+
+                'find the footer of "<v>"
+                ContentFooterDist = ProcString3.IndexOf(ContentFooter) - 1
+
+
+                '  ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen, removallen)
+                ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen + 3)
+
+                'ProcString3 = ProcString3 & "Test Insert" & """" & ContentFooter
+
+                ProcString3 = ProcString3 & ProcessArray2(ProcStringIndex) & """" & ContentFooter
+
+                splitStringResult(i + 1) = ProcString3
+
+                Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcString3)
+
+
+                'splitStringResult(i + 1) = ProcString3
+
+
 
 
             End If
