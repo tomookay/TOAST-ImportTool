@@ -1,4 +1,6 @@
-﻿Public Class frmMain
+﻿Imports System.IO
+
+Public Class frmMain
     Dim tc3progLocationFiler As String
     Dim RawProjectPath As String
 
@@ -37,6 +39,8 @@
 
     Dim MotionStringsFileLocation As String
 
+    Dim splitStringResult() As String 'read in language file
+
     Private Sub BtnOpenProject_Click(sender As Object, e As EventArgs) Handles btnOpenProject.Click
         ''set logic for later use
         IsLoadingData = True
@@ -72,8 +76,25 @@
         'load contents of .TcPoU file into parser
         PopulateListBoxMotions()
 
+        'load data into working list array
+        PopulateWorkingList()
+
+
+
         IsLoadingData = False
 
+
+        My.Computer.FileSystem.OpenTextFileWriter(MotionStringsFileLocation, True)
+
+
+
+
+
+
+
+    End Sub
+
+    Sub PopulateWorkingList()
         tabControlTasks.TabPages.Item(1).Select()
 
         lblPLCdataFilePath.Text = MotionStringsFileLocation
@@ -93,7 +114,6 @@
 
         lblMotionFilesPath.Text = "loaded"
         lstBoxPLCData.DataSource = ProcessArray2
-
 
 
 
@@ -154,7 +174,7 @@
         'load file to memory
         Dim fileContents As String
         fileContents = My.Computer.FileSystem.ReadAllText(lblMotionTextsPathName.Text)
-        Dim splitStringResult() As String
+
         Dim splittingSeperators() As String = {vbCr}
         splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
@@ -626,5 +646,104 @@
 
     End Sub
 
+    Private Sub btnUpdateArray_Click(sender As Object, e As EventArgs) Handles btnUpdateArray.Click
 
+        Dim procString As String
+        Dim ProcStringIndex As Integer
+        Dim textIDlocation As Integer
+
+        Dim TextIDStrSearch As String = "TextID"
+
+        Dim TextIDToContentDist As Integer = 9
+
+        Dim ContentFooter As String = "</v>"
+        Dim ContentFooterDist As Integer
+
+        Dim locationListBox As Integer
+
+        Dim arrySelection As Integer
+        Dim TextToUse As String
+
+        Dim ProcString2 As String
+
+        Dim TextDefaultstr As String = "TextDefault"
+        Dim textdefaultlen As Integer
+        textdefaultlen = TextDefaultstr.Length
+
+        Dim textdefaultloc As Integer
+
+
+
+
+        Dim UpdateRowValue
+
+        For i = 0 To splitStringResult.Length - 1
+
+            If splitStringResult(i).Contains(TextIDStrSearch) Then
+                UpdateRowValue = i
+
+                ' Console.WriteLine("found TextID header")
+                procString = splitStringResult(i)
+                textIDlocation = procString.IndexOf(TextIDStrSearch)
+
+                ProcString2 = splitStringResult(i + 1)
+
+                ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
+
+                ''find the location and length of Text default header
+                textdefaultloc = ProcString2.IndexOf(TextDefaultstr)
+
+                ProcString2 = ProcString2.Remove(0, textdefaultloc + textdefaultlen + 3)
+
+
+
+                'find and remove the footer of "<v>"
+                ContentFooterDist = ProcString2.IndexOf(ContentFooter) - 1
+                ProcString2 = ProcString2.Remove(ContentFooterDist, ContentFooter.Length + 1)
+
+
+
+                procString = splitStringResult(i)
+                textIDlocation = procString.IndexOf(TextIDStrSearch)
+
+                'distance between "TextID" and start of content = 9
+                procString = procString.Remove(0, textIDlocation + TextIDToContentDist)
+
+                'find and remove the footer of "<v>"
+                ContentFooterDist = procString.IndexOf(ContentFooter) - 1
+                If ContentFooterDist > 1 Then
+                    ProcStringIndex = Conversion.Int(procString.Remove(ContentFooterDist, ContentFooter.Length + 1))
+                End If
+
+
+
+
+
+                lstBoxPLCData.SelectedIndex = locationListBox
+
+
+                Me.Update()
+
+
+
+                TextToUse = lstBoxPLCData.SelectedIndex
+
+                Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcessArray2(ProcStringIndex))
+
+
+            End If
+
+
+        Next
+
+
+    End Sub
+
+    Private Sub lstBoxPLCData_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstBoxPLCData.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub lstbxRow1Data_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstbxRow1Data.SelectedIndexChanged
+
+    End Sub
 End Class

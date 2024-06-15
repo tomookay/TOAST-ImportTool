@@ -78,13 +78,14 @@ Partial Class frmMain
         Me.tabControlTasks = New System.Windows.Forms.TabControl()
         Me.tabImport = New System.Windows.Forms.TabPage()
         Me.tabViewData = New System.Windows.Forms.TabPage()
+        Me.btnUpdateArray = New System.Windows.Forms.Button()
+        Me.lblPLCDataNumSelected = New System.Windows.Forms.Label()
+        Me.lblImportBoxSelectionNum = New System.Windows.Forms.Label()
         Me.lblMotionFilesPath = New System.Windows.Forms.Label()
         Me.lblPLCdataFilePath = New System.Windows.Forms.Label()
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
-        Me.lblImportBoxSelectionNum = New System.Windows.Forms.Label()
-        Me.lblPLCDataNumSelected = New System.Windows.Forms.Label()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -696,6 +697,7 @@ Partial Class frmMain
         '
         'tabViewData
         '
+        Me.tabViewData.Controls.Add(Me.btnUpdateArray)
         Me.tabViewData.Controls.Add(Me.lblPLCDataNumSelected)
         Me.tabViewData.Controls.Add(Me.lblImportBoxSelectionNum)
         Me.tabViewData.Controls.Add(Me.lblMotionFilesPath)
@@ -709,6 +711,33 @@ Partial Class frmMain
         Me.tabViewData.TabIndex = 1
         Me.tabViewData.Text = "View Data"
         Me.tabViewData.UseVisualStyleBackColor = True
+        '
+        'btnUpdateArray
+        '
+        Me.btnUpdateArray.Location = New System.Drawing.Point(561, 28)
+        Me.btnUpdateArray.Name = "btnUpdateArray"
+        Me.btnUpdateArray.Size = New System.Drawing.Size(75, 23)
+        Me.btnUpdateArray.TabIndex = 6
+        Me.btnUpdateArray.Text = "Update"
+        Me.btnUpdateArray.UseVisualStyleBackColor = True
+        '
+        'lblPLCDataNumSelected
+        '
+        Me.lblPLCDataNumSelected.AutoSize = True
+        Me.lblPLCDataNumSelected.Location = New System.Drawing.Point(260, 399)
+        Me.lblPLCDataNumSelected.Name = "lblPLCDataNumSelected"
+        Me.lblPLCDataNumSelected.Size = New System.Drawing.Size(13, 13)
+        Me.lblPLCDataNumSelected.TabIndex = 5
+        Me.lblPLCDataNumSelected.Text = "0"
+        '
+        'lblImportBoxSelectionNum
+        '
+        Me.lblImportBoxSelectionNum.AutoSize = True
+        Me.lblImportBoxSelectionNum.Location = New System.Drawing.Point(21, 399)
+        Me.lblImportBoxSelectionNum.Name = "lblImportBoxSelectionNum"
+        Me.lblImportBoxSelectionNum.Size = New System.Drawing.Size(13, 13)
+        Me.lblImportBoxSelectionNum.TabIndex = 4
+        Me.lblImportBoxSelectionNum.Text = "0"
         '
         'lblMotionFilesPath
         '
@@ -756,24 +785,6 @@ Partial Class frmMain
         Me.tabExportData.TabIndex = 2
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
-        '
-        'lblImportBoxSelectionNum
-        '
-        Me.lblImportBoxSelectionNum.AutoSize = True
-        Me.lblImportBoxSelectionNum.Location = New System.Drawing.Point(21, 399)
-        Me.lblImportBoxSelectionNum.Name = "lblImportBoxSelectionNum"
-        Me.lblImportBoxSelectionNum.Size = New System.Drawing.Size(13, 13)
-        Me.lblImportBoxSelectionNum.TabIndex = 4
-        Me.lblImportBoxSelectionNum.Text = "0"
-        '
-        'lblPLCDataNumSelected
-        '
-        Me.lblPLCDataNumSelected.AutoSize = True
-        Me.lblPLCDataNumSelected.Location = New System.Drawing.Point(260, 399)
-        Me.lblPLCDataNumSelected.Name = "lblPLCDataNumSelected"
-        Me.lblPLCDataNumSelected.Size = New System.Drawing.Size(13, 13)
-        Me.lblPLCDataNumSelected.TabIndex = 5
-        Me.lblPLCDataNumSelected.Text = "0"
         '
         'frmMain
         '
@@ -872,4 +883,5 @@ Partial Class frmMain
     Friend WithEvents lblPLCdataFilePath As Label
     Friend WithEvents lblImportBoxSelectionNum As Label
     Friend WithEvents lblPLCDataNumSelected As Label
+    Friend WithEvents btnUpdateArray As Button
 End Class
