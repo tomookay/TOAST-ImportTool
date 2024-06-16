@@ -86,6 +86,7 @@ Partial Class frmMain
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -99,6 +100,7 @@ Partial Class frmMain
         Me.tabControlTasks.SuspendLayout()
         Me.tabImport.SuspendLayout()
         Me.tabViewData.SuspendLayout()
+        Me.tabExportData.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnOpenProject
@@ -697,7 +699,6 @@ Partial Class frmMain
         '
         'tabViewData
         '
-        Me.tabViewData.Controls.Add(Me.btnUpdateArray)
         Me.tabViewData.Controls.Add(Me.lblPLCDataNumSelected)
         Me.tabViewData.Controls.Add(Me.lblImportBoxSelectionNum)
         Me.tabViewData.Controls.Add(Me.lblMotionFilesPath)
@@ -714,7 +715,7 @@ Partial Class frmMain
         '
         'btnUpdateArray
         '
-        Me.btnUpdateArray.Location = New System.Drawing.Point(561, 28)
+        Me.btnUpdateArray.Location = New System.Drawing.Point(43, 24)
         Me.btnUpdateArray.Name = "btnUpdateArray"
         Me.btnUpdateArray.Size = New System.Drawing.Size(75, 23)
         Me.btnUpdateArray.TabIndex = 6
@@ -779,12 +780,22 @@ Partial Class frmMain
         '
         'tabExportData
         '
+        Me.tabExportData.Controls.Add(Me.WebBrowser1)
+        Me.tabExportData.Controls.Add(Me.btnUpdateArray)
         Me.tabExportData.Location = New System.Drawing.Point(4, 22)
         Me.tabExportData.Name = "tabExportData"
         Me.tabExportData.Size = New System.Drawing.Size(720, 421)
         Me.tabExportData.TabIndex = 2
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
+        '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Location = New System.Drawing.Point(63, 62)
+        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.Size = New System.Drawing.Size(507, 321)
+        Me.WebBrowser1.TabIndex = 7
         '
         'frmMain
         '
@@ -815,6 +826,7 @@ Partial Class frmMain
         Me.tabImport.ResumeLayout(False)
         Me.tabViewData.ResumeLayout(False)
         Me.tabViewData.PerformLayout()
+        Me.tabExportData.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -884,4 +896,5 @@ Partial Class frmMain
     Friend WithEvents lblImportBoxSelectionNum As Label
     Friend WithEvents lblPLCDataNumSelected As Label
     Friend WithEvents btnUpdateArray As Button
+    Friend WithEvents WebBrowser1 As WebBrowser
 End Class

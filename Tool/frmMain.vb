@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Net
+Imports System.Text
 
 Public Class frmMain
     Dim tc3progLocationFiler As String
@@ -39,9 +41,15 @@ Public Class frmMain
 
     Dim MotionStringsFileLocation As String
 
-    Dim splitStringResult() As String 'read in language file
+    Dim xmlStrMotionFile() As String 'read in language file
+
+    Dim StartTime As Integer
+    Dim EndTime As Integer
 
     Private Sub BtnOpenProject_Click(sender As Object, e As EventArgs) Handles btnOpenProject.Click
+
+        StartTime = My.Computer.Clock.TickCount
+
         ''set logic for later use
         IsLoadingData = True
 
@@ -77,20 +85,14 @@ Public Class frmMain
         PopulateListBoxMotions()
 
         'load data into working list array
-        ' PopulateWorkingList()
+        PopulateWorkingList()
 
 
 
         IsLoadingData = False
+        EndTime = My.Computer.Clock.TickCount
 
-
-        My.Computer.FileSystem.OpenTextFileWriter(MotionStringsFileLocation, True)
-
-
-
-
-
-
+        MsgBox(EndTime - StartTime & "ms", MsgBoxStyle.Information, "Time Taken...")
 
     End Sub
 
@@ -176,7 +178,7 @@ Public Class frmMain
         fileContents = My.Computer.FileSystem.ReadAllText(lblMotionTextsPathName.Text)
 
         Dim splittingSeperators() As String = {vbCr}
-        splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
+        xmlStrMotionFile = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
         Dim procString As String
         Dim textIDlocation As Integer
@@ -192,14 +194,14 @@ Public Class frmMain
         'init pointer to array
         ProcessArry1Num = 0
 
-        ReDim ProcessArray1(splitStringResult.Length)
-        ReDim ProcessArray2(splitStringResult.Length)
+        ReDim ProcessArray1(xmlStrMotionFile.Length)
+        ReDim ProcessArray2(xmlStrMotionFile.Length)
 
-        For i = 0 To splitStringResult.Length - 1
+        For i = 0 To xmlStrMotionFile.Length - 1
             'check if text matches textid header
-            If splitStringResult(i).Contains(TextIDStrSearch) Then
+            If xmlStrMotionFile(i).Contains(TextIDStrSearch) Then
                 ' Console.WriteLine("found TextID header")
-                procString = splitStringResult(i)
+                procString = xmlStrMotionFile(i)
                 textIDlocation = procString.IndexOf(TextIDStrSearch)
 
                 'distance between "TextID" and start of content = 9
@@ -648,6 +650,7 @@ Public Class frmMain
 
     Private Sub btnUpdateArray_Click(sender As Object, e As EventArgs) Handles btnUpdateArray.Click
 
+
         Dim procString As String
         Dim ProcStringIndex As Integer
         Dim textIDlocation As Integer
@@ -659,12 +662,6 @@ Public Class frmMain
         Dim ContentFooter As String = "</v>"
         Dim ContentFooterDist As Integer
 
-        Dim locationListBox As Integer
-
-        Dim arrySelection As Integer
-        Dim TextToUse As String
-
-        Dim ProcString2 As String
 
         Dim TextDefaultstr As String = "TextDefault"
         Dim textdefaultlen As Integer
@@ -675,79 +672,28 @@ Public Class frmMain
 
         Dim ProcString3 As String
 
-        Dim removallen As Integer
-
-        Dim indexnumfromPLC As String
+        StartTime = My.Computer.Clock.TickCount
 
 
+        For i = 0 To xmlStrMotionFile.Length - 1
 
+            If xmlStrMotionFile(i).Contains(TextIDStrSearch) Then
 
-
-        Dim UpdateRowValue
-
-        For i = 0 To splitStringResult.Length - 1
-
-            If splitStringResult(i).Contains(TextIDStrSearch) Then
-                UpdateRowValue = i
-
-                ' Console.WriteLine("found TextID header")
-                procString = splitStringResult(i)
-                textIDlocation = procString.IndexOf(TextIDStrSearch)
-
-                ProcString2 = splitStringResult(i + 1)
-
-                ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
-
-                ''find the location and length of Text default header
-                textdefaultloc = ProcString2.IndexOf(TextDefaultstr)
-
-                ProcString2 = ProcString2.Remove(0, textdefaultloc + textdefaultlen + 3)
-
-
-
-                'find and remove the footer of "<v>"
-                ContentFooterDist = ProcString2.IndexOf(ContentFooter) - 1
-                ProcString2 = ProcString2.Remove(ContentFooterDist, ContentFooter.Length + 1)
-
-
-
-                procString = splitStringResult(i)
+                procString = xmlStrMotionFile(i)
                 textIDlocation = procString.IndexOf(TextIDStrSearch)
 
                 'distance between "TextID" and start of content = 9
                 procString = procString.Remove(0, textIDlocation + TextIDToContentDist)
 
-                'find and remove the footer of "<v>"
+                'find and remove the footer of "</v>"
                 ContentFooterDist = procString.IndexOf(ContentFooter) - 1
                 If ContentFooterDist > 1 Then
                     ProcStringIndex = Conversion.Int(procString.Remove(ContentFooterDist, ContentFooter.Length + 1))
                 End If
 
-                '"10000""</v>"
-                'procString
-                'ContentFooterDist = procString.IndexOf(ContentFooter)
-
-                'indexnumfromPLC = procString.Remove(ContentFooterDist)
-                'procString
-
-
-                'lstBoxImportData.SelectedIndex = ProcStringIndex
-
-                ' lstBoxPLCData.SelectedIndex = locationListBox
-
-
-                'Me.Update()
-                'Me.Refresh()
-
-
-
-                ' TextToUse = lstBoxPLCData.SelectedIndex
-
-                ' Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcessArray2(ProcStringIndex))
-
 
                 ''string insersion
-                ProcString3 = splitStringResult(i + 1)
+                ProcString3 = xmlStrMotionFile(i + 1)
 
                 ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
                 ''converts to
@@ -760,47 +706,60 @@ Public Class frmMain
                 'find the footer of "<v>"
                 ContentFooterDist = procString.IndexOf(ContentFooter) - 1
 
-                removallen = ContentFooterDist - textdefaultloc
-
                 'insert at row specified
                 procString = procString.Substring(ContentFooterDist)
                 'ProcStringIndex = Conversion.Int(procString)
 
 
-                'find the footer of "<v>"
-                ContentFooterDist = ProcString3.IndexOf(ContentFooter) - 1
-
-
-                '  ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen, removallen)
                 ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen + 3)
 
-                'ProcString3 = ProcString3 & "Test Insert" & """" & ContentFooter
-
+                'reassemle XML row using snipped header, insert the next and add the footer of </v>
                 ProcString3 = ProcString3 & ProcessArray2(ProcStringIndex) & """" & ContentFooter
 
-                splitStringResult(i + 1) = ProcString3
+                xmlStrMotionFile(i + 1) = ProcString3
 
-                Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcString3)
+                ' Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcString3)
 
-
-                'splitStringResult(i + 1) = ProcString3
 
 
 
 
             End If
 
-
+            'Console.WriteLine(xmlStrMotionFile(i))
         Next
 
 
+
+        EndTime = My.Computer.Clock.TickCount
+
+        MsgBox(EndTime - StartTime & "ms", MsgBoxStyle.Information, "Time Taken...")
+
+
+
     End Sub
 
-    Private Sub lstBoxPLCData_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstBoxPLCData.SelectedIndexChanged
+    Private Sub tabViewData_Click(sender As Object, e As EventArgs) Handles tabViewData.Click
 
     End Sub
 
-    Private Sub lstbxRow1Data_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstbxRow1Data.SelectedIndexChanged
+    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs)
+
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Chart1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub BindingNavigator1_RefreshItems(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 End Class
