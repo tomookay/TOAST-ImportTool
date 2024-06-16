@@ -28,17 +28,17 @@ Public Class frmMain
 
 
     ''Location of elements in array
-    Const txtReturnRel As Integer = 13
-    Const txtMotionNameRel As Integer = 16
-    Const txtReturnedRel As Integer = 14
-    Const txtAdvanceRel As Integer = 10
-    Const txtAdvancedRel As Integer = 11
+    Const txtReturnRel As Integer = 3
+    Const txtMotionNameRel As Integer = 6
+    Const txtReturnedRel As Integer = 4
+    Const txtAdvanceRel As Integer = 0
+    Const txtAdvancedRel As Integer = 1
 
-    Const txtReturnAbs As Integer = 3
-    Const txtMotionNameAbs As Integer = 6
-    Const txtReturnedAbs As Integer = 4
-    Const txtAdvanceAbs As Integer = 0
-    Const txtAdvancedAbs As Integer = 1
+    Const txtReturnAbs As Integer = 13
+    Const txtMotionNameAbs As Integer = 16
+    Const txtReturnedAbs As Integer = 14
+    Const txtAdvanceAbs As Integer = 10
+    Const txtAdvancedAbs As Integer = 11
 
     Dim MotionStringsFileLocation As String
 
@@ -805,8 +805,9 @@ Public Class frmMain
 
 
 
-                'file.NewLine = vbNull
-                file.Write(xmlStrMotionFile(i))
+                file.NewLine = vbCrLf
+                file.WriteLine(xmlStrMotionFile(i))
+
 
 
 
