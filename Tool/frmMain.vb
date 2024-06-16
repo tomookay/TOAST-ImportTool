@@ -4,6 +4,7 @@ Imports System.Text
 
 Public Class frmMain
     Dim tc3progLocationFiler As String
+    Dim tc3xmlfilefilter As String
     Dim RawProjectPath As String
 
     Dim RawProjectPathLastSlash As Integer
@@ -41,7 +42,7 @@ Public Class frmMain
 
     Dim MotionStringsFileLocation As String
 
-    Dim xmlStrMotionFile() As String 'read in language file
+    Dim xmlStrMotionFile(1) As String 'read in language file
 
     Dim StartTime As Integer
     Dim EndTime As Integer
@@ -674,62 +675,71 @@ Public Class frmMain
 
         StartTime = My.Computer.Clock.TickCount
 
+        ''check if length is valid for a loaded file
+        If xmlStrMotionFile.Length > 100 Then
 
-        For i = 0 To xmlStrMotionFile.Length - 1
+            For i = 0 To xmlStrMotionFile.Length - 1
 
-            If xmlStrMotionFile(i).Contains(TextIDStrSearch) Then
+                If xmlStrMotionFile(i).Contains(TextIDStrSearch) Then
 
-                procString = xmlStrMotionFile(i)
-                textIDlocation = procString.IndexOf(TextIDStrSearch)
+                    procString = xmlStrMotionFile(i)
+                    textIDlocation = procString.IndexOf(TextIDStrSearch)
 
-                'distance between "TextID" and start of content = 9
-                procString = procString.Remove(0, textIDlocation + TextIDToContentDist)
+                    'distance between "TextID" and start of content = 9
+                    procString = procString.Remove(0, textIDlocation + TextIDToContentDist)
 
-                'find and remove the footer of "</v>"
-                ContentFooterDist = procString.IndexOf(ContentFooter) - 1
-                If ContentFooterDist > 1 Then
-                    ProcStringIndex = Conversion.Int(procString.Remove(ContentFooterDist, ContentFooter.Length + 1))
+                    'find and remove the footer of "</v>"
+                    ContentFooterDist = procString.IndexOf(ContentFooter) - 1
+                    If ContentFooterDist > 1 Then
+                        ProcStringIndex = Conversion.Int(procString.Remove(ContentFooterDist, ContentFooter.Length + 1))
+                    End If
+
+
+                    ''string insersion
+                    ProcString3 = xmlStrMotionFile(i + 1)
+
+                    ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
+                    ''converts to
+                    ''vbLf & "              <v n=""TextDefault"">""Test Insert""</v>"
+
+                    ''find the location and length of Text default header
+                    textdefaultloc = ProcString3.IndexOf(TextDefaultstr)
+
+
+                    'find the footer of "<v>"
+                    ContentFooterDist = procString.IndexOf(ContentFooter) - 1
+
+                    'insert at row specified
+                    procString = procString.Substring(ContentFooterDist)
+                    'ProcStringIndex = Conversion.Int(procString)
+
+
+                    ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen + 3)
+
+                    'reassemle XML row using snipped header, insert the next and add the footer of </v>
+                    ProcString3 = ProcString3 & ProcessArray2(ProcStringIndex) & """" & ContentFooter
+
+                    xmlStrMotionFile(i + 1) = ProcString3
+
+                    ' Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcString3)
+
+
+
+
+
                 End If
 
+                'Console.WriteLine(xmlStrMotionFile(i))
 
-                ''string insersion
-                ProcString3 = xmlStrMotionFile(i + 1)
+                ' If xmlStrMotionFile(i).Contains(vbCr) Then
+                ' xmlStrMotionFile(i) = xmlStrMotionFile(i).Substring(0, xmlStrMotionFile(i).Length - 2)
+                'End If'
 
-                ''vbLf & "              <v n=""TextDefault"">""To Pick Pounce""</v>"
-                ''converts to
-                ''vbLf & "              <v n=""TextDefault"">""Test Insert""</v>"
+            Next
 
-                ''find the location and length of Text default header
-                textdefaultloc = ProcString3.IndexOf(TextDefaultstr)
-
-
-                'find the footer of "<v>"
-                ContentFooterDist = procString.IndexOf(ContentFooter) - 1
-
-                'insert at row specified
-                procString = procString.Substring(ContentFooterDist)
-                'ProcStringIndex = Conversion.Int(procString)
-
-
-                ProcString3 = ProcString3.Remove(textdefaultloc + textdefaultlen + 3)
-
-                'reassemle XML row using snipped header, insert the next and add the footer of </v>
-                ProcString3 = ProcString3 & ProcessArray2(ProcStringIndex) & """" & ContentFooter
-
-                xmlStrMotionFile(i + 1) = ProcString3
-
-                ' Console.WriteLine("TextID:= " & ProcString2 & " TextToUse:= " & ProcString3)
-
-
-
-
-
-            End If
-
-            'Console.WriteLine(xmlStrMotionFile(i))
-        Next
-
-
+        Else
+            MsgBox("No Motion File Detected...", MsgBoxStyle.Information, "Not Detected")
+        End If
 
         EndTime = My.Computer.Clock.TickCount
 
@@ -739,27 +749,59 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub tabViewData_Click(sender As Object, e As EventArgs) Handles tabViewData.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim xmlPath As String
+
+        xmlPath = ""
+
+
+        ''set filter for project locator
+        'MotionRowText.TcTLO
+        tc3xmlfilefilter = "TOAST MotionRowText file (*.TcTLO)|*.TcTLO"
+
+        SaveXMLFileDialog.Filter = tc3xmlfilefilter
+
+        SaveXMLFileDialog.ShowDialog()
+
+        xmlPath = SaveXMLFileDialog.FileName
+
+        If xmlPath.Length > 1 Then
+            'My.Computer.FileSystem.WriteAllText(xmlPath, xmlStrMotionFile, True)
+            'Dim streamwrite As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(xmlPath, False)
+
+            Dim FileName As String = xmlPath
+            'IO.File.WriteAllLines(FileName, xmlStrMotionFile, Encoding.Unicode)
+
+            Dim file As System.IO.StreamWriter
+            'file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False)
+            file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False, Encoding.UTF8)
+
+
+
+
+
+
+            For i = 0 To xmlStrMotionFile.Length - 1
+
+                'xmlStrMotionFile(i) = xmlStrMotionFile(i).Substring(0, xmlStrMotionFile(i).Length - 1)
+
+                file.NewLine = vbCrLf
+                file.Write(xmlStrMotionFile(i))
+
+
+            Next
+            file.Close()
+
+
+
+
+
+        Else
+            MsgBox("No file path to write to!", MsgBoxStyle.Critical, "Error Writing File...")
+
+        End If
 
     End Sub
 
-    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs)
 
-    End Sub
-
-    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub Chart1_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub BindingNavigator1_RefreshItems(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
-
-    End Sub
 End Class

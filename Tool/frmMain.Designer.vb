@@ -78,7 +78,6 @@ Partial Class frmMain
         Me.tabControlTasks = New System.Windows.Forms.TabControl()
         Me.tabImport = New System.Windows.Forms.TabPage()
         Me.tabViewData = New System.Windows.Forms.TabPage()
-        Me.btnUpdateArray = New System.Windows.Forms.Button()
         Me.lblPLCDataNumSelected = New System.Windows.Forms.Label()
         Me.lblImportBoxSelectionNum = New System.Windows.Forms.Label()
         Me.lblMotionFilesPath = New System.Windows.Forms.Label()
@@ -86,7 +85,10 @@ Partial Class frmMain
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
+        Me.btnSave = New System.Windows.Forms.Button()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.btnUpdateArray = New System.Windows.Forms.Button()
+        Me.SaveXMLFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -713,15 +715,6 @@ Partial Class frmMain
         Me.tabViewData.Text = "View Data"
         Me.tabViewData.UseVisualStyleBackColor = True
         '
-        'btnUpdateArray
-        '
-        Me.btnUpdateArray.Location = New System.Drawing.Point(43, 24)
-        Me.btnUpdateArray.Name = "btnUpdateArray"
-        Me.btnUpdateArray.Size = New System.Drawing.Size(75, 23)
-        Me.btnUpdateArray.TabIndex = 6
-        Me.btnUpdateArray.Text = "Update"
-        Me.btnUpdateArray.UseVisualStyleBackColor = True
-        '
         'lblPLCDataNumSelected
         '
         Me.lblPLCDataNumSelected.AutoSize = True
@@ -780,6 +773,7 @@ Partial Class frmMain
         '
         'tabExportData
         '
+        Me.tabExportData.Controls.Add(Me.btnSave)
         Me.tabExportData.Controls.Add(Me.WebBrowser1)
         Me.tabExportData.Controls.Add(Me.btnUpdateArray)
         Me.tabExportData.Location = New System.Drawing.Point(4, 22)
@@ -789,6 +783,15 @@ Partial Class frmMain
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
         '
+        'btnSave
+        '
+        Me.btnSave.Location = New System.Drawing.Point(601, 24)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(75, 23)
+        Me.btnSave.TabIndex = 8
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = True
+        '
         'WebBrowser1
         '
         Me.WebBrowser1.Location = New System.Drawing.Point(63, 62)
@@ -797,11 +800,26 @@ Partial Class frmMain
         Me.WebBrowser1.Size = New System.Drawing.Size(507, 321)
         Me.WebBrowser1.TabIndex = 7
         '
+        'btnUpdateArray
+        '
+        Me.btnUpdateArray.Location = New System.Drawing.Point(43, 24)
+        Me.btnUpdateArray.Name = "btnUpdateArray"
+        Me.btnUpdateArray.Size = New System.Drawing.Size(75, 23)
+        Me.btnUpdateArray.TabIndex = 6
+        Me.btnUpdateArray.Text = "Update"
+        Me.btnUpdateArray.UseVisualStyleBackColor = True
+        '
+        'SaveXMLFileDialog
+        '
+        Me.SaveXMLFileDialog.CreatePrompt = True
+        Me.SaveXMLFileDialog.DefaultExt = "TcTLO"
+        Me.SaveXMLFileDialog.RestoreDirectory = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(749, 628)
+        Me.ClientSize = New System.Drawing.Size(752, 628)
         Me.Controls.Add(Me.tabControlTasks)
         Me.Controls.Add(Me.lblgNumberElementsPerRow)
         Me.Controls.Add(Me.lblCONSTsFileSize)
@@ -897,4 +915,6 @@ Partial Class frmMain
     Friend WithEvents lblPLCDataNumSelected As Label
     Friend WithEvents btnUpdateArray As Button
     Friend WithEvents WebBrowser1 As WebBrowser
+    Friend WithEvents btnSave As Button
+    Friend WithEvents SaveXMLFileDialog As SaveFileDialog
 End Class
