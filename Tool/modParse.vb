@@ -1,4 +1,6 @@
-﻿Module modParse
+﻿Imports System.Net.Security
+
+Module modParse
 
     Public Const motionheader_lt As String = "&lt;"
     Public Const motionfooter_gt As String = "&gt;"
@@ -110,7 +112,14 @@
         Dim processString3 As String
         processString3 = processString2.Remove(0, 1)
 
-        Console.Write(vbCrLf)
+        If processString3.Contains("   ") Then
+            ''snip 3 phantom spaces at the start
+            processString3 = processString3.Remove(0, 4)
+        End If
+
+
+
+        ''   Console.Write(vbCrLf)
         Return processString3
 
     End Function

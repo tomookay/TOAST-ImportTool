@@ -141,6 +141,8 @@ Public Class frmMain
         Dim fileContents As String
         fileContents = My.Computer.FileSystem.ReadAllText(lblCONTsPathName.Text)
         Dim splitStringResult() As String
+
+        'read Cr line endings from default beckhoff file formatting
         Dim splittingSeperators() As String = {vbCr}
         splitStringResult = fileContents.Split(splittingSeperators, StringSplitOptions.None)
 
@@ -154,6 +156,9 @@ Public Class frmMain
             End If
 
         Next
+
+
+
 
 
     End Sub
@@ -178,8 +183,17 @@ Public Class frmMain
         Dim fileContents As String
         fileContents = My.Computer.FileSystem.ReadAllText(lblMotionTextsPathName.Text)
 
-        Dim splittingSeperators() As String = {vbCr}
+        Dim splittingSeperators() As String = {vbCrLf}
         xmlStrMotionFile = fileContents.Split(splittingSeperators, StringSplitOptions.None)
+
+        'If xmlStrMotionFile.Length < 100 Then
+        '    ''if CRLF didnt work, just try LF
+        '    Dim splittingSeperators2() As String = {vbCrLf}
+
+        '    xmlStrMotionFile = fileContents.Split(splittingSeperators2, StringSplitOptions.None)
+
+        'End If
+
 
         Dim procString As String
         Dim textIDlocation As Integer
@@ -197,6 +211,10 @@ Public Class frmMain
 
         ReDim ProcessArray1(xmlStrMotionFile.Length)
         ReDim ProcessArray2(xmlStrMotionFile.Length)
+
+        If ProcessArray2.Length < 100 Then
+            MsgBox("Failed to Read file: " & lblMotionTextsPathName.Text & ". Length too short")
+        End If
 
         For i = 0 To xmlStrMotionFile.Length - 1
             'check if text matches textid header
@@ -780,13 +798,20 @@ Public Class frmMain
 
 
 
-
             For i = 0 To xmlStrMotionFile.Length - 1
 
                 'xmlStrMotionFile(i) = xmlStrMotionFile(i).Substring(0, xmlStrMotionFile(i).Length - 1)
+                'Console.WriteLine(xmlStrMotionFile(i))
 
-                file.NewLine = vbCrLf
+
+
+                'file.NewLine = vbNull
                 file.Write(xmlStrMotionFile(i))
+
+
+
+
+
 
 
             Next
