@@ -85,10 +85,18 @@ Partial Class frmMain
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
+        Me.cbUpdateRichText = New System.Windows.Forms.CheckBox()
+        Me.rtxXMLdata = New System.Windows.Forms.RichTextBox()
+        Me.cbUpdateDataview = New System.Windows.Forms.CheckBox()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnSave = New System.Windows.Forms.Button()
-        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.btnUpdateArray = New System.Windows.Forms.Button()
         Me.SaveXMLFileDialog = New System.Windows.Forms.SaveFileDialog()
+        Me.DataSet1 = New System.Data.DataSet()
+        Me.DataTable1 = New System.Data.DataTable()
+        Me.DataColumn1 = New System.Data.DataColumn()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -103,6 +111,9 @@ Partial Class frmMain
         Me.tabImport.SuspendLayout()
         Me.tabViewData.SuspendLayout()
         Me.tabExportData.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOpenProject
@@ -701,6 +712,7 @@ Partial Class frmMain
         '
         'tabViewData
         '
+        Me.tabViewData.Controls.Add(Me.Button1)
         Me.tabViewData.Controls.Add(Me.lblPLCDataNumSelected)
         Me.tabViewData.Controls.Add(Me.lblImportBoxSelectionNum)
         Me.tabViewData.Controls.Add(Me.lblMotionFilesPath)
@@ -773,8 +785,11 @@ Partial Class frmMain
         '
         'tabExportData
         '
+        Me.tabExportData.Controls.Add(Me.cbUpdateRichText)
+        Me.tabExportData.Controls.Add(Me.rtxXMLdata)
+        Me.tabExportData.Controls.Add(Me.cbUpdateDataview)
+        Me.tabExportData.Controls.Add(Me.DataGridView1)
         Me.tabExportData.Controls.Add(Me.btnSave)
-        Me.tabExportData.Controls.Add(Me.WebBrowser1)
         Me.tabExportData.Controls.Add(Me.btnUpdateArray)
         Me.tabExportData.Location = New System.Drawing.Point(4, 22)
         Me.tabExportData.Name = "tabExportData"
@@ -782,6 +797,49 @@ Partial Class frmMain
         Me.tabExportData.TabIndex = 2
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
+        '
+        'cbUpdateRichText
+        '
+        Me.cbUpdateRichText.AutoSize = True
+        Me.cbUpdateRichText.Location = New System.Drawing.Point(315, 30)
+        Me.cbUpdateRichText.Name = "cbUpdateRichText"
+        Me.cbUpdateRichText.Size = New System.Drawing.Size(120, 17)
+        Me.cbUpdateRichText.TabIndex = 12
+        Me.cbUpdateRichText.Text = "Update richtextview"
+        Me.cbUpdateRichText.UseVisualStyleBackColor = True
+        '
+        'rtxXMLdata
+        '
+        Me.rtxXMLdata.Location = New System.Drawing.Point(392, 53)
+        Me.rtxXMLdata.Name = "rtxXMLdata"
+        Me.rtxXMLdata.Size = New System.Drawing.Size(306, 365)
+        Me.rtxXMLdata.TabIndex = 11
+        Me.rtxXMLdata.Text = ""
+        '
+        'cbUpdateDataview
+        '
+        Me.cbUpdateDataview.AutoSize = True
+        Me.cbUpdateDataview.Location = New System.Drawing.Point(159, 30)
+        Me.cbUpdateDataview.Name = "cbUpdateDataview"
+        Me.cbUpdateDataview.Size = New System.Drawing.Size(129, 17)
+        Me.cbUpdateDataview.TabIndex = 10
+        Me.cbUpdateDataview.Text = "Update DataGridView"
+        Me.cbUpdateDataview.UseVisualStyleBackColor = True
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1})
+        Me.DataGridView1.Location = New System.Drawing.Point(5, 53)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(381, 365)
+        Me.DataGridView1.TabIndex = 9
+        '
+        'Column1
+        '
+        Me.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Column1.HeaderText = "Column1"
+        Me.Column1.Name = "Column1"
         '
         'btnSave
         '
@@ -791,14 +849,6 @@ Partial Class frmMain
         Me.btnSave.TabIndex = 8
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = True
-        '
-        'WebBrowser1
-        '
-        Me.WebBrowser1.Location = New System.Drawing.Point(63, 62)
-        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
-        Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(507, 321)
-        Me.WebBrowser1.TabIndex = 7
         '
         'btnUpdateArray
         '
@@ -814,6 +864,29 @@ Partial Class frmMain
         Me.SaveXMLFileDialog.CreatePrompt = True
         Me.SaveXMLFileDialog.DefaultExt = "TcTLO"
         Me.SaveXMLFileDialog.RestoreDirectory = True
+        '
+        'DataSet1
+        '
+        Me.DataSet1.DataSetName = "NewDataSet"
+        Me.DataSet1.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
+        '
+        'DataTable1
+        '
+        Me.DataTable1.Columns.AddRange(New System.Data.DataColumn() {Me.DataColumn1})
+        Me.DataTable1.TableName = "Table1"
+        '
+        'DataColumn1
+        '
+        Me.DataColumn1.ColumnName = "Column1"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(561, 28)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(89, 41)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Update (Slow)"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -845,6 +918,10 @@ Partial Class frmMain
         Me.tabViewData.ResumeLayout(False)
         Me.tabViewData.PerformLayout()
         Me.tabExportData.ResumeLayout(False)
+        Me.tabExportData.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataSet1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -914,7 +991,15 @@ Partial Class frmMain
     Friend WithEvents lblImportBoxSelectionNum As Label
     Friend WithEvents lblPLCDataNumSelected As Label
     Friend WithEvents btnUpdateArray As Button
-    Friend WithEvents WebBrowser1 As WebBrowser
     Friend WithEvents btnSave As Button
     Friend WithEvents SaveXMLFileDialog As SaveFileDialog
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents cbUpdateDataview As CheckBox
+    Friend WithEvents DataSet1 As DataSet
+    Friend WithEvents DataTable1 As DataTable
+    Friend WithEvents DataColumn1 As DataColumn
+    Friend WithEvents cbUpdateRichText As CheckBox
+    Friend WithEvents rtxXMLdata As RichTextBox
+    Friend WithEvents Button1 As Button
 End Class

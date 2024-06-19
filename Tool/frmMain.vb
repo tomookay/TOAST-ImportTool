@@ -68,32 +68,40 @@ Public Class frmMain
 
         lblProjectPath.Text = OpenTOASTprojectDialog.FileName
 
-        ''find raw project location
-        RawProjectPathLastSlash = lblProjectPath.Text.LastIndexOf("\")
-        lblRawProjectPath.Text = RawProjectPathLastSlash
-        lblRawProjectPath.Text = lblProjectPath.Text.Remove(RawProjectPathLastSlash)
+        Dim fileExists As Boolean
+        fileExists = My.Computer.FileSystem.FileExists(lblProjectPath.Text)
 
-        'load CONSTS files
-        LoadCONSTsFile()
+        If fileExists Then
 
-        'load string language files
-        LoadMotionStringsFile()
+            ''find raw project location
+            RawProjectPathLastSlash = lblProjectPath.Text.LastIndexOf("\")
+            lblRawProjectPath.Text = RawProjectPathLastSlash
+            lblRawProjectPath.Text = lblProjectPath.Text.Remove(RawProjectPathLastSlash)
 
-        'load .TcPoU file into list
-        LoadMotionListsFromStation()
+            'load CONSTS files
+            LoadCONSTsFile()
 
-        'load contents of .TcPoU file into parser
-        PopulateListBoxMotions()
+            'load string language files
+            LoadMotionStringsFile()
 
-        'load data into working list array
-        PopulateWorkingList()
+            'load .TcPoU file into list
+            LoadMotionListsFromStation()
+
+            'load contents of .TcPoU file into parser
+            PopulateListBoxMotions()
 
 
 
-        IsLoadingData = False
-        EndTime = My.Computer.Clock.TickCount
 
-        MsgBox(EndTime - StartTime & "ms", MsgBoxStyle.Information, "Time Taken...")
+
+            IsLoadingData = False
+            EndTime = My.Computer.Clock.TickCount
+
+            MsgBox(EndTime - StartTime & "ms", MsgBoxStyle.Information, "Time Taken...")
+
+
+        End If
+
 
     End Sub
 
@@ -104,15 +112,19 @@ Public Class frmMain
         lstBoxImportData.DataSource = ProcessArray1
 
 
+        Try
+            ''update null values
+            For i = 0 To ProcessArray2.Length - 1
+                If ProcessArray2(i) = "" Then
+                    ''null value, assign dummy string
+                    ProcessArray2(i) = "NoDetectedValue"
+                End If
+            Next
 
-        ''update null values
-        For i = 0 To ProcessArray2.Length - 1
-            If ProcessArray2(i) = "" Then
-                ''null value, assign dummy string
-                ProcessArray2(i) = "NoDetectedValue"
-            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
 
-        Next
 
 
         lblMotionFilesPath.Text = "loaded"
@@ -759,75 +771,90 @@ Public Class frmMain
             MsgBox("No Motion File Detected...", MsgBoxStyle.Information, "Not Detected")
         End If
 
+
+
+        If cbUpdateDataview.Checked Then
+            For i = 0 To xmlStrMotionFile.Length - 1
+                DataGridView1.Rows.Add(xmlStrMotionFile(i))
+            Next
+        End If
+
+        If cbUpdateRichText.Checked Then
+
+            For i = 0 To xmlStrMotionFile.Length - 1
+                rtxXMLdata.AppendText(xmlStrMotionFile(i))
+                rtxXMLdata.AppendText(vbCrLf)
+
+
+            Next
+
+        End If
+
         EndTime = My.Computer.Clock.TickCount
 
+
+
         MsgBox(EndTime - StartTime & "ms", MsgBoxStyle.Information, "Time Taken...")
+
+
 
 
 
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim xmlPath As String
 
-        xmlPath = ""
+        'check if any data is present in outputarray
+        If xmlStrMotionFile.Length > 10 Then
 
+            Dim xmlPath As String
+            xmlPath = ""
 
-        ''set filter for project locator
-        'MotionRowText.TcTLO
-        tc3xmlfilefilter = "TOAST MotionRowText file (*.TcTLO)|*.TcTLO"
+            ''set filter for project locator
+            'MotionRowText.TcTLO
+            tc3xmlfilefilter = "TOAST MotionRowText file (*.TcTLO)|*.TcTLO"
 
-        SaveXMLFileDialog.Filter = tc3xmlfilefilter
+            SaveXMLFileDialog.Filter = tc3xmlfilefilter
 
-        SaveXMLFileDialog.ShowDialog()
+            SaveXMLFileDialog.ShowDialog()
 
-        xmlPath = SaveXMLFileDialog.FileName
+            xmlPath = SaveXMLFileDialog.FileName
 
-        If xmlPath.Length > 1 Then
-            'My.Computer.FileSystem.WriteAllText(xmlPath, xmlStrMotionFile, True)
-            'Dim streamwrite As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(xmlPath, False)
+            If xmlPath.Length > 1 Then
+                'My.Computer.FileSystem.WriteAllText(xmlPath, xmlStrMotionFile, True)
+                'Dim streamwrite As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(xmlPath, False)
 
-            Dim FileName As String = xmlPath
-            'IO.File.WriteAllLines(FileName, xmlStrMotionFile, Encoding.Unicode)
+                Dim FileName As String = xmlPath
+                'IO.File.WriteAllLines(FileName, xmlStrMotionFile, Encoding.Unicode)
 
-            Dim file As System.IO.StreamWriter
-            'file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False)
-            file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False, Encoding.UTF8)
+                Dim file As System.IO.StreamWriter
+                'file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False)
+                file = My.Computer.FileSystem.OpenTextFileWriter(FileName, False, Encoding.UTF8)
 
+                For i = 0 To xmlStrMotionFile.Length - 1
 
+                    file.NewLine = vbCrLf
+                    file.WriteLine(xmlStrMotionFile(i))
 
+                Next
+                file.Close()
+            Else
+                MsgBox("No file path to write to!", MsgBoxStyle.Critical, "Error Writing File...")
 
-
-            For i = 0 To xmlStrMotionFile.Length - 1
-
-                'xmlStrMotionFile(i) = xmlStrMotionFile(i).Substring(0, xmlStrMotionFile(i).Length - 1)
-                'Console.WriteLine(xmlStrMotionFile(i))
-
-
-
-                file.NewLine = vbCrLf
-                file.WriteLine(xmlStrMotionFile(i))
-
-
-
-
-
-
-
-
-            Next
-            file.Close()
-
-
-
-
+            End If
 
         Else
-            MsgBox("No file path to write to!", MsgBoxStyle.Critical, "Error Writing File...")
+            MsgBox("No Data to Write to .TcTLO file!", MsgBoxStyle.Information, "No Data Parsed")
+
 
         End If
 
+
+
     End Sub
 
-
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'load data into working list array
+        PopulateWorkingList()
+    End Sub
 End Class
