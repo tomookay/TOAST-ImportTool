@@ -78,6 +78,7 @@ Partial Class frmMain
         Me.tabControlTasks = New System.Windows.Forms.TabControl()
         Me.tabImport = New System.Windows.Forms.TabPage()
         Me.tabViewData = New System.Windows.Forms.TabPage()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.lblPLCDataNumSelected = New System.Windows.Forms.Label()
         Me.lblImportBoxSelectionNum = New System.Windows.Forms.Label()
         Me.lblMotionFilesPath = New System.Windows.Forms.Label()
@@ -93,10 +94,9 @@ Partial Class frmMain
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnUpdateArray = New System.Windows.Forms.Button()
         Me.SaveXMLFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.DataSet1 = New System.Data.DataSet()
+        Me.datasetXML = New System.Data.DataSet()
         Me.DataTable1 = New System.Data.DataTable()
         Me.DataColumn1 = New System.Data.DataColumn()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -112,7 +112,7 @@ Partial Class frmMain
         Me.tabViewData.SuspendLayout()
         Me.tabExportData.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.datasetXML, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -727,6 +727,15 @@ Partial Class frmMain
         Me.tabViewData.Text = "View Data"
         Me.tabViewData.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(561, 28)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(89, 41)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Update (Slow)"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'lblPLCDataNumSelected
         '
         Me.lblPLCDataNumSelected.AutoSize = True
@@ -865,10 +874,10 @@ Partial Class frmMain
         Me.SaveXMLFileDialog.DefaultExt = "TcTLO"
         Me.SaveXMLFileDialog.RestoreDirectory = True
         '
-        'DataSet1
+        'datasetXML
         '
-        Me.DataSet1.DataSetName = "NewDataSet"
-        Me.DataSet1.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
+        Me.datasetXML.DataSetName = "NewDataSet"
+        Me.datasetXML.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
         '
         'DataTable1
         '
@@ -877,16 +886,7 @@ Partial Class frmMain
         '
         'DataColumn1
         '
-        Me.DataColumn1.ColumnName = "Column1"
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(561, 28)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(89, 41)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Update (Slow)"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.DataColumn1.ColumnName = "text"
         '
         'frmMain
         '
@@ -920,7 +920,7 @@ Partial Class frmMain
         Me.tabExportData.ResumeLayout(False)
         Me.tabExportData.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.datasetXML, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -996,10 +996,10 @@ Partial Class frmMain
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents cbUpdateDataview As CheckBox
-    Friend WithEvents DataSet1 As DataSet
-    Friend WithEvents DataTable1 As DataTable
+    Friend WithEvents datasetXML As DataSet
     Friend WithEvents DataColumn1 As DataColumn
     Friend WithEvents cbUpdateRichText As CheckBox
     Friend WithEvents rtxXMLdata As RichTextBox
     Friend WithEvents Button1 As Button
+    Private WithEvents DataTable1 As DataTable
 End Class

@@ -112,6 +112,22 @@ Module modParse
         Dim processString3 As String
         processString3 = processString2.Remove(0, 1)
 
+        Dim resultfirst As Char = processString3.First()
+
+        'try harder at removing header spaces
+        If processString3.Length > 1 Then
+            Do Until resultfirst <> " "
+                If resultfirst = " " Then
+                    processString3 = processString3.Remove(0, 1)
+                End If
+
+                'update checker
+                resultfirst = processString3.First()
+            Loop
+        End If
+
+
+
         If processString3.Contains("   ") Then
             ''snip 3 phantom spaces at the start
             processString3 = processString3.Remove(0, 4)
@@ -123,5 +139,26 @@ Module modParse
         Return processString3
 
     End Function
+
+    Sub LoadStationMotionPaths(ByRef CheckboxValue As CheckBox, ByVal RawProjectPath As String, ByVal StationNumber As String, ByRef ListboxStationFiles As ListBox)
+
+        Dim stationLocation As String
+
+        'cbS1.Checked
+        If CheckboxValue.Checked Then
+
+            ''find station
+            stationLocation = RawProjectPath & "\PLC1\PLC\Machine\Station " & StationNumber & "\Motions\"
+
+            ''record all uses of motion files
+            For Each foundfile As String In My.Computer.FileSystem.GetFiles(
+            stationLocation, Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories,
+             "*.TCPoU")
+
+                ListboxStationFiles.Items.Add(foundfile)
+            Next
+            'nowt
+        End If
+    End Sub
 
 End Module
