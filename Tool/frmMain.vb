@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.Http.Headers
 Imports System.Text
 
 Public Class frmMain
@@ -677,6 +678,9 @@ Public Class frmMain
 
         If cbUpdateRichText.Checked Then
 
+            rtxXMLdata.HideSelection = True
+
+
             For h = 0 To xmlStrMotionFile.Length - 1
 
                 rtxXMLdata.AppendText(xmlStrMotionFile(h))
@@ -684,8 +688,33 @@ Public Class frmMain
 
 
             Next
+            rtxXMLdata.HideSelection = False
+        End If
+
+
+
+
+
+        Dim sr As Stream
+
+
+        If cbUpdatehttp.Checked Then
+
+
+
+            For p = 0 To xmlStrMotionFile.Length - 1
+                sr.ReadLine(xmlStrMotionFile(p))
+                sr.Read(Convert.by(xmlStrMotionFile(p)), 0, xmlStrMotionFile(p).Length - 1)
+
+
+            Next
+
+            datasetXML.ReadXml(sr)
 
         End If
+
+
+
 
         EndTime = My.Computer.Clock.TickCount
 
@@ -747,5 +776,17 @@ Public Class frmMain
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         'load data into working list array
         PopulateWorkingList()
+    End Sub
+
+    Private Sub rtxXMLdata_TextChanged(sender As Object, e As EventArgs) Handles rtxXMLdata.TextChanged
+
+    End Sub
+
+    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs)
+
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
     End Sub
 End Class

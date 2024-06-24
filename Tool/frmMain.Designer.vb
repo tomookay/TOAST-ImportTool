@@ -95,6 +95,8 @@ Partial Class frmMain
         Me.btnUpdateArray = New System.Windows.Forms.Button()
         Me.SaveXMLFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.datasetXML = New System.Data.DataSet()
+        Me.cbUpdatehttp = New System.Windows.Forms.CheckBox()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.DataTable1 = New System.Data.DataTable()
         Me.DataColumn1 = New System.Data.DataColumn()
         Me.grpBoxSelectProject.SuspendLayout()
@@ -794,6 +796,8 @@ Partial Class frmMain
         '
         'tabExportData
         '
+        Me.tabExportData.Controls.Add(Me.ListBox1)
+        Me.tabExportData.Controls.Add(Me.cbUpdatehttp)
         Me.tabExportData.Controls.Add(Me.cbUpdateRichText)
         Me.tabExportData.Controls.Add(Me.rtxXMLdata)
         Me.tabExportData.Controls.Add(Me.cbUpdateDataview)
@@ -819,9 +823,9 @@ Partial Class frmMain
         '
         'rtxXMLdata
         '
-        Me.rtxXMLdata.Location = New System.Drawing.Point(392, 53)
+        Me.rtxXMLdata.Location = New System.Drawing.Point(207, 53)
         Me.rtxXMLdata.Name = "rtxXMLdata"
-        Me.rtxXMLdata.Size = New System.Drawing.Size(306, 365)
+        Me.rtxXMLdata.Size = New System.Drawing.Size(152, 365)
         Me.rtxXMLdata.TabIndex = 11
         Me.rtxXMLdata.Text = ""
         '
@@ -841,7 +845,7 @@ Partial Class frmMain
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1})
         Me.DataGridView1.Location = New System.Drawing.Point(5, 53)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(381, 365)
+        Me.DataGridView1.Size = New System.Drawing.Size(196, 365)
         Me.DataGridView1.TabIndex = 9
         '
         'Column1
@@ -879,6 +883,27 @@ Partial Class frmMain
         Me.datasetXML.DataSetName = "NewDataSet"
         Me.datasetXML.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
         '
+        'cbUpdatehttp
+        '
+        Me.cbUpdatehttp.AutoSize = True
+        Me.cbUpdatehttp.Location = New System.Drawing.Point(475, 28)
+        Me.cbUpdatehttp.Name = "cbUpdatehttp"
+        Me.cbUpdatehttp.Size = New System.Drawing.Size(121, 17)
+        Me.cbUpdatehttp.TabIndex = 14
+        Me.cbUpdatehttp.Text = "Update xmlwebview" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.cbUpdatehttp.UseVisualStyleBackColor = True
+        '
+        'ListBox1
+        '
+        Me.ListBox1.DataSource = Me.datasetXML
+        Me.ListBox1.DisplayMember = "Table1.text"
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(409, 63)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(250, 329)
+        Me.ListBox1.TabIndex = 15
+        Me.ListBox1.ValueMember = "Table1.text"
+        '
         'DataTable1
         '
         Me.DataTable1.Columns.AddRange(New System.Data.DataColumn() {Me.DataColumn1})
@@ -886,7 +911,7 @@ Partial Class frmMain
         '
         'DataColumn1
         '
-        Me.DataColumn1.ColumnName = "text"
+        Me.DataColumn1.ColumnName = "Column1"
         '
         'frmMain
         '
@@ -997,9 +1022,11 @@ Partial Class frmMain
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents cbUpdateDataview As CheckBox
     Friend WithEvents datasetXML As DataSet
-    Friend WithEvents DataColumn1 As DataColumn
     Friend WithEvents cbUpdateRichText As CheckBox
     Friend WithEvents rtxXMLdata As RichTextBox
     Friend WithEvents Button1 As Button
-    Private WithEvents DataTable1 As DataTable
+    Friend WithEvents cbUpdatehttp As CheckBox
+    Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents DataTable1 As DataTable
+    Friend WithEvents DataColumn1 As DataColumn
 End Class
