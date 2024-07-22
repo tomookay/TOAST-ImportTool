@@ -702,14 +702,14 @@ Public Class frmMain
 
 
 
-            For p = 0 To xmlStrMotionFile.Length - 1
-                sr.ReadLine(xmlStrMotionFile(p))
-                sr.Read(Convert.by(xmlStrMotionFile(p)), 0, xmlStrMotionFile(p).Length - 1)
+            '     For p = 0 To xmlStrMotionFile.Length - 1
+            '      sr.ReadLine(xmlStrMotionFile(p))
+            '     sr.Read(Convert.by(xmlStrMotionFile(p)), 0, xmlStrMotionFile(p).Length - 1)
 
 
-            Next
+            '     Next
 
-            datasetXML.ReadXml(sr)
+            '     datasetXML.ReadXml(sr)
 
         End If
 
