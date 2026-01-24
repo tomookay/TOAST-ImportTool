@@ -86,6 +86,11 @@ Partial Class frmMain
         Me.lstBoxPLCData = New System.Windows.Forms.ListBox()
         Me.lstBoxImportData = New System.Windows.Forms.ListBox()
         Me.tabExportData = New System.Windows.Forms.TabPage()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.datasetXML = New System.Data.DataSet()
+        Me.DataTable1 = New System.Data.DataTable()
+        Me.DataColumn1 = New System.Data.DataColumn()
+        Me.cbUpdatehttp = New System.Windows.Forms.CheckBox()
         Me.cbUpdateRichText = New System.Windows.Forms.CheckBox()
         Me.rtxXMLdata = New System.Windows.Forms.RichTextBox()
         Me.cbUpdateDataview = New System.Windows.Forms.CheckBox()
@@ -94,11 +99,6 @@ Partial Class frmMain
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnUpdateArray = New System.Windows.Forms.Button()
         Me.SaveXMLFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.datasetXML = New System.Data.DataSet()
-        Me.cbUpdatehttp = New System.Windows.Forms.CheckBox()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.DataTable1 = New System.Data.DataTable()
-        Me.DataColumn1 = New System.Data.DataColumn()
         Me.grpBoxSelectProject.SuspendLayout()
         Me.grpboxMotionRow.SuspendLayout()
         Me.tabContStationLoading.SuspendLayout()
@@ -113,9 +113,9 @@ Partial Class frmMain
         Me.tabImport.SuspendLayout()
         Me.tabViewData.SuspendLayout()
         Me.tabExportData.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.datasetXML, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnOpenProject
@@ -811,6 +811,41 @@ Partial Class frmMain
         Me.tabExportData.Text = "Export Data"
         Me.tabExportData.UseVisualStyleBackColor = True
         '
+        'ListBox1
+        '
+        Me.ListBox1.DataSource = Me.datasetXML
+        Me.ListBox1.DisplayMember = "Table1.text"
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(409, 63)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(250, 329)
+        Me.ListBox1.TabIndex = 15
+        Me.ListBox1.ValueMember = "Table1.text"
+        '
+        'datasetXML
+        '
+        Me.datasetXML.DataSetName = "NewDataSet"
+        Me.datasetXML.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
+        '
+        'DataTable1
+        '
+        Me.DataTable1.Columns.AddRange(New System.Data.DataColumn() {Me.DataColumn1})
+        Me.DataTable1.TableName = "Table1"
+        '
+        'DataColumn1
+        '
+        Me.DataColumn1.ColumnName = "Column1"
+        '
+        'cbUpdatehttp
+        '
+        Me.cbUpdatehttp.AutoSize = True
+        Me.cbUpdatehttp.Location = New System.Drawing.Point(475, 28)
+        Me.cbUpdatehttp.Name = "cbUpdatehttp"
+        Me.cbUpdatehttp.Size = New System.Drawing.Size(121, 17)
+        Me.cbUpdatehttp.TabIndex = 14
+        Me.cbUpdatehttp.Text = "Update xmlwebview" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.cbUpdatehttp.UseVisualStyleBackColor = True
+        '
         'cbUpdateRichText
         '
         Me.cbUpdateRichText.AutoSize = True
@@ -878,41 +913,6 @@ Partial Class frmMain
         Me.SaveXMLFileDialog.DefaultExt = "TcTLO"
         Me.SaveXMLFileDialog.RestoreDirectory = True
         '
-        'datasetXML
-        '
-        Me.datasetXML.DataSetName = "NewDataSet"
-        Me.datasetXML.Tables.AddRange(New System.Data.DataTable() {Me.DataTable1})
-        '
-        'cbUpdatehttp
-        '
-        Me.cbUpdatehttp.AutoSize = True
-        Me.cbUpdatehttp.Location = New System.Drawing.Point(475, 28)
-        Me.cbUpdatehttp.Name = "cbUpdatehttp"
-        Me.cbUpdatehttp.Size = New System.Drawing.Size(121, 17)
-        Me.cbUpdatehttp.TabIndex = 14
-        Me.cbUpdatehttp.Text = "Update xmlwebview" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.cbUpdatehttp.UseVisualStyleBackColor = True
-        '
-        'ListBox1
-        '
-        Me.ListBox1.DataSource = Me.datasetXML
-        Me.ListBox1.DisplayMember = "Table1.text"
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(409, 63)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(250, 329)
-        Me.ListBox1.TabIndex = 15
-        Me.ListBox1.ValueMember = "Table1.text"
-        '
-        'DataTable1
-        '
-        Me.DataTable1.Columns.AddRange(New System.Data.DataColumn() {Me.DataColumn1})
-        Me.DataTable1.TableName = "Table1"
-        '
-        'DataColumn1
-        '
-        Me.DataColumn1.ColumnName = "Column1"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -944,9 +944,9 @@ Partial Class frmMain
         Me.tabViewData.PerformLayout()
         Me.tabExportData.ResumeLayout(False)
         Me.tabExportData.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.datasetXML, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataTable1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
