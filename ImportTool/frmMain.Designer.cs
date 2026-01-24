@@ -33,17 +33,18 @@
             OpenTOASTprojectDialog = new OpenFileDialog();
             tabContStationLoading = new TabControl();
             tpStation1 = new TabPage();
-            tpStation2 = new TabPage();
-            tpStation3 = new TabPage();
-            tpStation4 = new TabPage();
-            tpStation5 = new TabPage();
-            tpStation6 = new TabPage();
-            lstbxStation2Files = new ListBox();
-            lstbxStation3Files = new ListBox();
-            lstbxStation4Files = new ListBox();
-            lstbxStation5Files = new ListBox();
-            lstbxStation6Files = new ListBox();
             lstbxStation1Files = new ListBox();
+            tpStation2 = new TabPage();
+            lstbxStation2Files = new ListBox();
+            tpStation3 = new TabPage();
+            lstbxStation3Files = new ListBox();
+            tpStation4 = new TabPage();
+            lstbxStation4Files = new ListBox();
+            tpStation5 = new TabPage();
+            lstbxStation5Files = new ListBox();
+            tpStation6 = new TabPage();
+            lstbxStation6Files = new ListBox();
+            tvStation1Motions = new TreeView();
             tabContStationLoading.SuspendLayout();
             tpStation1.SuspendLayout();
             tpStation2.SuspendLayout();
@@ -88,19 +89,28 @@
             tabContStationLoading.Location = new Point(61, 101);
             tabContStationLoading.Name = "tabContStationLoading";
             tabContStationLoading.SelectedIndex = 0;
-            tabContStationLoading.Size = new Size(648, 259);
+            tabContStationLoading.Size = new Size(648, 327);
             tabContStationLoading.TabIndex = 2;
             // 
             // tpStation1
             // 
+            tpStation1.Controls.Add(tvStation1Motions);
             tpStation1.Controls.Add(lstbxStation1Files);
             tpStation1.Location = new Point(4, 24);
             tpStation1.Name = "tpStation1";
             tpStation1.Padding = new Padding(3);
-            tpStation1.Size = new Size(640, 231);
+            tpStation1.Size = new Size(640, 299);
             tpStation1.TabIndex = 0;
             tpStation1.Text = "Station 1";
             tpStation1.UseVisualStyleBackColor = true;
+            // 
+            // lstbxStation1Files
+            // 
+            lstbxStation1Files.FormattingEnabled = true;
+            lstbxStation1Files.Location = new Point(44, 68);
+            lstbxStation1Files.Name = "lstbxStation1Files";
+            lstbxStation1Files.Size = new Size(553, 94);
+            lstbxStation1Files.TabIndex = 1;
             // 
             // tpStation2
             // 
@@ -108,54 +118,10 @@
             tpStation2.Location = new Point(4, 24);
             tpStation2.Name = "tpStation2";
             tpStation2.Padding = new Padding(3);
-            tpStation2.Size = new Size(640, 231);
+            tpStation2.Size = new Size(640, 299);
             tpStation2.TabIndex = 1;
             tpStation2.Text = "Station 2";
             tpStation2.UseVisualStyleBackColor = true;
-            // 
-            // tpStation3
-            // 
-            tpStation3.Controls.Add(lstbxStation3Files);
-            tpStation3.Location = new Point(4, 24);
-            tpStation3.Name = "tpStation3";
-            tpStation3.Padding = new Padding(3);
-            tpStation3.Size = new Size(640, 231);
-            tpStation3.TabIndex = 2;
-            tpStation3.Text = "Station 3";
-            tpStation3.UseVisualStyleBackColor = true;
-            // 
-            // tpStation4
-            // 
-            tpStation4.Controls.Add(lstbxStation4Files);
-            tpStation4.Location = new Point(4, 24);
-            tpStation4.Name = "tpStation4";
-            tpStation4.Padding = new Padding(3);
-            tpStation4.Size = new Size(640, 231);
-            tpStation4.TabIndex = 3;
-            tpStation4.Text = "Station 4";
-            tpStation4.UseVisualStyleBackColor = true;
-            // 
-            // tpStation5
-            // 
-            tpStation5.Controls.Add(lstbxStation5Files);
-            tpStation5.Location = new Point(4, 24);
-            tpStation5.Name = "tpStation5";
-            tpStation5.Padding = new Padding(3);
-            tpStation5.Size = new Size(640, 231);
-            tpStation5.TabIndex = 4;
-            tpStation5.Text = "Station 5";
-            tpStation5.UseVisualStyleBackColor = true;
-            // 
-            // tpStation6
-            // 
-            tpStation6.Controls.Add(lstbxStation6Files);
-            tpStation6.Location = new Point(4, 24);
-            tpStation6.Name = "tpStation6";
-            tpStation6.Padding = new Padding(3);
-            tpStation6.Size = new Size(640, 231);
-            tpStation6.TabIndex = 5;
-            tpStation6.Text = "Station 6";
-            tpStation6.UseVisualStyleBackColor = true;
             // 
             // lstbxStation2Files
             // 
@@ -165,6 +131,17 @@
             lstbxStation2Files.Size = new Size(553, 94);
             lstbxStation2Files.TabIndex = 1;
             // 
+            // tpStation3
+            // 
+            tpStation3.Controls.Add(lstbxStation3Files);
+            tpStation3.Location = new Point(4, 24);
+            tpStation3.Name = "tpStation3";
+            tpStation3.Padding = new Padding(3);
+            tpStation3.Size = new Size(640, 299);
+            tpStation3.TabIndex = 2;
+            tpStation3.Text = "Station 3";
+            tpStation3.UseVisualStyleBackColor = true;
+            // 
             // lstbxStation3Files
             // 
             lstbxStation3Files.FormattingEnabled = true;
@@ -172,6 +149,17 @@
             lstbxStation3Files.Name = "lstbxStation3Files";
             lstbxStation3Files.Size = new Size(553, 94);
             lstbxStation3Files.TabIndex = 1;
+            // 
+            // tpStation4
+            // 
+            tpStation4.Controls.Add(lstbxStation4Files);
+            tpStation4.Location = new Point(4, 24);
+            tpStation4.Name = "tpStation4";
+            tpStation4.Padding = new Padding(3);
+            tpStation4.Size = new Size(640, 299);
+            tpStation4.TabIndex = 3;
+            tpStation4.Text = "Station 4";
+            tpStation4.UseVisualStyleBackColor = true;
             // 
             // lstbxStation4Files
             // 
@@ -181,6 +169,17 @@
             lstbxStation4Files.Size = new Size(553, 94);
             lstbxStation4Files.TabIndex = 1;
             // 
+            // tpStation5
+            // 
+            tpStation5.Controls.Add(lstbxStation5Files);
+            tpStation5.Location = new Point(4, 24);
+            tpStation5.Name = "tpStation5";
+            tpStation5.Padding = new Padding(3);
+            tpStation5.Size = new Size(640, 299);
+            tpStation5.TabIndex = 4;
+            tpStation5.Text = "Station 5";
+            tpStation5.UseVisualStyleBackColor = true;
+            // 
             // lstbxStation5Files
             // 
             lstbxStation5Files.FormattingEnabled = true;
@@ -188,6 +187,17 @@
             lstbxStation5Files.Name = "lstbxStation5Files";
             lstbxStation5Files.Size = new Size(553, 94);
             lstbxStation5Files.TabIndex = 1;
+            // 
+            // tpStation6
+            // 
+            tpStation6.Controls.Add(lstbxStation6Files);
+            tpStation6.Location = new Point(4, 24);
+            tpStation6.Name = "tpStation6";
+            tpStation6.Padding = new Padding(3);
+            tpStation6.Size = new Size(640, 299);
+            tpStation6.TabIndex = 5;
+            tpStation6.Text = "Station 6";
+            tpStation6.UseVisualStyleBackColor = true;
             // 
             // lstbxStation6Files
             // 
@@ -197,13 +207,12 @@
             lstbxStation6Files.Size = new Size(553, 94);
             lstbxStation6Files.TabIndex = 1;
             // 
-            // lstbxStation1Files
+            // tvStation1Motions
             // 
-            lstbxStation1Files.FormattingEnabled = true;
-            lstbxStation1Files.Location = new Point(44, 68);
-            lstbxStation1Files.Name = "lstbxStation1Files";
-            lstbxStation1Files.Size = new Size(553, 94);
-            lstbxStation1Files.TabIndex = 1;
+            tvStation1Motions.Location = new Point(43, 168);
+            tvStation1Motions.Name = "tvStation1Motions";
+            tvStation1Motions.Size = new Size(554, 111);
+            tvStation1Motions.TabIndex = 2;
             // 
             // frmMain
             // 
@@ -243,5 +252,6 @@
         private ListBox lstbxStation4Files;
         private ListBox lstbxStation5Files;
         private ListBox lstbxStation6Files;
+        private TreeView tvStation1Motions;
     }
 }
