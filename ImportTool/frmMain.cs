@@ -117,22 +117,22 @@ namespace ImportTool
                         // Build and add the TreeNode
                         TreeNode rootNode = new TreeNode($"Row {rowNumber}");
                         TreeNode advanceNode = new TreeNode("Advance");
-                        advanceNode.Nodes.Add(new TreeNode($"AdvanceCoilTextSym: {advanceCoilTextSym}"));
-                        advanceNode.Nodes.Add(new TreeNode($"AdvanceDepthTextSym: {advanceDepthTextSym}"));
-                        advanceNode.Nodes.Add(new TreeNode($"AdvanceCoilTextAbs: {advanceCoilTextAbs}"));
-                        advanceNode.Nodes.Add(new TreeNode($"AdvanceDepthTextAbs: {advanceDepthTextAbs}"));
-                        advanceNode.Nodes.Add(new TreeNode($"ManSeq: {advanceManSeq}"));
+                        advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextSym}"));
+                        advanceNode.Nodes.Add(new TreeNode($"{advanceDepthTextSym}"));
+                        advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextAbs}"));
+                        advanceNode.Nodes.Add(new TreeNode($"{advanceDepthTextAbs}"));
+                        advanceNode.Nodes.Add(new TreeNode($"{advanceManSeq}"));
 
                         TreeNode returnNode = new TreeNode("Return");
-                        returnNode.Nodes.Add(new TreeNode($"ReturnCoilTextSym: {returnCoilTextSym}"));
-                        returnNode.Nodes.Add(new TreeNode($"ReturnDepthTextSym: {returnDepthTextSym}"));
-                        returnNode.Nodes.Add(new TreeNode($"ReturnCoilTextAbs: {returnCoilTextAbs}"));
-                        returnNode.Nodes.Add(new TreeNode($"ReturnDepthTextAbs: {returnDepthTextAbs}"));
-                        returnNode.Nodes.Add(new TreeNode($"ManSeq: {returnManSeq}"));
+                        returnNode.Nodes.Add(new TreeNode($"{returnCoilTextSym}"));
+                        returnNode.Nodes.Add(new TreeNode($"{returnDepthTextSym}"));
+                        returnNode.Nodes.Add(new TreeNode($"{returnCoilTextAbs}"));
+                        returnNode.Nodes.Add(new TreeNode($"{returnDepthTextAbs}"));
+                        returnNode.Nodes.Add(new TreeNode($"{returnManSeq}"));
 
                         TreeNode motionNode = new TreeNode("Motion");
-                        motionNode.Nodes.Add(new TreeNode($"NameSym: {motionNameSym}"));
-                        motionNode.Nodes.Add(new TreeNode($"NameAbs: {motionNameAbs}"));
+                        motionNode.Nodes.Add(new TreeNode($"{motionNameSym}"));
+                        motionNode.Nodes.Add(new TreeNode($"{motionNameAbs}"));
 
                         rootNode.Nodes.Add(advanceNode);
                         rootNode.Nodes.Add(returnNode);
@@ -147,15 +147,7 @@ namespace ImportTool
                     }
 
 
-
-
-
-
-
-
-
-
-                    }
+                }
 
 
                 //populate the dgvStation1 with the extracted data from the xml files
@@ -170,22 +162,92 @@ namespace ImportTool
                     //   6 => dgvStation6,
                     _ => null
                 };
-                //for each element of xmlin tvStation1 create a new number from 1-10000 starting at rootNode and put into dgvStation1
+                //insert the data rootNode into the dgvStation1 with each value in a new row
+                //start the number at station number (1-6) * 10000
+                //the numbers are allways populated from 10000 to 19999 for station 1, and for other stations accordingly
+                //the following pattern is used
+                //10000 - advanceCoilTextSym
+                //10001 - advanceDepthTextSym
+                //10002 - spare
+                //10003 - returnCoilTextSym
+                //10004 - returnDepthTextSym
+                //10005 - spare
+                //10006 - motionNameSym
+                //10007 - spare
+                //10008 - spare
+                //10009 - spare
+                //10010 - advanceCoilTextRel
+                //10011 - advanceDepthTextRel
+                //10012 - spare
+                //10013 - returnCoilTextRel
+                //10014 - returnDepthTextRel
+                //10015 - spare
+                //10016 - motionNameRel
+                //10017 - spare
+                //10018 - spare
+                //10019 - spare
+                //10020 - spare
+                //start of next row at 10021
+
+                //create 20 strings based on the above pattern for each rootnode xml node parsed
                 if (targetDataGridView != null)
                 {
-                    int rowIndex = targetDataGridView.Rows.Add();
-                    DataGridViewRow newRow = targetDataGridView.Rows[rowIndex];
-                    newRow.Cells["clmNumber"].Value = rowIndex + 1;
-                    //add the data from the treeview to the datagridview in clmText from advanceNode, returnNode, motionNode
-                   
+                    int baseNumber = stationNumber * 10000;
+                    foreach (TreeNode rootNode in targetTreeView.Nodes)
+                    {
+                        if (rootNode.Text.StartsWith("Row "))
+                        {
+                            int rowOffset = 0;
+                            foreach (TreeNode childNode in rootNode.Nodes)
+                            {
+                                foreach (TreeNode dataNode in childNode.Nodes)
+                                {
+                                    if (dataNode.Text != null)
+                                    {
+                                        targetDataGridView.Rows.Add(baseNumber + rowOffset, dataNode.Text);
+                                    }
+                                    rowOffset++;
+                                }
+                                // Add spares as needed
+                                if (childNode.Text == "Advance" || childNode.Text == "Return" || childNode.Text == "Motion")
+                                {
+                                    targetDataGridView.Rows.Add(baseNumber + rowOffset, "spare");
+                                    rowOffset++;
+                                }
+                            }
+                            // Add additional spares to reach 20 entries per row
+                            while (rowOffset < 19)
+                            {
+                                targetDataGridView.Rows.Add(baseNumber + rowOffset, "spare");
+                                rowOffset++;
+                            }
+                            baseNumber += 20; // Move to the next block for the next row
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 }
+
+
+
+
+
             }
         }
-
-
-
-
-
     }
 }
+
+
