@@ -145,20 +145,47 @@ namespace ImportTool
                         System.Diagnostics.Debug.WriteLine($"Error parsing '{filePath}': {ex.Message}");
                         // Continue to next file on error
                     }
+
+
+
+
+
+
+
+
+
+
+                    }
+
+
+                //populate the dgvStation1 with the extracted data from the xml files
+                //the values are from clmNumber, and the text is from the other extracted elements into clmText
+                DataGridView targetDataGridView = stationNumber switch
+                {
+                    1 => dgvStation1,
+                    //   2 => dgvStation2,
+                    //    3 => dgvStation3,
+                    //    4 => dgvStation4,
+                    //   5 => dgvStation5,
+                    //   6 => dgvStation6,
+                    _ => null
+                };
+                //for each element of xmlin tvStation1 create a new number from 1-10000 starting at rootNode and put into dgvStation1
+                if (targetDataGridView != null)
+                {
+                    int rowIndex = targetDataGridView.Rows.Add();
+                    DataGridViewRow newRow = targetDataGridView.Rows[rowIndex];
+                    newRow.Cells["clmNumber"].Value = rowIndex + 1;
+                    //add the data from the treeview to the datagridview in clmText from advanceNode, returnNode, motionNode
+                   
+
                 }
             }
-
-
-
-
-
-
-
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
-        {
 
-        }
+
+
+
     }
 }

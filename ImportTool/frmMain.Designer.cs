@@ -35,6 +35,7 @@
             lstbxStation1Files = new ListBox();
             tabStations = new TabControl();
             tabPage1 = new TabPage();
+            dgvStation1 = new DataGridView();
             tabPage2 = new TabPage();
             tvStation2 = new TreeView();
             lstbxStation2Files = new ListBox();
@@ -50,8 +51,11 @@
             tabPage6 = new TabPage();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
+            clmNumber = new DataGridViewTextBoxColumn();
+            clmText = new DataGridViewTextBoxColumn();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
             tabPage4.SuspendLayout();
@@ -114,6 +118,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(dgvStation1);
             tabPage1.Controls.Add(tvStation1);
             tabPage1.Controls.Add(lstbxStation1Files);
             tabPage1.Location = new Point(4, 24);
@@ -124,6 +129,15 @@
             tabPage1.Text = "Station 1";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // dgvStation1
+            // 
+            dgvStation1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber, clmText });
+            dgvStation1.Location = new Point(6, 299);
+            dgvStation1.Name = "dgvStation1";
+            dgvStation1.Size = new Size(843, 158);
+            dgvStation1.TabIndex = 3;
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(tvStation2);
@@ -131,7 +145,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(855, 321);
+            tabPage2.Size = new Size(855, 477);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Station 2";
             tabPage2.UseVisualStyleBackColor = true;
@@ -158,7 +172,7 @@
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(855, 321);
+            tabPage3.Size = new Size(855, 477);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Station 3";
             tabPage3.UseVisualStyleBackColor = true;
@@ -185,7 +199,7 @@
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(855, 321);
+            tabPage4.Size = new Size(855, 477);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Station 4";
             tabPage4.UseVisualStyleBackColor = true;
@@ -212,7 +226,7 @@
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(855, 321);
+            tabPage5.Size = new Size(855, 477);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Station 5";
             tabPage5.UseVisualStyleBackColor = true;
@@ -239,7 +253,7 @@
             tabPage6.Location = new Point(4, 24);
             tabPage6.Name = "tabPage6";
             tabPage6.Padding = new Padding(3);
-            tabPage6.Size = new Size(855, 321);
+            tabPage6.Size = new Size(855, 477);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Station 6";
             tabPage6.UseVisualStyleBackColor = true;
@@ -259,6 +273,16 @@
             lstbxStation6Files.Size = new Size(843, 109);
             lstbxStation6Files.TabIndex = 5;
             // 
+            // clmNumber
+            // 
+            clmNumber.HeaderText = "Number";
+            clmNumber.Name = "clmNumber";
+            // 
+            // clmText
+            // 
+            clmText.HeaderText = "Text";
+            clmText.Name = "clmText";
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -268,10 +292,9 @@
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
             Name = "frmMain";
-            Text = "Form1";
-            Load += frmMain_Load;
             tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
             tabPage4.ResumeLayout(false);
@@ -304,5 +327,8 @@
         private TabPage tabPage6;
         private TreeView tvStation6;
         private ListBox lstbxStation6Files;
+        private DataGridView dgvStation1;
+        private DataGridViewTextBoxColumn clmNumber;
+        private DataGridViewTextBoxColumn clmText;
     }
 }
