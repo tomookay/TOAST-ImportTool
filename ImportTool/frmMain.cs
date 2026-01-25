@@ -263,24 +263,29 @@ namespace ImportTool
             {
                 //read all lines from the file into a list
                 List<string> fileLines = File.ReadAllLines(motionRowTextFilePath).ToList();
-                foreach (string line in fileLines)
+                for (int idx = 0; idx < fileLines.Count; idx++)
                 {
+                    string line = fileLines[idx];
                     for (int i = 0; i < dgvStation1.Rows.Count; i++)
                     {
-                        DataGridViewRow row = dgvStation1.Rows[i];
-                        if (row.Cells["clmNumber"].Value != null)
+                        var row = dgvStation1.Rows[i];
+                        if (row.Cells["clmNumber"].Value == null) continue;
+                        string textID = row.Cells["clmNumber"].Value.ToString();
+                        if (line.Contains($"<v n=\"TextID\">\"{textID}\"</v>"))
                         {
-                            string textID = row.Cells["clmNumber"].Value.ToString();
-                            if (line.Contains($"<v n=\"TextID\">\"{textID}\"</v>"))
-                            {
-                                //insert the text from clmText into the line after it
-                                string textDefault = row.Cells["clmText"].Value.ToString();
-                                int lineIndex = fileLines.IndexOf(line);
-                                fileLines.Insert(lineIndex + 1, $"    <v n=\"TextDefault\">\"{textDefault}\"</v>");
-                            }
+                            string textDefault = row.Cells["clmText"].Value?.ToString() ?? "";
+                            fileLines.Insert(idx + 1, $"    <v n=\"TextDefault\">\"{textDefault}\"</v>");
+                            idx++; // skip the inserted line to avoid reprocessing it
+                            break; // found match for this line, move to next file line
                         }
                     }
                 }
+
+                //write the file back
+                File.WriteAllLines(motionRowTextFilePath, fileLines);
+                //messagebox to show success
+                MessageBox.Show("Data exported successfully to MotionRowText.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
 
@@ -295,6 +300,8 @@ namespace ImportTool
             }
         }
     }
+
+
 
 
 
