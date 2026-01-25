@@ -225,34 +225,76 @@ namespace ImportTool
                         }
                     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
+            }
+        }
+
+      
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            //search for the MotionRowText.TcTLO file in the selected project folder or sub folder
+            string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
+            if (!Directory.Exists(projectDirectory))
+            {
+                //messagebox to show file found
+                MessageBox.Show("Please load a valid TOAST project first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //if path does exist and the dgvStation1 has rows,
+            //open the file MotionRowText.TcTLO and search for the line "<v n="TextID">"10000"</v>" for the text ID
+            //and insert the text from dgvStation1 clmText into the line after it as <v n="TextDefault">"clmText"</v>
+            string[] motionRowTextFiles = Directory.GetFiles(projectDirectory, "MotionRowText.TcTLO", SearchOption.AllDirectories);
+            if (motionRowTextFiles.Length == 0)
+            {
+                //messagebox to show file not found
+                MessageBox.Show("MotionRowText.TcTLO file not found in the project.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string motionRowTextFilePath = motionRowTextFiles[0];
+            if (dgvStation1.Rows.Count == 0)
+            {
+                //messagebox to show dgvStation1 is empty
+                MessageBox.Show("No data to export in Station 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                //read all lines from the file into a list
+                List<string> fileLines = File.ReadAllLines(motionRowTextFilePath).ToList();
+                foreach (string line in fileLines)
+                {
+                    for (int i = 0; i < dgvStation1.Rows.Count; i++)
+                    {
+                        DataGridViewRow row = dgvStation1.Rows[i];
+                        if (row.Cells["clmNumber"].Value != null)
+                        {
+                            string textID = row.Cells["clmNumber"].Value.ToString();
+                            if (line.Contains($"<v n=\"TextID\">\"{textID}\"</v>"))
+                            {
+                                //insert the text from clmText into the line after it
+                                string textDefault = row.Cells["clmText"].Value.ToString();
+                                int lineIndex = fileLines.IndexOf(line);
+                                fileLines.Insert(lineIndex + 1, $"    <v n=\"TextDefault\">\"{textDefault}\"</v>");
+                            }
+                        }
+                    }
+                }
+            }
 
 
-
+            catch (Exception ex)
+            {
+                //messagebox to show error
+                MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
 
             }
         }
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-
-        }
     }
-}
+
 
 

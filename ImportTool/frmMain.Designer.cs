@@ -68,6 +68,7 @@
             dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
+            btnExport = new Button();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
@@ -87,7 +88,7 @@
             // 
             btnLoadProject.Location = new Point(12, 12);
             btnLoadProject.Name = "btnLoadProject";
-            btnLoadProject.Size = new Size(90, 29);
+            btnLoadProject.Size = new Size(90, 30);
             btnLoadProject.TabIndex = 0;
             btnLoadProject.Text = "Load Project";
             btnLoadProject.UseVisualStyleBackColor = true;
@@ -403,17 +404,27 @@
             lstbxStation6Files.Size = new Size(843, 109);
             lstbxStation6Files.TabIndex = 5;
             // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(12, 558);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(202, 30);
+            btnExport.TabIndex = 4;
+            btnExport.Text = "Export to MotionRowText.TcTLO";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(884, 564);
+            ClientSize = new Size(884, 607);
+            Controls.Add(btnExport);
             Controls.Add(tabStations);
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
             Name = "frmMain";
             Text = "Sx_01_Motion_xx.TcPOU-2-MotionRowText.TcTLO Importer";
-            Load += frmMain_Load;
             tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
@@ -472,5 +483,6 @@
         private DataGridView dgvStation6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private Button btnExport;
     }
 }
