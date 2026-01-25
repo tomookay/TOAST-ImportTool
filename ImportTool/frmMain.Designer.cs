@@ -33,7 +33,7 @@
             OpenTOASTprojectDialog = new OpenFileDialog();
             tvStation1 = new TreeView();
             lstbxStation1Files = new ListBox();
-            tabControl1 = new TabControl();
+            tabStations = new TabControl();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             tvStation2 = new TreeView();
@@ -50,7 +50,7 @@
             tabPage6 = new TabPage();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
-            tabControl1.SuspendLayout();
+            tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
@@ -98,19 +98,19 @@
             lstbxStation1Files.Size = new Size(843, 109);
             lstbxStation1Files.TabIndex = 1;
             // 
-            // tabControl1
+            // tabStations
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Controls.Add(tabPage4);
-            tabControl1.Controls.Add(tabPage5);
-            tabControl1.Controls.Add(tabPage6);
-            tabControl1.Location = new Point(19, 47);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(863, 349);
-            tabControl1.TabIndex = 3;
+            tabStations.Controls.Add(tabPage1);
+            tabStations.Controls.Add(tabPage2);
+            tabStations.Controls.Add(tabPage3);
+            tabStations.Controls.Add(tabPage4);
+            tabStations.Controls.Add(tabPage5);
+            tabStations.Controls.Add(tabPage6);
+            tabStations.Location = new Point(19, 47);
+            tabStations.Name = "tabStations";
+            tabStations.SelectedIndex = 0;
+            tabStations.Size = new Size(863, 505);
+            tabStations.TabIndex = 3;
             // 
             // tabPage1
             // 
@@ -119,9 +119,9 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(855, 321);
+            tabPage1.Size = new Size(855, 477);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
+            tabPage1.Text = "Station 1";
             tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -133,7 +133,7 @@
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(855, 321);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
+            tabPage2.Text = "Station 2";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // tvStation2
@@ -160,7 +160,7 @@
             tabPage3.Padding = new Padding(3);
             tabPage3.Size = new Size(855, 321);
             tabPage3.TabIndex = 2;
-            tabPage3.Text = "tabPage3";
+            tabPage3.Text = "Station 3";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // tvStation3
@@ -187,7 +187,7 @@
             tabPage4.Padding = new Padding(3);
             tabPage4.Size = new Size(855, 321);
             tabPage4.TabIndex = 3;
-            tabPage4.Text = "tabPage4";
+            tabPage4.Text = "Station 4";
             tabPage4.UseVisualStyleBackColor = true;
             // 
             // tvStation4
@@ -214,7 +214,7 @@
             tabPage5.Padding = new Padding(3);
             tabPage5.Size = new Size(855, 321);
             tabPage5.TabIndex = 4;
-            tabPage5.Text = "tabPage5";
+            tabPage5.Text = "Station 5";
             tabPage5.UseVisualStyleBackColor = true;
             // 
             // tvStation5
@@ -241,7 +241,7 @@
             tabPage6.Padding = new Padding(3);
             tabPage6.Size = new Size(855, 321);
             tabPage6.TabIndex = 5;
-            tabPage6.Text = "tabPage6";
+            tabPage6.Text = "Station 6";
             tabPage6.UseVisualStyleBackColor = true;
             // 
             // tvStation6
@@ -263,13 +263,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(884, 450);
-            Controls.Add(tabControl1);
+            ClientSize = new Size(884, 564);
+            Controls.Add(tabStations);
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
             Name = "frmMain";
             Text = "Form1";
-            tabControl1.ResumeLayout(false);
+            Load += frmMain_Load;
+            tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
@@ -286,7 +287,7 @@
         private OpenFileDialog OpenTOASTprojectDialog;
         private ListBox lstbxStation1Files;
         private TreeView tvStation1;
-        private TabControl tabControl1;
+        private TabControl tabStations;
         private TabPage tabPage1;
         private TabPage tabPage2;
         private TreeView tvStation2;
