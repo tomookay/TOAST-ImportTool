@@ -155,11 +155,11 @@ namespace ImportTool
                 DataGridView targetDataGridView = stationNumber switch
                 {
                     1 => dgvStation1,
-                    //   2 => dgvStation2,
-                    //    3 => dgvStation3,
-                    //    4 => dgvStation4,
-                    //   5 => dgvStation5,
-                    //   6 => dgvStation6,
+                    2 => dgvStation2,
+                    3 => dgvStation3,
+                    4 => dgvStation4,
+                    5 => dgvStation5,
+                    6 => dgvStation6,
                     _ => null
                 };
                 //insert the data rootNode into the dgvStation1 with each value in a new row
@@ -246,6 +246,11 @@ namespace ImportTool
 
 
             }
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

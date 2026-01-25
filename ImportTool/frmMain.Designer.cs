@@ -36,6 +36,8 @@
             tabStations = new TabControl();
             tabPage1 = new TabPage();
             dgvStation1 = new DataGridView();
+            clmNumber = new DataGridViewTextBoxColumn();
+            clmText = new DataGridViewTextBoxColumn();
             tabPage2 = new TabPage();
             tvStation2 = new TreeView();
             lstbxStation2Files = new ListBox();
@@ -51,8 +53,21 @@
             tabPage6 = new TabPage();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
-            clmNumber = new DataGridViewTextBoxColumn();
-            clmText = new DataGridViewTextBoxColumn();
+            dgvStation2 = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dgvStation3 = new DataGridView();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dgvStation4 = new DataGridView();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dgvStation5 = new DataGridView();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dgvStation6 = new DataGridView();
+            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
@@ -61,6 +76,11 @@
             tabPage4.SuspendLayout();
             tabPage5.SuspendLayout();
             tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation6).BeginInit();
             SuspendLayout();
             // 
             // btnLoadProject
@@ -89,7 +109,7 @@
             // 
             // tvStation1
             // 
-            tvStation1.Location = new Point(6, 121);
+            tvStation1.Location = new Point(6, 132);
             tvStation1.Name = "tvStation1";
             tvStation1.Size = new Size(843, 172);
             tvStation1.TabIndex = 2;
@@ -97,7 +117,7 @@
             // lstbxStation1Files
             // 
             lstbxStation1Files.FormattingEnabled = true;
-            lstbxStation1Files.Location = new Point(6, 6);
+            lstbxStation1Files.Location = new Point(6, 17);
             lstbxStation1Files.Name = "lstbxStation1Files";
             lstbxStation1Files.Size = new Size(843, 109);
             lstbxStation1Files.TabIndex = 1;
@@ -133,13 +153,24 @@
             // 
             dgvStation1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber, clmText });
-            dgvStation1.Location = new Point(6, 299);
+            dgvStation1.Location = new Point(6, 310);
             dgvStation1.Name = "dgvStation1";
             dgvStation1.Size = new Size(843, 158);
             dgvStation1.TabIndex = 3;
             // 
+            // clmNumber
+            // 
+            clmNumber.HeaderText = "Number";
+            clmNumber.Name = "clmNumber";
+            // 
+            // clmText
+            // 
+            clmText.HeaderText = "Text";
+            clmText.Name = "clmText";
+            // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(dgvStation2);
             tabPage2.Controls.Add(tvStation2);
             tabPage2.Controls.Add(lstbxStation2Files);
             tabPage2.Location = new Point(4, 24);
@@ -167,6 +198,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(dgvStation3);
             tabPage3.Controls.Add(tvStation3);
             tabPage3.Controls.Add(lstbxStation3Files);
             tabPage3.Location = new Point(4, 24);
@@ -194,6 +226,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(dgvStation4);
             tabPage4.Controls.Add(tvStation4);
             tabPage4.Controls.Add(lstbxStation4Files);
             tabPage4.Location = new Point(4, 24);
@@ -221,6 +254,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(dgvStation5);
             tabPage5.Controls.Add(tvStation5);
             tabPage5.Controls.Add(lstbxStation5Files);
             tabPage5.Location = new Point(4, 24);
@@ -248,6 +282,7 @@
             // 
             // tabPage6
             // 
+            tabPage6.Controls.Add(dgvStation6);
             tabPage6.Controls.Add(tvStation6);
             tabPage6.Controls.Add(lstbxStation6Files);
             tabPage6.Location = new Point(4, 24);
@@ -273,15 +308,100 @@
             lstbxStation6Files.Size = new Size(843, 109);
             lstbxStation6Files.TabIndex = 5;
             // 
-            // clmNumber
+            // dgvStation2
             // 
-            clmNumber.HeaderText = "Number";
-            clmNumber.Name = "clmNumber";
+            dgvStation2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation2.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2 });
+            dgvStation2.Location = new Point(6, 310);
+            dgvStation2.Name = "dgvStation2";
+            dgvStation2.Size = new Size(843, 158);
+            dgvStation2.TabIndex = 5;
             // 
-            // clmText
+            // dataGridViewTextBoxColumn1
             // 
-            clmText.HeaderText = "Text";
-            clmText.Name = "clmText";
+            dataGridViewTextBoxColumn1.HeaderText = "Number";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Text";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dgvStation3
+            // 
+            dgvStation3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation3.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
+            dgvStation3.Location = new Point(6, 310);
+            dgvStation3.Name = "dgvStation3";
+            dgvStation3.Size = new Size(843, 158);
+            dgvStation3.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Number";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Text";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dgvStation4
+            // 
+            dgvStation4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation4.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            dgvStation4.Location = new Point(6, 310);
+            dgvStation4.Name = "dgvStation4";
+            dgvStation4.Size = new Size(843, 158);
+            dgvStation4.TabIndex = 7;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Number";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "Text";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dgvStation5
+            // 
+            dgvStation5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation5.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8 });
+            dgvStation5.Location = new Point(6, 310);
+            dgvStation5.Name = "dgvStation5";
+            dgvStation5.Size = new Size(843, 158);
+            dgvStation5.TabIndex = 7;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.HeaderText = "Number";
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.HeaderText = "Text";
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dgvStation6
+            // 
+            dgvStation6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation6.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10 });
+            dgvStation6.Location = new Point(6, 310);
+            dgvStation6.Name = "dgvStation6";
+            dgvStation6.Size = new Size(843, 158);
+            dgvStation6.TabIndex = 7;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            dataGridViewTextBoxColumn9.HeaderText = "Number";
+            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            dataGridViewTextBoxColumn10.HeaderText = "Text";
+            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
             // frmMain
             // 
@@ -292,6 +412,7 @@
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
             Name = "frmMain";
+            Load += frmMain_Load;
             tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
@@ -300,6 +421,11 @@
             tabPage4.ResumeLayout(false);
             tabPage5.ResumeLayout(false);
             tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStation6).EndInit();
             ResumeLayout(false);
         }
 
@@ -330,5 +456,20 @@
         private DataGridView dgvStation1;
         private DataGridViewTextBoxColumn clmNumber;
         private DataGridViewTextBoxColumn clmText;
+        private DataGridView dgvStation2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridView dgvStation3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridView dgvStation4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridView dgvStation5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridView dgvStation6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
     }
 }
