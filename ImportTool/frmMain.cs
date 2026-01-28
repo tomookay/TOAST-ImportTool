@@ -232,21 +232,18 @@ namespace ImportTool
             }
         }
 
-      
+
         private void btnExport_Click(object sender, EventArgs e)
         {
             //search for the MotionRowText.TcTLO file in the selected project folder or sub folder
             string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
-            if (!Directory.Exists(projectDirectory))
+            if (string.IsNullOrEmpty(projectDirectory) || !Directory.Exists(projectDirectory))
             {
                 //messagebox to show file found
                 MessageBox.Show("Please load a valid TOAST project first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            //if path does exist and the dgvStation1 has rows,
-            //open the file MotionRowText.TcTLO and search for the line "<v n="TextID">"10000"</v>" for the text ID
-            //and insert the text from dgvStation1 clmText into the line after it as <v n="TextDefault">"clmText"</v>
             string[] motionRowTextFiles = Directory.GetFiles(projectDirectory, "MotionRowText.TcTLO", SearchOption.AllDirectories);
             if (motionRowTextFiles.Length == 0)
             {
@@ -255,6 +252,7 @@ namespace ImportTool
                 return;
             }
             string motionRowTextFilePath = motionRowTextFiles[0];
+
             if (dgvStation1.Rows.Count == 0)
             {
                 //messagebox to show dgvStation1 is empty
@@ -264,45 +262,71 @@ namespace ImportTool
 
             try
             {
-                //read all lines from the file into a list
                 List<string> fileLines = File.ReadAllLines(motionRowTextFilePath).ToList();
-                for (int idx = 0; idx < fileLines.Count; idx++)
+                List<string> newLines = new List<string>();
+
+                for (int i = 0; i < fileLines.Count; i++)
                 {
-                    string line = fileLines[idx];
-                    for (int i = 0; i < dgvStation1.Rows.Count; i++)
+                    string line = fileLines[i];
+                    bool matched = false;
+
+                    // Try to match this line against any TextID from dgvStation1
+                    for (int r = 0; r < dgvStation1.Rows.Count; r++)
                     {
-                        var row = dgvStation1.Rows[i];
+                        var row = dgvStation1.Rows[r];
                         if (row.Cells["clmNumber"].Value == null) continue;
                         string textID = row.Cells["clmNumber"].Value.ToString();
+
                         if (line.Contains($"<v n=\"TextID\">\"{textID}\"</v>"))
                         {
+                            // Remove any TextDefault that was directly above (already added to newLines)
+                            if (newLines.Count > 0 && newLines.Last().Contains("<v n=\"TextDefault\">"))
+                            {
+                                newLines.RemoveAt(newLines.Count - 1);
+                            }
+
+                            // Append the TextID line
+                            newLines.Add(line);
+
+                            // Determine indentation from the current line (leading whitespace)
+                            int indentLen = 0;
+                            while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
+                            string indent = line.Substring(0, indentLen);
+
+                            // Prepare TextDefault value (use empty string if null)
                             string textDefault = row.Cells["clmText"].Value?.ToString() ?? "";
-                            fileLines.Insert(idx + 1, $"    <v n=\"TextDefault\">\"{textDefault}\"</v>");
-                            idx++; // skip the inserted line to avoid reprocessing it
-                            break; // found match for this line, move to next file line
+
+                            // Insert the new TextDefault line (with same indentation)
+                            newLines.Add(indent + $"<v n=\"TextDefault\">\"{textDefault}\"</v>");
+
+                            // Skip any immediate following original TextDefault lines (remove "below" duplicates)
+                            while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                            {
+                                i++;
+                            }
+
+                            matched = true;
+                            break; // matched this TextID, move to next file line
                         }
+                    }
+
+                    if (!matched)
+                    {
+                        newLines.Add(line);
                     }
                 }
 
-                //write the file back
-                File.WriteAllLines(motionRowTextFilePath, fileLines);
-                //messagebox to show success
+                File.WriteAllLines(motionRowTextFilePath, newLines);
                 MessageBox.Show("Data exported successfully to MotionRowText.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
-
-
             catch (Exception ex)
             {
-                //messagebox to show error
                 MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
-            }
         }
     }
+}
 
 
 
