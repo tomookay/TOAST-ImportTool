@@ -35,42 +35,48 @@
             lstbxStation1Files = new ListBox();
             tabStations = new TabControl();
             tabPage1 = new TabPage();
+            tvStation1Alarms = new TreeView();
+            dgvStation1Alarms = new DataGridView();
+            s1AlarmNumber = new DataGridViewTextBoxColumn();
+            s1AlarmText = new DataGridViewTextBoxColumn();
+            lblStation1AlarmsFilePath = new Label();
             dgvStation1 = new DataGridView();
+            clmNumber1 = new DataGridViewTextBoxColumn();
+            clmText1 = new DataGridViewTextBoxColumn();
             tabPage2 = new TabPage();
             dgvStation2 = new DataGridView();
+            clmNumber2 = new DataGridViewTextBoxColumn();
+            clmText2 = new DataGridViewTextBoxColumn();
             tvStation2 = new TreeView();
             lstbxStation2Files = new ListBox();
             tabPage3 = new TabPage();
             dgvStation3 = new DataGridView();
+            clmNumber3 = new DataGridViewTextBoxColumn();
+            clmText3 = new DataGridViewTextBoxColumn();
             tvStation3 = new TreeView();
             lstbxStation3Files = new ListBox();
             tabPage4 = new TabPage();
             dgvStation4 = new DataGridView();
+            clmNumber4 = new DataGridViewTextBoxColumn();
+            clmText4 = new DataGridViewTextBoxColumn();
             tvStation4 = new TreeView();
             lstbxStation4Files = new ListBox();
             tabPage5 = new TabPage();
             dgvStation5 = new DataGridView();
+            clmNumber5 = new DataGridViewTextBoxColumn();
+            clmText5 = new DataGridViewTextBoxColumn();
             tvStation5 = new TreeView();
             lstbxStation5Files = new ListBox();
             tabPage6 = new TabPage();
             dgvStation6 = new DataGridView();
+            clmNumber6 = new DataGridViewTextBoxColumn();
+            clmText6 = new DataGridViewTextBoxColumn();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
             btnExport = new Button();
-            clmNumber1 = new DataGridViewTextBoxColumn();
-            clmText1 = new DataGridViewTextBoxColumn();
-            clmNumber2 = new DataGridViewTextBoxColumn();
-            clmText2 = new DataGridViewTextBoxColumn();
-            clmNumber3 = new DataGridViewTextBoxColumn();
-            clmText3 = new DataGridViewTextBoxColumn();
-            clmNumber4 = new DataGridViewTextBoxColumn();
-            clmText4 = new DataGridViewTextBoxColumn();
-            clmNumber5 = new DataGridViewTextBoxColumn();
-            clmText5 = new DataGridViewTextBoxColumn();
-            clmNumber6 = new DataGridViewTextBoxColumn();
-            clmText6 = new DataGridViewTextBoxColumn();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
@@ -112,7 +118,7 @@
             // 
             tvStation1.Location = new Point(6, 132);
             tvStation1.Name = "tvStation1";
-            tvStation1.Size = new Size(843, 172);
+            tvStation1.Size = new Size(405, 172);
             tvStation1.TabIndex = 2;
             // 
             // lstbxStation1Files
@@ -139,6 +145,9 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(tvStation1Alarms);
+            tabPage1.Controls.Add(dgvStation1Alarms);
+            tabPage1.Controls.Add(lblStation1AlarmsFilePath);
             tabPage1.Controls.Add(dgvStation1);
             tabPage1.Controls.Add(tvStation1);
             tabPage1.Controls.Add(lstbxStation1Files);
@@ -150,14 +159,59 @@
             tabPage1.Text = "Station 1";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tvStation1Alarms
+            // 
+            tvStation1Alarms.Location = new Point(421, 162);
+            tvStation1Alarms.Name = "tvStation1Alarms";
+            tvStation1Alarms.Size = new Size(405, 142);
+            tvStation1Alarms.TabIndex = 7;
+            // 
+            // dgvStation1Alarms
+            // 
+            dgvStation1Alarms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation1Alarms.Columns.AddRange(new DataGridViewColumn[] { s1AlarmNumber, s1AlarmText });
+            dgvStation1Alarms.Location = new Point(421, 310);
+            dgvStation1Alarms.Name = "dgvStation1Alarms";
+            dgvStation1Alarms.Size = new Size(405, 158);
+            dgvStation1Alarms.TabIndex = 6;
+            // 
+            // s1AlarmNumber
+            // 
+            s1AlarmNumber.HeaderText = "Number";
+            s1AlarmNumber.Name = "s1AlarmNumber";
+            // 
+            // s1AlarmText
+            // 
+            s1AlarmText.HeaderText = "Text";
+            s1AlarmText.Name = "s1AlarmText";
+            // 
+            // lblStation1AlarmsFilePath
+            // 
+            lblStation1AlarmsFilePath.Location = new Point(402, 132);
+            lblStation1AlarmsFilePath.Name = "lblStation1AlarmsFilePath";
+            lblStation1AlarmsFilePath.Size = new Size(424, 27);
+            lblStation1AlarmsFilePath.TabIndex = 5;
+            lblStation1AlarmsFilePath.Text = "No Station 1 Alarms Path Found...";
+            lblStation1AlarmsFilePath.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // dgvStation1
             // 
             dgvStation1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber1, clmText1 });
             dgvStation1.Location = new Point(6, 310);
             dgvStation1.Name = "dgvStation1";
-            dgvStation1.Size = new Size(843, 158);
+            dgvStation1.Size = new Size(405, 158);
             dgvStation1.TabIndex = 3;
+            // 
+            // clmNumber1
+            // 
+            clmNumber1.HeaderText = "Number";
+            clmNumber1.Name = "clmNumber1";
+            // 
+            // clmText1
+            // 
+            clmText1.HeaderText = "Text";
+            clmText1.Name = "clmText1";
             // 
             // tabPage2
             // 
@@ -180,6 +234,16 @@
             dgvStation2.Name = "dgvStation2";
             dgvStation2.Size = new Size(843, 158);
             dgvStation2.TabIndex = 5;
+            // 
+            // clmNumber2
+            // 
+            clmNumber2.HeaderText = "Number";
+            clmNumber2.Name = "clmNumber2";
+            // 
+            // clmText2
+            // 
+            clmText2.HeaderText = "Text";
+            clmText2.Name = "clmText2";
             // 
             // tvStation2
             // 
@@ -218,6 +282,16 @@
             dgvStation3.Size = new Size(843, 158);
             dgvStation3.TabIndex = 5;
             // 
+            // clmNumber3
+            // 
+            clmNumber3.HeaderText = "Number";
+            clmNumber3.Name = "clmNumber3";
+            // 
+            // clmText3
+            // 
+            clmText3.HeaderText = "Text";
+            clmText3.Name = "clmText3";
+            // 
             // tvStation3
             // 
             tvStation3.Location = new Point(6, 132);
@@ -254,6 +328,16 @@
             dgvStation4.Name = "dgvStation4";
             dgvStation4.Size = new Size(843, 158);
             dgvStation4.TabIndex = 7;
+            // 
+            // clmNumber4
+            // 
+            clmNumber4.HeaderText = "Number";
+            clmNumber4.Name = "clmNumber4";
+            // 
+            // clmText4
+            // 
+            clmText4.HeaderText = "Text";
+            clmText4.Name = "clmText4";
             // 
             // tvStation4
             // 
@@ -292,6 +376,16 @@
             dgvStation5.Size = new Size(843, 158);
             dgvStation5.TabIndex = 7;
             // 
+            // clmNumber5
+            // 
+            clmNumber5.HeaderText = "Number";
+            clmNumber5.Name = "clmNumber5";
+            // 
+            // clmText5
+            // 
+            clmText5.HeaderText = "Text";
+            clmText5.Name = "clmText5";
+            // 
             // tvStation5
             // 
             tvStation5.Location = new Point(6, 132);
@@ -329,6 +423,16 @@
             dgvStation6.Size = new Size(843, 158);
             dgvStation6.TabIndex = 7;
             // 
+            // clmNumber6
+            // 
+            clmNumber6.HeaderText = "Number";
+            clmNumber6.Name = "clmNumber6";
+            // 
+            // clmText6
+            // 
+            clmText6.HeaderText = "Text";
+            clmText6.Name = "clmText6";
+            // 
             // tvStation6
             // 
             tvStation6.Location = new Point(6, 132);
@@ -354,66 +458,6 @@
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
             // 
-            // clmNumber1
-            // 
-            clmNumber1.HeaderText = "Number";
-            clmNumber1.Name = "clmNumber1";
-            // 
-            // clmText1
-            // 
-            clmText1.HeaderText = "Text";
-            clmText1.Name = "clmText1";
-            // 
-            // clmNumber2
-            // 
-            clmNumber2.HeaderText = "Number";
-            clmNumber2.Name = "clmNumber2";
-            // 
-            // clmText2
-            // 
-            clmText2.HeaderText = "Text";
-            clmText2.Name = "clmText2";
-            // 
-            // clmNumber3
-            // 
-            clmNumber3.HeaderText = "Number";
-            clmNumber3.Name = "clmNumber3";
-            // 
-            // clmText3
-            // 
-            clmText3.HeaderText = "Text";
-            clmText3.Name = "clmText3";
-            // 
-            // clmNumber4
-            // 
-            clmNumber4.HeaderText = "Number";
-            clmNumber4.Name = "clmNumber4";
-            // 
-            // clmText4
-            // 
-            clmText4.HeaderText = "Text";
-            clmText4.Name = "clmText4";
-            // 
-            // clmNumber5
-            // 
-            clmNumber5.HeaderText = "Number";
-            clmNumber5.Name = "clmNumber5";
-            // 
-            // clmText5
-            // 
-            clmText5.HeaderText = "Text";
-            clmText5.Name = "clmText5";
-            // 
-            // clmNumber6
-            // 
-            clmNumber6.HeaderText = "Number";
-            clmNumber6.Name = "clmNumber6";
-            // 
-            // clmText6
-            // 
-            clmText6.HeaderText = "Text";
-            clmText6.Name = "clmText6";
-            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -427,6 +471,7 @@
             Text = "Sx_01_Motion_xx.TcPOU-2-MotionRowText.TcTLO Importer";
             tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
             tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
@@ -484,5 +529,10 @@
         private DataGridViewTextBoxColumn clmText5;
         private DataGridViewTextBoxColumn clmNumber6;
         private DataGridViewTextBoxColumn clmText6;
+        private Label lblStation1AlarmsFilePath;
+        private DataGridView dgvStation1Alarms;
+        private DataGridViewTextBoxColumn s1AlarmNumber;
+        private DataGridViewTextBoxColumn s1AlarmText;
+        private TreeView tvStation1Alarms;
     }
 }

@@ -239,6 +239,57 @@ namespace ImportTool
                 }
             }
 
+
+            //serach for the station 1 path for the alarms file S1_Alarms.TcTLO and put the path in lblStation1AlarmsFilePath
+            string station1AlarmsFile = Directory.GetFiles(Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty, "S1_Alarms.TcTLO", SearchOption.AllDirectories).FirstOrDefault();
+            lblStation1AlarmsFilePath.Text = station1AlarmsFile ?? "Alarms file not found.";
+
+            //find the following xml in the lblStation1AlarmsFilePath file and populate into tvStation1Alarms
+            //v n = "TextID" > "0" </ v >
+            // <v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v>
+            tvStation1Alarms.Nodes.Clear();
+            if (File.Exists(station1AlarmsFile))
+            {
+                string[] alarmFileLines = File.ReadAllLines(station1AlarmsFile);
+                TreeNode rootAlarmNode = new TreeNode("Alarms");
+                for (int i = 0; i < alarmFileLines.Length; i++)
+                {
+                    string line = alarmFileLines[i];
+                    if (line.Contains("<v n=\"TextID\">"))
+                    {
+                        int gt = line.IndexOf('>');
+                        int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                        if (gt >= 0 && lt > gt)
+                        {
+                            string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                            string textID = inner.Trim().Trim('"');
+                            // Look ahead for TextDefault
+                            string textDefault = "";
+                            if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                            {
+                                string nextLine = alarmFileLines[i + 1];
+                                int gtDef = nextLine.IndexOf('>');
+                                int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
+                                if (gtDef >= 0 && ltDef > gtDef)
+                                {
+                                    string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1); // e.g. "\"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default\""
+                                    textDefault = innerDef.Trim().Trim('"');
+                                }
+                            }
+                            TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
+                            rootAlarmNode.Nodes.Add(alarmNode);
+                        }
+                    }
+                }
+                tvStation1Alarms.Nodes.Add(rootAlarmNode);
+                tvStation1Alarms.ExpandAll();
+            }
+
+
+
+
+
+
             progressDlg.SetProgress(100, "Finished");
             progressDlg.Close();
         }
