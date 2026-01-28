@@ -235,33 +235,113 @@ namespace ImportTool
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            //search for the MotionRowText.TcTLO file in the selected project folder or sub folder
-            string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
-            if (string.IsNullOrEmpty(projectDirectory) || !Directory.Exists(projectDirectory))
-            {
-                //messagebox to show file found
-                MessageBox.Show("Please load a valid TOAST project first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string[] motionRowTextFiles = Directory.GetFiles(projectDirectory, "MotionRowText.TcTLO", SearchOption.AllDirectories);
-            if (motionRowTextFiles.Length == 0)
-            {
-                //messagebox to show file not found
-                MessageBox.Show("MotionRowText.TcTLO file not found in the project.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string motionRowTextFilePath = motionRowTextFiles[0];
-
-            if (dgvStation1.Rows.Count == 0)
-            {
-                //messagebox to show dgvStation1 is empty
-                MessageBox.Show("No data to export in Station 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            /*
+            Pseudocode / Plan (detailed):
+            - Validate project directory exists and find MotionRowText.TcTLO file.
+            - Build a dictionary textMap mapping TextID -> TextDefault by scanning all station DataGridViews (1..6).
+              For each station:
+                - Get corresponding DataGridView (dgv).
+                - For each row in dgv (skip new-row template):
+                  - Determine column names for this station:
+                    - clmNumberColumn = "clmNumber" + stationNumber
+                    - clmTextColumn   = "clmText"   + stationNumber
+                  - If dgv.Columns contains clmNumberColumn, read id from that column.
+                    Otherwise fall back to first column index 0.
+                  - If dgv.Columns contains clmTextColumn, read text from that column.
+                    Otherwise fall back to second column index 1 (if available).
+                  - Trim and validate id; if valid store/overwrite textMap[id] = textDefault.
+            - If no entries in textMap show a warning and abort.
+            - Read MotionRowText.TcTLO into fileLines and create newLines.
+            - For each line in fileLines:
+              - If line contains "<v n=\"TextID\">" extract the id value.
+              - If textMap contains that id:
+                - Remove any previously injected TextDefault line at end of newLines.
+                - Add the TextID line.
+                - Determine indentation from the TextID line and inject a new TextDefault line with the mapped text.
+                - Skip any immediate following original TextDefault lines in fileLines.
+              - Otherwise append the line unchanged.
+            - Write newLines back to the file and show success message.
+            - Catch exceptions and show error message.
+            */
 
             try
             {
+                string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
+                if (string.IsNullOrEmpty(projectDirectory) || !Directory.Exists(projectDirectory))
+                {
+                    MessageBox.Show("Please load a valid TOAST project first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string[] motionRowTextFiles = Directory.GetFiles(projectDirectory, "MotionRowText.TcTLO", SearchOption.AllDirectories);
+                if (motionRowTextFiles.Length == 0)
+                {
+                    MessageBox.Show("MotionRowText.TcTLO file not found in the project.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string motionRowTextFilePath = motionRowTextFiles[0];
+
+                // Build lookup of TextID -> TextDefault from all station DataGridViews (1..6)
+                var textMap = new Dictionary<string, string>();
+                for (int stationNumber = 1; stationNumber <= 6; stationNumber++)
+                {
+                    DataGridView dgv = stationNumber switch
+                    {
+                        1 => dgvStation1,
+                        2 => dgvStation2,
+                        3 => dgvStation3,
+                        4 => dgvStation4,
+                        5 => dgvStation5,
+                        6 => dgvStation6,
+                        _ => null
+                    };
+                    if (dgv == null) continue;
+
+                    string clmNumberName = $"clmNumber{stationNumber}";
+                    string clmTextName = $"clmText{stationNumber}";
+
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        if (row == null || row.IsNewRow) continue;
+
+                        // Try to access by station-specific column name first, fall back to index if necessary
+                        object idObj = null;
+                        object textObj = null;
+
+                        if (dgv.Columns.Contains(clmNumberName))
+                        {
+                            idObj = row.Cells[clmNumberName].Value;
+                        }
+                        else if (row.Cells.Count > 0)
+                        {
+                            idObj = row.Cells[0].Value;
+                        }
+
+                        if (dgv.Columns.Contains(clmTextName))
+                        {
+                            textObj = row.Cells[clmTextName].Value;
+                        }
+                        else if (row.Cells.Count > 1)
+                        {
+                            textObj = row.Cells[1].Value;
+                        }
+
+                        string id = idObj?.ToString()?.Trim();
+                        if (string.IsNullOrEmpty(id)) continue;
+
+                        string textDefault = textObj?.ToString() ?? string.Empty;
+
+                        // store/overwrite mapping
+                        textMap[id] = textDefault;
+                    }
+                }
+
+                if (textMap.Count == 0)
+                {
+                    MessageBox.Show("No TextID/Text entries found in the station tables to export.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 List<string> fileLines = File.ReadAllLines(motionRowTextFilePath).ToList();
                 List<string> newLines = new List<string>();
 
@@ -270,43 +350,41 @@ namespace ImportTool
                     string line = fileLines[i];
                     bool matched = false;
 
-                    // Try to match this line against any TextID from dgvStation1
-                    for (int r = 0; r < dgvStation1.Rows.Count; r++)
+                    if (line.Contains("<v n=\"TextID\">"))
                     {
-                        var row = dgvStation1.Rows[r];
-                        if (row.Cells["clmNumber"].Value == null) continue;
-                        string textID = row.Cells["clmNumber"].Value.ToString();
-
-                        if (line.Contains($"<v n=\"TextID\">\"{textID}\"</v>"))
+                        int gt = line.IndexOf('>');
+                        int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                        if (gt >= 0 && lt > gt)
                         {
-                            // Remove any TextDefault that was directly above (already added to newLines)
-                            if (newLines.Count > 0 && newLines.Last().Contains("<v n=\"TextDefault\">"))
+                            string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"10000\""
+                            string id = inner.Trim().Trim('"');
+                            if (!string.IsNullOrEmpty(id) && textMap.TryGetValue(id, out string textDefault))
                             {
-                                newLines.RemoveAt(newLines.Count - 1);
+                                // If the last line we added was a TextDefault, remove it (preserve earlier behavior)
+                                if (newLines.Count > 0 && newLines.Last().Contains("<v n=\"TextDefault\">"))
+                                {
+                                    newLines.RemoveAt(newLines.Count - 1);
+                                }
+
+                                // Append the TextID line
+                                newLines.Add(line);
+
+                                // Determine indentation from the current line (leading whitespace)
+                                int indentLen = 0;
+                                while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
+                                string indent = line.Substring(0, indentLen);
+
+                                // Append the new TextDefault line with same indentation
+                                newLines.Add(indent + $"<v n=\"TextDefault\">\"{textDefault}\"</v>");
+
+                                // Skip any immediate following original TextDefault lines
+                                while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                                {
+                                    i++;
+                                }
+
+                                matched = true;
                             }
-
-                            // Append the TextID line
-                            newLines.Add(line);
-
-                            // Determine indentation from the current line (leading whitespace)
-                            int indentLen = 0;
-                            while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
-                            string indent = line.Substring(0, indentLen);
-
-                            // Prepare TextDefault value (use empty string if null)
-                            string textDefault = row.Cells["clmText"].Value?.ToString() ?? "";
-
-                            // Insert the new TextDefault line (with same indentation)
-                            newLines.Add(indent + $"<v n=\"TextDefault\">\"{textDefault}\"</v>");
-
-                            // Skip any immediate following original TextDefault lines (remove "below" duplicates)
-                            while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
-                            {
-                                i++;
-                            }
-
-                            matched = true;
-                            break; // matched this TextID, move to next file line
                         }
                     }
 
@@ -327,6 +405,55 @@ namespace ImportTool
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

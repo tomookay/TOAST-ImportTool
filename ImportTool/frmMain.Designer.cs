@@ -36,39 +36,39 @@
             tabStations = new TabControl();
             tabPage1 = new TabPage();
             dgvStation1 = new DataGridView();
-            clmNumber = new DataGridViewTextBoxColumn();
-            clmText = new DataGridViewTextBoxColumn();
             tabPage2 = new TabPage();
             dgvStation2 = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             tvStation2 = new TreeView();
             lstbxStation2Files = new ListBox();
             tabPage3 = new TabPage();
             dgvStation3 = new DataGridView();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             tvStation3 = new TreeView();
             lstbxStation3Files = new ListBox();
             tabPage4 = new TabPage();
             dgvStation4 = new DataGridView();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             tvStation4 = new TreeView();
             lstbxStation4Files = new ListBox();
             tabPage5 = new TabPage();
             dgvStation5 = new DataGridView();
-            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
             tvStation5 = new TreeView();
             lstbxStation5Files = new ListBox();
             tabPage6 = new TabPage();
             dgvStation6 = new DataGridView();
-            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
             tvStation6 = new TreeView();
             lstbxStation6Files = new ListBox();
             btnExport = new Button();
+            clmNumber1 = new DataGridViewTextBoxColumn();
+            clmText1 = new DataGridViewTextBoxColumn();
+            clmNumber2 = new DataGridViewTextBoxColumn();
+            clmText2 = new DataGridViewTextBoxColumn();
+            clmNumber3 = new DataGridViewTextBoxColumn();
+            clmText3 = new DataGridViewTextBoxColumn();
+            clmNumber4 = new DataGridViewTextBoxColumn();
+            clmText4 = new DataGridViewTextBoxColumn();
+            clmNumber5 = new DataGridViewTextBoxColumn();
+            clmText5 = new DataGridViewTextBoxColumn();
+            clmNumber6 = new DataGridViewTextBoxColumn();
+            clmText6 = new DataGridViewTextBoxColumn();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
@@ -153,21 +153,11 @@
             // dgvStation1
             // 
             dgvStation1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber, clmText });
+            dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber1, clmText1 });
             dgvStation1.Location = new Point(6, 310);
             dgvStation1.Name = "dgvStation1";
             dgvStation1.Size = new Size(843, 158);
             dgvStation1.TabIndex = 3;
-            // 
-            // clmNumber
-            // 
-            clmNumber.HeaderText = "Number";
-            clmNumber.Name = "clmNumber";
-            // 
-            // clmText
-            // 
-            clmText.HeaderText = "Text";
-            clmText.Name = "clmText";
             // 
             // tabPage2
             // 
@@ -185,21 +175,11 @@
             // dgvStation2
             // 
             dgvStation2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation2.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2 });
+            dgvStation2.Columns.AddRange(new DataGridViewColumn[] { clmNumber2, clmText2 });
             dgvStation2.Location = new Point(6, 310);
             dgvStation2.Name = "dgvStation2";
             dgvStation2.Size = new Size(843, 158);
             dgvStation2.TabIndex = 5;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.HeaderText = "Number";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.HeaderText = "Text";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
             // tvStation2
             // 
@@ -232,21 +212,11 @@
             // dgvStation3
             // 
             dgvStation3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation3.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
+            dgvStation3.Columns.AddRange(new DataGridViewColumn[] { clmNumber3, clmText3 });
             dgvStation3.Location = new Point(6, 310);
             dgvStation3.Name = "dgvStation3";
             dgvStation3.Size = new Size(843, 158);
             dgvStation3.TabIndex = 5;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.HeaderText = "Number";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.HeaderText = "Text";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // tvStation3
             // 
@@ -279,21 +249,11 @@
             // dgvStation4
             // 
             dgvStation4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation4.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            dgvStation4.Columns.AddRange(new DataGridViewColumn[] { clmNumber4, clmText4 });
             dgvStation4.Location = new Point(6, 310);
             dgvStation4.Name = "dgvStation4";
             dgvStation4.Size = new Size(843, 158);
             dgvStation4.TabIndex = 7;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.HeaderText = "Number";
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.HeaderText = "Text";
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // tvStation4
             // 
@@ -326,21 +286,11 @@
             // dgvStation5
             // 
             dgvStation5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation5.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8 });
+            dgvStation5.Columns.AddRange(new DataGridViewColumn[] { clmNumber5, clmText5 });
             dgvStation5.Location = new Point(6, 310);
             dgvStation5.Name = "dgvStation5";
             dgvStation5.Size = new Size(843, 158);
             dgvStation5.TabIndex = 7;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            dataGridViewTextBoxColumn7.HeaderText = "Number";
-            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            dataGridViewTextBoxColumn8.HeaderText = "Text";
-            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
             // tvStation5
             // 
@@ -373,21 +323,11 @@
             // dgvStation6
             // 
             dgvStation6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation6.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10 });
+            dgvStation6.Columns.AddRange(new DataGridViewColumn[] { clmNumber6, clmText6 });
             dgvStation6.Location = new Point(6, 310);
             dgvStation6.Name = "dgvStation6";
             dgvStation6.Size = new Size(843, 158);
             dgvStation6.TabIndex = 7;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            dataGridViewTextBoxColumn9.HeaderText = "Number";
-            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            dataGridViewTextBoxColumn10.HeaderText = "Text";
-            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
             // tvStation6
             // 
@@ -413,6 +353,66 @@
             btnExport.Text = "Export to MotionRowText.TcTLO";
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
+            // 
+            // clmNumber1
+            // 
+            clmNumber1.HeaderText = "Number";
+            clmNumber1.Name = "clmNumber1";
+            // 
+            // clmText1
+            // 
+            clmText1.HeaderText = "Text";
+            clmText1.Name = "clmText1";
+            // 
+            // clmNumber2
+            // 
+            clmNumber2.HeaderText = "Number";
+            clmNumber2.Name = "clmNumber2";
+            // 
+            // clmText2
+            // 
+            clmText2.HeaderText = "Text";
+            clmText2.Name = "clmText2";
+            // 
+            // clmNumber3
+            // 
+            clmNumber3.HeaderText = "Number";
+            clmNumber3.Name = "clmNumber3";
+            // 
+            // clmText3
+            // 
+            clmText3.HeaderText = "Text";
+            clmText3.Name = "clmText3";
+            // 
+            // clmNumber4
+            // 
+            clmNumber4.HeaderText = "Number";
+            clmNumber4.Name = "clmNumber4";
+            // 
+            // clmText4
+            // 
+            clmText4.HeaderText = "Text";
+            clmText4.Name = "clmText4";
+            // 
+            // clmNumber5
+            // 
+            clmNumber5.HeaderText = "Number";
+            clmNumber5.Name = "clmNumber5";
+            // 
+            // clmText5
+            // 
+            clmText5.HeaderText = "Text";
+            clmText5.Name = "clmText5";
+            // 
+            // clmNumber6
+            // 
+            clmNumber6.HeaderText = "Number";
+            clmNumber6.Name = "clmNumber6";
+            // 
+            // clmText6
+            // 
+            clmText6.HeaderText = "Text";
+            clmText6.Name = "clmText6";
             // 
             // frmMain
             // 
@@ -466,23 +466,23 @@
         private TreeView tvStation6;
         private ListBox lstbxStation6Files;
         private DataGridView dgvStation1;
-        private DataGridViewTextBoxColumn clmNumber;
-        private DataGridViewTextBoxColumn clmText;
         private DataGridView dgvStation2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridView dgvStation3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridView dgvStation4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridView dgvStation5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridView dgvStation6;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private Button btnExport;
+        private DataGridViewTextBoxColumn clmNumber1;
+        private DataGridViewTextBoxColumn clmText1;
+        private DataGridViewTextBoxColumn clmNumber2;
+        private DataGridViewTextBoxColumn clmText2;
+        private DataGridViewTextBoxColumn clmNumber3;
+        private DataGridViewTextBoxColumn clmText3;
+        private DataGridViewTextBoxColumn clmNumber4;
+        private DataGridViewTextBoxColumn clmText4;
+        private DataGridViewTextBoxColumn clmNumber5;
+        private DataGridViewTextBoxColumn clmText5;
+        private DataGridViewTextBoxColumn clmNumber6;
+        private DataGridViewTextBoxColumn clmText6;
     }
 }
