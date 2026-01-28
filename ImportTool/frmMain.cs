@@ -211,14 +211,17 @@ namespace ImportTool
                                 // Add spares as needed
                                 if (childNode.Text == "Advance" || childNode.Text == "Return" || childNode.Text == "Motion")
                                 {
-                                    targetDataGridView.Rows.Add(baseNumber + rowOffset, "spare");
+                                    int spareId = baseNumber + rowOffset;
+                                    // include the numeric id on the same line as "spare"
+                                    targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
                                     rowOffset++;
                                 }
                             }
                             // Add additional spares to reach 20 entries per row
                             while (rowOffset < 19)
                             {
-                                targetDataGridView.Rows.Add(baseNumber + rowOffset, "spare");
+                                int spareId = baseNumber + rowOffset;
+                                targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
                                 rowOffset++;
                             }
                             baseNumber += 20; // Move to the next block for the next row
@@ -300,6 +303,9 @@ namespace ImportTool
             }
         }
     }
+
+
+
 
 
 
