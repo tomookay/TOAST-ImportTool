@@ -23,6 +23,12 @@ namespace ImportTool
             }
 
 
+            // Prepare cancellation and progress UI
+            var cts = new System.Threading.CancellationTokenSource();
+            using var progressDlg = new frmProgress(cts);
+            progressDlg.Show(this);
+
+
             //search for all files with the file extention and name in the selected project folder or sub folder
             //S1_01_Motion_1.TcPOU, S1_01_Motion_2.TcPOU, etc
             //S2_01_Motion_1.TcPOU, S2_01_Motion_2.TcPOU etc
@@ -139,6 +145,8 @@ namespace ImportTool
                         rootNode.Nodes.Add(motionNode);
 
                         targetTreeView.Nodes.Add(rootNode);
+
+
                     }
                     catch (Exception ex)
                     {
@@ -230,6 +238,9 @@ namespace ImportTool
 
                 }
             }
+
+            progressDlg.SetProgress(100, "Finished");
+            progressDlg.Close();
         }
 
 
@@ -265,7 +276,17 @@ namespace ImportTool
             */
 
             try
+
+
             {
+
+
+                // Prepare cancellation and progress UI
+                var cts = new System.Threading.CancellationTokenSource();
+                using var progressDlg = new frmProgress(cts);
+                progressDlg.Show(this);
+
+
                 string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
                 if (string.IsNullOrEmpty(projectDirectory) || !Directory.Exists(projectDirectory))
                 {
@@ -345,57 +366,107 @@ namespace ImportTool
                 List<string> fileLines = File.ReadAllLines(motionRowTextFilePath).ToList();
                 List<string> newLines = new List<string>();
 
-                for (int i = 0; i < fileLines.Count; i++)
+                //// Prepare cancellation and progress UI
+                //var cts = new System.Threading.CancellationTokenSource();
+                //using var progressDlg = new frmProgress(cts);
+                //progressDlg.Show(this);
+
+                var token = cts.Token;
+
+                Task.Run(() =>
                 {
-                    string line = fileLines[i];
-                    bool matched = false;
-
-                    if (line.Contains("<v n=\"TextID\">"))
+                    try
                     {
-                        int gt = line.IndexOf('>');
-                        int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
-                        if (gt >= 0 && lt > gt)
+                        for (int i = 0; i < fileLines.Count; i++)
                         {
-                            string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"10000\""
-                            string id = inner.Trim().Trim('"');
-                            if (!string.IsNullOrEmpty(id) && textMap.TryGetValue(id, out string textDefault))
+                            if (token.IsCancellationRequested)
+                                token.ThrowIfCancellationRequested();
+
+                            string line = fileLines[i];
+                            bool matched = false;
+
+                            if (line.Contains("<v n=\"TextID\">"))
                             {
-                                // If the last line we added was a TextDefault, remove it (preserve earlier behavior)
-                                if (newLines.Count > 0 && newLines.Last().Contains("<v n=\"TextDefault\">"))
+                                int gt = line.IndexOf('>');
+                                int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                                if (gt >= 0 && lt > gt)
                                 {
-                                    newLines.RemoveAt(newLines.Count - 1);
-                                }
+                                    string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"10000\""
+                                    string id = inner.Trim().Trim('"');
+                                    if (!string.IsNullOrEmpty(id) && textMap.TryGetValue(id, out string textDefault))
+                                    {
+                                        // If the last line we added was a TextDefault, remove it (preserve earlier behavior)
+                                        if (newLines.Count > 0 && newLines.Last().Contains("<v n=\"TextDefault\">"))
+                                        {
+                                            newLines.RemoveAt(newLines.Count - 1);
+                                        }
 
-                                // Append the TextID line
+                                        // Append the TextID line
+                                        newLines.Add(line);
+
+                                        // Determine indentation from the current line (leading whitespace)
+                                        int indentLen = 0;
+                                        while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
+                                        string indent = line.Substring(0, indentLen);
+
+                                        // Append the new TextDefault line with same indentation
+                                        newLines.Add(indent + $"<v n=\"TextDefault\">\"{textDefault}\"</v>");
+
+                                        // Skip any immediate following original TextDefault lines
+                                        while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                                        {
+                                            i++;
+                                        }
+
+                                        matched = true;
+                                    }
+                                }
+                            }
+
+                            if (!matched)
+                            {
                                 newLines.Add(line);
+                            }
 
-                                // Determine indentation from the current line (leading whitespace)
-                                int indentLen = 0;
-                                while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
-                                string indent = line.Substring(0, indentLen);
-
-                                // Append the new TextDefault line with same indentation
-                                newLines.Add(indent + $"<v n=\"TextDefault\">\"{textDefault}\"</v>");
-
-                                // Skip any immediate following original TextDefault lines
-                                while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
-                                {
-                                    i++;
-                                }
-
-                                matched = true;
+                            // Update progress periodically (every 20 lines or on last)
+                            if ((i % 20) == 0 || i == fileLines.Count - 1)
+                            {
+                                int percent = fileLines.Count == 0 ? 100 : (int)(((i + 1) * 100L) / fileLines.Count);
+                                progressDlg.SetProgress(percent, $"Processing line {i + 1} of {fileLines.Count} ({percent}%)");
                             }
                         }
-                    }
 
-                    if (!matched)
+                        // If canceled after loop exit, respect it
+                        if (token.IsCancellationRequested)
+                            token.ThrowIfCancellationRequested();
+
+                        File.WriteAllLines(motionRowTextFilePath, newLines);
+
+                        // Close progress and notify success on UI thread
+                        progressDlg.BeginInvoke(new Action(() =>
+                        {
+                            progressDlg.SetProgress(100, "Finished");
+                            progressDlg.Close();
+                            MessageBox.Show(this, "Data exported successfully to MotionRowText.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }));
+                    }
+                    catch (OperationCanceledException)
                     {
-                        newLines.Add(line);
+                        progressDlg.BeginInvoke(new Action(() =>
+                        {
+                            progressDlg.Close();
+                            MessageBox.Show(this, "Export canceled by user.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }));
                     }
-                }
-
-                File.WriteAllLines(motionRowTextFilePath, newLines);
-                MessageBox.Show("Data exported successfully to MotionRowText.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    catch (Exception ex)
+                    {
+                        progressDlg.BeginInvoke(new Action(() =>
+                        {
+                            progressDlg.Close();
+                            MessageBox.Show(this, $"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }));
+                    }
+                }, token);
             }
             catch (Exception ex)
             {
@@ -405,6 +476,62 @@ namespace ImportTool
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
