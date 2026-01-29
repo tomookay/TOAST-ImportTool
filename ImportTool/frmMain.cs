@@ -170,146 +170,124 @@ namespace ImportTool
                     6 => dgvStation6,
                     _ => null
                 };
-                //insert the data rootNode into the dgvStation1 with each value in a new row
-                //start the number at station number (1-6) * 10000
-                //the numbers are allways populated from 10000 to 19999 for station 1, and for other stations accordingly
-                //the following pattern is used
-                //10000 - advanceCoilTextSym
-                //10001 - advanceDepthTextSym
-                //10002 - spare
-                //10003 - returnCoilTextSym
-                //10004 - returnDepthTextSym
-                //10005 - spare
-                //10006 - motionNameSym
-                //10007 - spare
-                //10008 - spare
-                //10009 - spare
-                //10010 - advanceCoilTextRel
-                //10011 - advanceDepthTextRel
-                //10012 - spare
-                //10013 - returnCoilTextRel
-                //10014 - returnDepthTextRel
-                //10015 - spare
-                //10016 - motionNameRel
-                //10017 - spare
-                //10018 - spare
-                //10019 - spare
-                //10020 - spare
-                //start of next row at 10021
 
-                //create 20 strings based on the above pattern for each rootnode xml node parsed
                 if (targetDataGridView != null)
                 {
-                    int baseNumber = stationNumber * 10000;
+                    // Clear existing rows to avoid accumulating rows across repeated loads
+                    targetDataGridView.Rows.Clear();
+                    targetDataGridView.SuspendLayout();
+
+                    int motionIndex = 0; // counts only processed "Row " nodes so baseNumber is stable per motion
+
                     foreach (TreeNode rootNode in targetTreeView.Nodes)
                     {
-                        if (rootNode.Text.StartsWith("Row "))
+                        if (!rootNode.Text.StartsWith("Row "))
+                            continue;
+
+                        int baseNumber = stationNumber * 10000 + motionIndex * 20;
+                        int rowOffset = 0;
+
+                        // Iterate Advance / Return / Motion groups and their data nodes
+                        foreach (TreeNode childNode in rootNode.Nodes)
                         {
-                            int rowOffset = 0;
-                            foreach (TreeNode childNode in rootNode.Nodes)
+                            foreach (TreeNode dataNode in childNode.Nodes)
                             {
-                                foreach (TreeNode dataNode in childNode.Nodes)
-                                {
-                                    if (dataNode.Text != null)
-                                    {
-                                        targetDataGridView.Rows.Add(baseNumber + rowOffset, dataNode.Text);
-                                    }
-                                    rowOffset++;
-                                }
-                                // Add spares as needed
-                                if (childNode.Text == "Advance" || childNode.Text == "Return" || childNode.Text == "Motion")
-                                {
-                                    int spareId = baseNumber + rowOffset;
-                                    // include the numeric id on the same line as "spare"
-                                    targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
-                                    rowOffset++;
-                                }
-                            }
-                            // Add additional spares to reach 20 entries per row
-                            while (rowOffset < 20)
-                            {
-                                int spareId = baseNumber + rowOffset;
-                                targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
+                                string text = dataNode?.Text ?? string.Empty;
+                                targetDataGridView.Rows.Add(baseNumber + rowOffset, text);
                                 rowOffset++;
                             }
-                            baseNumber += 20; // Move to the next block for the next row
+
+                            // Add one spare after each child-group to keep fields in predictable positions
+                            int spareId = baseNumber + rowOffset;
+                            targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
+                            rowOffset++;
                         }
-                    }
 
-                }
-            }
-
-
-            //serach for the station 1 path for the alarms file S1_Alarms.TcTLO and put the path in lblStation1AlarmsFilePath
-            string station1AlarmsFile = Directory.GetFiles(Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty, "S1_Alarms.TcTLO", SearchOption.AllDirectories).FirstOrDefault();
-            lblStation1AlarmsFilePath.Text = station1AlarmsFile ?? "Alarms file not found.";
-
-            //find the following xml in the lblStation1AlarmsFilePath file and populate into tvStation1Alarms
-            //v n = "TextID" > "0" </ v >
-            // <v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v>
-            tvStation1Alarms.Nodes.Clear();
-            if (File.Exists(station1AlarmsFile))
-            {
-                string[] alarmFileLines = File.ReadAllLines(station1AlarmsFile);
-                TreeNode rootAlarmNode = new TreeNode("Alarms");
-                for (int i = 0; i < alarmFileLines.Length; i++)
-                {
-                    string line = alarmFileLines[i];
-                    if (line.Contains("<v n=\"TextID\">"))
-                    {
-                        int gt = line.IndexOf('>');
-                        int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
-                        if (gt >= 0 && lt > gt)
+                        // Pad the block to exactly 20 entries
+                        while (rowOffset < 20)
                         {
-                            string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
-                            string textID = inner.Trim().Trim('"');
-                            // Look ahead for TextDefault
-                            string textDefault = "";
-                            if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                            int spareId = baseNumber + rowOffset;
+                            targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
+                            rowOffset++;
+                        }
+
+                        motionIndex++;
+                    }
+
+                    targetDataGridView.ResumeLayout();
+                }
+
+
+                //serach for the station 1 path for the alarms file S1_Alarms.TcTLO and put the path in lblStation1AlarmsFilePath
+                string station1AlarmsFile = Directory.GetFiles(Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty, "S1_Alarms.TcTLO", SearchOption.AllDirectories).FirstOrDefault();
+                lblStation1AlarmsFilePath.Text = station1AlarmsFile ?? "Alarms file not found.";
+
+                //find the following xml in the lblStation1AlarmsFilePath file and populate into tvStation1Alarms
+                //v n = "TextID" > "0" </ v >
+                // <v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v>
+                tvStation1Alarms.Nodes.Clear();
+                if (File.Exists(station1AlarmsFile))
+                {
+                    string[] alarmFileLines = File.ReadAllLines(station1AlarmsFile);
+                    TreeNode rootAlarmNode = new TreeNode("Alarms");
+                    for (int i = 0; i < alarmFileLines.Length; i++)
+                    {
+                        string line = alarmFileLines[i];
+                        if (line.Contains("<v n=\"TextID\">"))
+                        {
+                            int gt = line.IndexOf('>');
+                            int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                            if (gt >= 0 && lt > gt)
                             {
-                                string nextLine = alarmFileLines[i + 1];
-                                int gtDef = nextLine.IndexOf('>');
-                                int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
-                                if (gtDef >= 0 && ltDef > gtDef)
+                                string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                                string textID = inner.Trim().Trim('"');
+                                // Look ahead for TextDefault
+                                string textDefault = "";
+                                if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
                                 {
-                                    string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1); // e.g. "\"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default\""
-                                    textDefault = innerDef.Trim().Trim('"');
+                                    string nextLine = alarmFileLines[i + 1];
+                                    int gtDef = nextLine.IndexOf('>');
+                                    int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
+                                    if (gtDef >= 0 && ltDef > gtDef)
+                                    {
+                                        string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1); // e.g. "\"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default\""
+                                        textDefault = innerDef.Trim().Trim('"');
+                                    }
                                 }
+                                TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
+                                rootAlarmNode.Nodes.Add(alarmNode);
                             }
-                            TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
-                            rootAlarmNode.Nodes.Add(alarmNode);
                         }
                     }
-                }
-                tvStation1Alarms.Nodes.Add(rootAlarmNode);
-                tvStation1Alarms.ExpandAll();
+                    tvStation1Alarms.Nodes.Add(rootAlarmNode);
+                    tvStation1Alarms.ExpandAll();
 
-                //populate dgvStation1Alarms with elements from tvStation1Alarms into the colums s1AlarmNumber and s1AlarmText
-                foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
-                {
-                    string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
-                    if (parts.Length == 2)
+                    //populate dgvStation1Alarms with elements from tvStation1Alarms into the colums s1AlarmNumber and s1AlarmText
+                    foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
                     {
-                        string alarmNumber = parts[0];
-                        string alarmText = parts[1];
-                        dgvStation1Alarms.Rows.Add(alarmNumber, alarmText);
+                        string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
+                        if (parts.Length == 2)
+                        {
+                            string alarmNumber = parts[0];
+                            string alarmText = parts[1];
+                            dgvStation1Alarms.Rows.Add(alarmNumber, alarmText);
+                        }
                     }
+
+
+
+
                 }
 
 
 
 
+
+
+                progressDlg.SetProgress(100, "Finished");
+                progressDlg.Close();
             }
-
-
-
-
-
-
-            progressDlg.SetProgress(100, "Finished");
-            progressDlg.Close();
         }
-
 
         private void btnExport_Click(object sender, EventArgs e)
         {
@@ -346,7 +324,6 @@ namespace ImportTool
 
 
             {
-
 
                 // Prepare cancellation and progress UI
                 var cts = new System.Threading.CancellationTokenSource();
@@ -566,6 +543,11 @@ namespace ImportTool
 
             dgvStation1Alarms.Rows.Clear();
 
+            // Prevent UI re-layout while we bulk-add rows and disable automatic column sorting
+            dgvStation1Alarms.SuspendLayout();
+            foreach (DataGridViewColumn col in dgvStation1Alarms.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
             // Build id -> text map from dgvStation1
             var map = new Dictionary<int, string>();
             bool hasNamedCols = dgvStation1.Columns.Contains("clmNumber1") && dgvStation1.Columns.Contains("clmText1");
@@ -600,10 +582,6 @@ namespace ImportTool
             {
                 return map.TryGetValue(id, out var t) && !string.IsNullOrEmpty(t) ? t : $"<{id}>";
             }
-
-
-            // Use a display counter so s1AlarmNumber column is sequential from 0 upwards
-            int displayIndex = 0;
 
             // For each motion row generate 10 alarms based on id arithmetic and lookup
             foreach (DataGridViewRow motionRow in dgvStation1.Rows)
@@ -646,21 +624,13 @@ namespace ImportTool
 
                     int actualId = baseNumber + i;
 
-                    // Add row with sequential display index (0,1,2...) in s1AlarmNumber column
-                    // and the generated alarmText in the text column.
-                    // Store the actual numeric alarm id in the row.Tag for later reference if needed.
-                    int newRowIndex = dgvStation1Alarms.Rows.Add(displayIndex, alarmText);
+                    // Use the actual numeric alarm id as the displayed id so rows remain synchronized with the source IDs.
+                    int newRowIndex = dgvStation1Alarms.Rows.Add(actualId, alarmText);
                     dgvStation1Alarms.Rows[newRowIndex].Tag = actualId;
-
-                    displayIndex++;
-
-
-                    // dgvStation1Alarms.Rows.Add(baseNumber + i, alarmText);
-
-                    //in dgvStation1Alarms, renumber the s1AlarmNumber colunm from 0 onwards
-
                 }
             }
+
+            dgvStation1Alarms.ResumeLayout();
         }
     }
 }
