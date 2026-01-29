@@ -35,14 +35,17 @@
             lstbxStation1Files = new ListBox();
             tabStations = new TabControl();
             tabPage1 = new TabPage();
-            tvStation1Alarms = new TreeView();
             dgvStation1Alarms = new DataGridView();
             s1AlarmNumber = new DataGridViewTextBoxColumn();
             s1AlarmText = new DataGridViewTextBoxColumn();
-            lblStation1AlarmsFilePath = new Label();
             dgvStation1 = new DataGridView();
             clmNumber1 = new DataGridViewTextBoxColumn();
             clmText1 = new DataGridViewTextBoxColumn();
+            grpBoxAutoAlarmS1 = new GroupBox();
+            btnExporttoAlarmS1 = new Button();
+            btnApplyAlarmsS1 = new Button();
+            tvStation1Alarms = new TreeView();
+            lblStation1AlarmsFilePath = new Label();
             tabPage2 = new TabPage();
             dgvStation2 = new DataGridView();
             clmNumber2 = new DataGridViewTextBoxColumn();
@@ -78,6 +81,7 @@
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
+            grpBoxAutoAlarmS1.SuspendLayout();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
             tabPage3.SuspendLayout();
@@ -140,39 +144,31 @@
             tabStations.Location = new Point(19, 47);
             tabStations.Name = "tabStations";
             tabStations.SelectedIndex = 0;
-            tabStations.Size = new Size(863, 505);
+            tabStations.Size = new Size(1000, 556);
             tabStations.TabIndex = 3;
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(tvStation1Alarms);
             tabPage1.Controls.Add(dgvStation1Alarms);
-            tabPage1.Controls.Add(lblStation1AlarmsFilePath);
             tabPage1.Controls.Add(dgvStation1);
             tabPage1.Controls.Add(tvStation1);
             tabPage1.Controls.Add(lstbxStation1Files);
+            tabPage1.Controls.Add(grpBoxAutoAlarmS1);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(855, 477);
+            tabPage1.Size = new Size(992, 528);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Station 1";
             tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tvStation1Alarms
-            // 
-            tvStation1Alarms.Location = new Point(421, 162);
-            tvStation1Alarms.Name = "tvStation1Alarms";
-            tvStation1Alarms.Size = new Size(405, 142);
-            tvStation1Alarms.TabIndex = 7;
             // 
             // dgvStation1Alarms
             // 
             dgvStation1Alarms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStation1Alarms.Columns.AddRange(new DataGridViewColumn[] { s1AlarmNumber, s1AlarmText });
-            dgvStation1Alarms.Location = new Point(421, 310);
+            dgvStation1Alarms.Location = new Point(459, 348);
             dgvStation1Alarms.Name = "dgvStation1Alarms";
-            dgvStation1Alarms.Size = new Size(405, 158);
+            dgvStation1Alarms.Size = new Size(438, 120);
             dgvStation1Alarms.TabIndex = 6;
             // 
             // s1AlarmNumber
@@ -184,15 +180,6 @@
             // 
             s1AlarmText.HeaderText = "Text";
             s1AlarmText.Name = "s1AlarmText";
-            // 
-            // lblStation1AlarmsFilePath
-            // 
-            lblStation1AlarmsFilePath.Location = new Point(402, 132);
-            lblStation1AlarmsFilePath.Name = "lblStation1AlarmsFilePath";
-            lblStation1AlarmsFilePath.Size = new Size(424, 27);
-            lblStation1AlarmsFilePath.TabIndex = 5;
-            lblStation1AlarmsFilePath.Text = "No Station 1 Alarms Path Found...";
-            lblStation1AlarmsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // dgvStation1
             // 
@@ -213,6 +200,54 @@
             clmText1.HeaderText = "Text";
             clmText1.Name = "clmText1";
             // 
+            // grpBoxAutoAlarmS1
+            // 
+            grpBoxAutoAlarmS1.Controls.Add(btnExporttoAlarmS1);
+            grpBoxAutoAlarmS1.Controls.Add(btnApplyAlarmsS1);
+            grpBoxAutoAlarmS1.Controls.Add(tvStation1Alarms);
+            grpBoxAutoAlarmS1.Controls.Add(lblStation1AlarmsFilePath);
+            grpBoxAutoAlarmS1.Location = new Point(453, 151);
+            grpBoxAutoAlarmS1.Name = "grpBoxAutoAlarmS1";
+            grpBoxAutoAlarmS1.Size = new Size(450, 361);
+            grpBoxAutoAlarmS1.TabIndex = 8;
+            grpBoxAutoAlarmS1.TabStop = false;
+            grpBoxAutoAlarmS1.Text = "Auto Alarms S1";
+            // 
+            // btnExporttoAlarmS1
+            // 
+            btnExporttoAlarmS1.Location = new Point(317, 323);
+            btnExporttoAlarmS1.Name = "btnExporttoAlarmS1";
+            btnExporttoAlarmS1.Size = new Size(127, 23);
+            btnExporttoAlarmS1.TabIndex = 9;
+            btnExporttoAlarmS1.Text = "Export";
+            btnExporttoAlarmS1.UseVisualStyleBackColor = true;
+            // 
+            // btnApplyAlarmsS1
+            // 
+            btnApplyAlarmsS1.Location = new Point(6, 323);
+            btnApplyAlarmsS1.Name = "btnApplyAlarmsS1";
+            btnApplyAlarmsS1.Size = new Size(75, 23);
+            btnApplyAlarmsS1.TabIndex = 8;
+            btnApplyAlarmsS1.Text = "Apply";
+            btnApplyAlarmsS1.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS1.Click += btnApplyAlarmsS1_Click;
+            // 
+            // tvStation1Alarms
+            // 
+            tvStation1Alarms.Location = new Point(6, 49);
+            tvStation1Alarms.Name = "tvStation1Alarms";
+            tvStation1Alarms.Size = new Size(438, 142);
+            tvStation1Alarms.TabIndex = 7;
+            // 
+            // lblStation1AlarmsFilePath
+            // 
+            lblStation1AlarmsFilePath.Location = new Point(6, 19);
+            lblStation1AlarmsFilePath.Name = "lblStation1AlarmsFilePath";
+            lblStation1AlarmsFilePath.Size = new Size(438, 27);
+            lblStation1AlarmsFilePath.TabIndex = 5;
+            lblStation1AlarmsFilePath.Text = "No Station 1 Alarms Path Found...";
+            lblStation1AlarmsFilePath.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(dgvStation2);
@@ -221,7 +256,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(855, 477);
+            tabPage2.Size = new Size(992, 528);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Station 2";
             tabPage2.UseVisualStyleBackColor = true;
@@ -268,7 +303,7 @@
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(855, 477);
+            tabPage3.Size = new Size(992, 528);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Station 3";
             tabPage3.UseVisualStyleBackColor = true;
@@ -315,7 +350,7 @@
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(855, 477);
+            tabPage4.Size = new Size(992, 528);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Station 4";
             tabPage4.UseVisualStyleBackColor = true;
@@ -362,7 +397,7 @@
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(855, 477);
+            tabPage5.Size = new Size(992, 528);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Station 5";
             tabPage5.UseVisualStyleBackColor = true;
@@ -409,7 +444,7 @@
             tabPage6.Location = new Point(4, 24);
             tabPage6.Name = "tabPage6";
             tabPage6.Padding = new Padding(3);
-            tabPage6.Size = new Size(855, 477);
+            tabPage6.Size = new Size(992, 528);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Station 6";
             tabPage6.UseVisualStyleBackColor = true;
@@ -450,7 +485,7 @@
             // 
             // btnExport
             // 
-            btnExport.Location = new Point(12, 558);
+            btnExport.Location = new Point(19, 609);
             btnExport.Name = "btnExport";
             btnExport.Size = new Size(202, 30);
             btnExport.TabIndex = 4;
@@ -462,7 +497,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(884, 607);
+            ClientSize = new Size(1031, 651);
             Controls.Add(btnExport);
             Controls.Add(tabStations);
             Controls.Add(lblProjectPath);
@@ -473,6 +508,7 @@
             tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
+            grpBoxAutoAlarmS1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
             tabPage3.ResumeLayout(false);
@@ -534,5 +570,8 @@
         private DataGridViewTextBoxColumn s1AlarmNumber;
         private DataGridViewTextBoxColumn s1AlarmText;
         private TreeView tvStation1Alarms;
+        private GroupBox grpBoxAutoAlarmS1;
+        private Button btnExporttoAlarmS1;
+        private Button btnApplyAlarmsS1;
     }
 }

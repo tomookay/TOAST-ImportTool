@@ -283,6 +283,22 @@ namespace ImportTool
                 }
                 tvStation1Alarms.Nodes.Add(rootAlarmNode);
                 tvStation1Alarms.ExpandAll();
+
+                //populate dgvStation1Alarms with elements from tvStation1Alarms into the colums s1AlarmNumber and s1AlarmText
+                foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
+                {
+                    string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        string alarmNumber = parts[0];
+                        string alarmText = parts[1];
+                        dgvStation1Alarms.Rows.Add(alarmNumber, alarmText);
+                    }
+                }
+
+
+
+
             }
 
 
@@ -523,6 +539,109 @@ namespace ImportTool
             {
                 MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+        }
+
+        private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
+        {
+            /*
+            Pseudocode / Plan (detailed):
+            - Clear existing alarm rows in dgvStation1Alarms.
+            - Build a lookup dictionary `map` from numeric ID -> text using `dgvStation1`.
+              - Prefer columns named "clmNumber1" and "clmText1". If they don't exist, fall back to column indices 0 and 1.
+              - Skip new-row template and rows where the id cannot be parsed to int.
+            - Define a helper GetText(id) that returns the mapped text if present, otherwise returns a placeholder "<id>".
+            - For each motion row in dgvStation1:
+              - Parse the baseNumber from the row's clmNumber1 value.
+              - For i = 0..9 build alarmText using the id arithmetic described:
+                - case 0: ids base+12, base+13, base+0, base+2 -> "<12text> <13text> Failed to <0text>... Check <2text>..."
+                - case 1: ids base+12, base+13, base+6, base+8 -> "... Failed to <6text>... Check <8text>..."
+                - case 2: ids base+12, base+13, base+1, base+3 -> "Lost <1text>... Check <3text>..."
+                - case 3: ids base+12, base+13, base+7, base+9 -> "Lost <7text>... Check <9text>..."
+                - case 4: ids base+12, base+13, base+2, base+3 -> "Switch Fault... Check <2text>, <3text>..."
+                - default: "Spare"
+              - Add a row to dgvStation1Alarms with the numeric alarm id (base + i) and generated alarmText.
+            - This approach uses the numeric ID lookup, so it works for all rows independent of their index positions.
+            */
+
+            dgvStation1Alarms.Rows.Clear();
+
+            // Build id -> text map from dgvStation1
+            var map = new Dictionary<int, string>();
+            bool hasNamedCols = dgvStation1.Columns.Contains("clmNumber1") && dgvStation1.Columns.Contains("clmText1");
+
+            foreach (DataGridViewRow row in dgvStation1.Rows)
+            {
+                if (row == null || row.IsNewRow) continue;
+
+                object idObj = null;
+                object textObj = null;
+
+                if (hasNamedCols)
+                {
+                    idObj = row.Cells["clmNumber1"].Value;
+                    textObj = row.Cells["clmText1"].Value;
+                }
+                else
+                {
+                    if (row.Cells.Count > 0) idObj = row.Cells[0].Value;
+                    if (row.Cells.Count > 1) textObj = row.Cells[1].Value;
+                }
+
+                if (idObj == null) continue;
+                if (!int.TryParse(idObj.ToString(), out int id)) continue;
+
+                string text = textObj?.ToString() ?? string.Empty;
+                map[id] = text;
+            }
+
+            // Helper to get text for an id (falls back to "<id>" if missing)
+            string GetText(int id)
+            {
+                return map.TryGetValue(id, out var t) && !string.IsNullOrEmpty(t) ? t : $"<{id}>";
+            }
+
+            // For each motion row generate 10 alarms based on id arithmetic and lookup
+            foreach (DataGridViewRow motionRow in dgvStation1.Rows)
+            {
+                if (motionRow == null || motionRow.IsNewRow) continue;
+
+                object numberObj = null;
+                if (hasNamedCols)
+                    numberObj = motionRow.Cells["clmNumber1"].Value;
+                else if (motionRow.Cells.Count > 0)
+                    numberObj = motionRow.Cells[0].Value;
+
+                if (numberObj == null) continue;
+                if (!int.TryParse(numberObj.ToString(), out int baseNumber)) continue;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    string alarmText;
+                    switch (i)
+                    {
+                        case 0:
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Failed to {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 2)}...";
+                            break;
+                        case 1:
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Failed to {GetText(baseNumber + 6)}... Check {GetText(baseNumber + 8)}...";
+                            break;
+                        case 2:
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
+                            break;
+                        case 3:
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
+                            break;
+                        case 4:
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 2)}, {GetText(baseNumber + 3)}...";
+                            break;
+                        default:
+                            alarmText = "Spare";
+                            break;
+                    }
+
+                    dgvStation1Alarms.Rows.Add(baseNumber + i, alarmText);
+                }
             }
         }
     }
