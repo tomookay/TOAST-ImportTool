@@ -599,7 +599,7 @@ namespace ImportTool
                             alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
                             break;
                         case 4:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 2)}, {GetText(baseNumber + 3)}...";
+                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 3)}, {GetText(baseNumber + 9)}...";
                             break;
                         default:
                             alarmText = "Spare";
