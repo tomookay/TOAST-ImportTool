@@ -40,7 +40,7 @@ namespace ImportTool
                 string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
                 if (projectDirectory != null)
                 {
-                    string[] foundFiles = Directory.GetFiles(projectDirectory, searchPattern, SearchOption.AllDirectories);
+                    string[] foundFiles = NaturalSort.GetFilesNaturalSort(projectDirectory, searchPattern, SearchOption.AllDirectories);
                     ListBox targetListBox = stationNumber switch
                     {
                         1 => lstbxStation1Files,
@@ -121,6 +121,7 @@ namespace ImportTool
                         string motionNameAbs = xmlDoc.SelectSingleNode("//Motion/NameAbs")?.InnerText ?? "";
 
                         // Build and add the TreeNode
+                       // TreeNode rootNode = new TreeNode($"{rowNumber}");
                         TreeNode rootNode = new TreeNode($"Row {rowNumber}");
                         TreeNode advanceNode = new TreeNode("Advance");
                         advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextSym}"));
@@ -156,8 +157,6 @@ namespace ImportTool
 
 
                 }
-
-
                 //populate the dgvStation1 with the extracted data from the xml files
                 //the values are from clmNumber, and the text is from the other extracted elements into clmText
                 DataGridView targetDataGridView = stationNumber switch
@@ -215,6 +214,10 @@ namespace ImportTool
                     }
 
                     targetDataGridView.ResumeLayout();
+
+                    //reorder the dgvStation1 with the row number in neumerical order
+                   targetDataGridView.Sort(targetDataGridView.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
+
                 }
 
 
@@ -619,10 +622,7 @@ namespace ImportTool
                 DataGridViewRow row = dgvStation1Alarms.Rows[i];
                 if (row == null || row.IsNewRow) continue;
                 row.Cells["s1AlarmNumber"].Value = i;
-
-
-
-            }
+               }
         }
 
         private void btnExporttoAlarmS1_Click(object sender, EventArgs e)
