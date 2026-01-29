@@ -601,6 +601,10 @@ namespace ImportTool
                 return map.TryGetValue(id, out var t) && !string.IsNullOrEmpty(t) ? t : $"<{id}>";
             }
 
+
+            // Use a display counter so s1AlarmNumber column is sequential from 0 upwards
+            int displayIndex = 0;
+
             // For each motion row generate 10 alarms based on id arithmetic and lookup
             foreach (DataGridViewRow motionRow in dgvStation1.Rows)
             {
@@ -640,7 +644,21 @@ namespace ImportTool
                             break;
                     }
 
-                    dgvStation1Alarms.Rows.Add(baseNumber + i, alarmText);
+                    int actualId = baseNumber + i;
+
+                    // Add row with sequential display index (0,1,2...) in s1AlarmNumber column
+                    // and the generated alarmText in the text column.
+                    // Store the actual numeric alarm id in the row.Tag for later reference if needed.
+                    int newRowIndex = dgvStation1Alarms.Rows.Add(displayIndex, alarmText);
+                    dgvStation1Alarms.Rows[newRowIndex].Tag = actualId;
+
+                    displayIndex++;
+
+
+                    // dgvStation1Alarms.Rows.Add(baseNumber + i, alarmText);
+
+                    //in dgvStation1Alarms, renumber the s1AlarmNumber colunm from 0 onwards
+
                 }
             }
         }
