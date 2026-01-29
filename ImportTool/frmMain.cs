@@ -521,26 +521,6 @@ namespace ImportTool
 
         private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
         {
-            /*
-            Pseudocode / Plan (detailed):
-            - Clear existing alarm rows in dgvStation1Alarms.
-            - Build a lookup dictionary `map` from numeric ID -> text using `dgvStation1`.
-              - Prefer columns named "clmNumber1" and "clmText1". If they don't exist, fall back to column indices 0 and 1.
-              - Skip new-row template and rows where the id cannot be parsed to int.
-            - Define a helper GetText(id) that returns the mapped text if present, otherwise returns a placeholder "<id>".
-            - For each motion row in dgvStation1:
-              - Parse the baseNumber from the row's clmNumber1 value.
-              - For i = 0..9 build alarmText using the id arithmetic described:
-                - case 0: ids base+12, base+13, base+0, base+2 -> "<12text> <13text> Failed to <0text>... Check <2text>..."
-                - case 1: ids base+12, base+13, base+6, base+8 -> "... Failed to <6text>... Check <8text>..."
-                - case 2: ids base+12, base+13, base+1, base+3 -> "Lost <1text>... Check <3text>..."
-                - case 3: ids base+12, base+13, base+7, base+9 -> "Lost <7text>... Check <9text>..."
-                - case 4: ids base+12, base+13, base+2, base+3 -> "Switch Fault... Check <2text>, <3text>..."
-                - default: "Spare"
-              - Add a row to dgvStation1Alarms with the numeric alarm id (base + i) and generated alarmText.
-            - This approach uses the numeric ID lookup, so it works for all rows independent of their index positions.
-            */
-
             dgvStation1Alarms.Rows.Clear();
 
             // Prevent UI re-layout while we bulk-add rows and disable automatic column sorting
@@ -583,6 +563,9 @@ namespace ImportTool
                 return map.TryGetValue(id, out var t) && !string.IsNullOrEmpty(t) ? t : $"<{id}>";
             }
 
+            // Track which motion bases we've already processed so we only create alarms once per motion block
+            var processedBases = new HashSet<int>();
+
             // For each motion row generate 10 alarms based on id arithmetic and lookup
             foreach (DataGridViewRow motionRow in dgvStation1.Rows)
             {
@@ -595,7 +578,14 @@ namespace ImportTool
                     numberObj = motionRow.Cells[0].Value;
 
                 if (numberObj == null) continue;
-                if (!int.TryParse(numberObj.ToString(), out int baseNumber)) continue;
+                if (!int.TryParse(numberObj.ToString(), out int rowNumber)) continue;
+
+                // Compute block base (start of the 20-entry motion block)
+                int baseNumber = rowNumber - (rowNumber % 20);
+                if (processedBases.Contains(baseNumber))
+                    continue; // already created alarms for this motion
+
+                processedBases.Add(baseNumber);
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -631,6 +621,18 @@ namespace ImportTool
             }
 
             dgvStation1Alarms.ResumeLayout();
+
+            //in dgvStation1Alarms, rename the numbers in the s1AlarmNumber column to go from 0 to 999
+            for (int i = 0; i < dgvStation1Alarms.Rows.Count; i++)
+            {
+                DataGridViewRow row = dgvStation1Alarms.Rows[i];
+                if (row == null || row.IsNewRow) continue;
+                row.Cells["s1AlarmNumber"].Value = i;
+
+
+
+            }
         }
     }
 }
+
