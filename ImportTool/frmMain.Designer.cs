@@ -221,6 +221,7 @@
             btnExporttoAlarmS1.TabIndex = 9;
             btnExporttoAlarmS1.Text = "Export";
             btnExporttoAlarmS1.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS1.Click += btnExporttoAlarmS1_Click;
             // 
             // btnApplyAlarmsS1
             // 

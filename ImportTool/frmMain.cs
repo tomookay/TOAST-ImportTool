@@ -274,16 +274,7 @@ namespace ImportTool
                         }
                     }
 
-
-
-
-                }
-
-
-
-
-
-
+               }
                 progressDlg.SetProgress(100, "Finished");
                 progressDlg.Close();
             }
@@ -633,6 +624,105 @@ namespace ImportTool
 
             }
         }
-    }
-}
 
+        private void btnExporttoAlarmS1_Click(object sender, EventArgs e)
+        {
+            //open the file in the lblStation1AlarmsFilePath and insert the following xml elements
+            //for each row in dgvStation1Alarms
+            //< v n = "TextID" > "0" </ v > with the s1AlarmNumber number from dgvStation1Alarms ("<v n=\"TextID\">)
+            //the line below it
+            //<v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v> with the s1AlarmText from dgvStation1Alarms
+            //keep the rest of the file text lines, only change the value in quote marks " "
+            //
+            string alarmsFilePath = lblStation1AlarmsFilePath.Text;
+            if (!File.Exists(alarmsFilePath))
+            {
+                MessageBox.Show("Alarms file path is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            List<string> fileLines = File.ReadAllLines(alarmsFilePath).ToList();
+            List<string> newLines = new List<string>();
+            for (int i = 0; i < fileLines.Count; i++)
+            {
+                string line = fileLines[i];
+                bool matched = false;
+                if (line.Contains("<v n=\"TextID\">"))
+                {
+                    int gt = line.IndexOf('>');
+                    int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                    if (gt >= 0 && lt > gt)
+                    {
+                        string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                        string idStr = inner.Trim().Trim('"');
+                        if (int.TryParse(idStr, out int id))
+                        {
+                            // Find corresponding row in dgvStation1Alarms
+                            foreach (DataGridViewRow alarmRow in dgvStation1Alarms.Rows)
+                            {
+                                if (alarmRow == null || alarmRow.IsNewRow) continue;
+
+                                // Prefer matching against the displayed s1AlarmNumber cell value (renumbered 0..N).
+                                int displayedNumber = int.MinValue;
+                                object displayedObj = null;
+                                if (dgvStation1Alarms.Columns.Contains("s1AlarmNumber"))
+                                    displayedObj = alarmRow.Cells["s1AlarmNumber"].Value;
+                                else if (alarmRow.Cells.Count > 0)
+                                    displayedObj = alarmRow.Cells[0].Value;
+
+                                if (displayedObj != null && int.TryParse(displayedObj.ToString(), out int parsedDisplayed))
+                                {
+                                    displayedNumber = parsedDisplayed;
+                                }
+
+                                bool isMatch = (displayedNumber != int.MinValue && displayedNumber == id);
+
+                                // Fallback: if displayed number didn't match, check Tag (older code used Tag for the actual id)
+                                if (!isMatch && alarmRow.Tag is int tagId && tagId == id)
+                                    isMatch = true;
+
+                                if (isMatch)
+                                {
+                                    string alarmText = null;
+                                    if (dgvStation1Alarms.Columns.Contains("s1AlarmText"))
+                                        alarmText = alarmRow.Cells["s1AlarmText"].Value?.ToString();
+                                    else if (alarmRow.Cells.Count > 1)
+                                        alarmText = alarmRow.Cells[1].Value?.ToString();
+
+                                    alarmText = alarmText ?? string.Empty;
+
+                                    // Append the TextID line
+                                    newLines.Add(line);
+
+                                    // Determine indentation from the current line (leading whitespace)
+                                    int indentLen = 0;
+                                    while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
+                                    string indent = line.Substring(0, indentLen);
+
+                                    // Append the new TextDefault line with same indentation
+                                    newLines.Add(indent + $"<v n=\"TextDefault\">\"{alarmText}\"</v>");
+
+                                    // Skip any immediate following original TextDefault lines
+                                    while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                                    {
+                                        i++;
+                                    }
+
+                                    matched = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!matched)
+                {
+                    newLines.Add(line);
+                }
+            }
+            File.WriteAllLines(alarmsFilePath, newLines);
+            MessageBox.Show("Alarms exported successfully to S1_Alarms.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+    }
+          
+}
