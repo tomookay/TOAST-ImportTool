@@ -35,14 +35,15 @@
             lstbxStation1Files = new ListBox();
             tabStations = new TabControl();
             tabPage1 = new TabPage();
-            dgvStation1Alarms = new DataGridView();
-            s1AlarmNumber = new DataGridViewTextBoxColumn();
-            s1AlarmText = new DataGridViewTextBoxColumn();
+            grpBoxMotionsS1 = new GroupBox();
             dgvStation1 = new DataGridView();
             clmNumber1 = new DataGridViewTextBoxColumn();
             clmText1 = new DataGridViewTextBoxColumn();
             grpBoxAutoAlarmS1 = new GroupBox();
             btnExporttoAlarmS1 = new Button();
+            dgvStation1Alarms = new DataGridView();
+            s1AlarmNumber = new DataGridViewTextBoxColumn();
+            s1AlarmText = new DataGridViewTextBoxColumn();
             btnApplyAlarmsS1 = new Button();
             tvStation1Alarms = new TreeView();
             lblStation1AlarmsFilePath = new Label();
@@ -79,9 +80,10 @@
             btnExport = new Button();
             tabStations.SuspendLayout();
             tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).BeginInit();
+            grpBoxMotionsS1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
             grpBoxAutoAlarmS1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).BeginInit();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
             tabPage3.SuspendLayout();
@@ -120,7 +122,7 @@
             // 
             // tvStation1
             // 
-            tvStation1.Location = new Point(6, 132);
+            tvStation1.Location = new Point(19, 17);
             tvStation1.Name = "tvStation1";
             tvStation1.Size = new Size(405, 172);
             tvStation1.TabIndex = 2;
@@ -128,9 +130,9 @@
             // lstbxStation1Files
             // 
             lstbxStation1Files.FormattingEnabled = true;
-            lstbxStation1Files.Location = new Point(6, 17);
+            lstbxStation1Files.Location = new Point(6, 6);
             lstbxStation1Files.Name = "lstbxStation1Files";
-            lstbxStation1Files.Size = new Size(843, 109);
+            lstbxStation1Files.Size = new Size(914, 109);
             lstbxStation1Files.TabIndex = 1;
             // 
             // tabStations
@@ -149,9 +151,7 @@
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(dgvStation1Alarms);
-            tabPage1.Controls.Add(dgvStation1);
-            tabPage1.Controls.Add(tvStation1);
+            tabPage1.Controls.Add(grpBoxMotionsS1);
             tabPage1.Controls.Add(lstbxStation1Files);
             tabPage1.Controls.Add(grpBoxAutoAlarmS1);
             tabPage1.Location = new Point(4, 24);
@@ -162,53 +162,50 @@
             tabPage1.Text = "Station 1";
             tabPage1.UseVisualStyleBackColor = true;
             // 
-            // dgvStation1Alarms
+            // grpBoxMotionsS1
             // 
-            dgvStation1Alarms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStation1Alarms.Columns.AddRange(new DataGridViewColumn[] { s1AlarmNumber, s1AlarmText });
-            dgvStation1Alarms.Location = new Point(459, 348);
-            dgvStation1Alarms.Name = "dgvStation1Alarms";
-            dgvStation1Alarms.Size = new Size(438, 120);
-            dgvStation1Alarms.TabIndex = 6;
-            // 
-            // s1AlarmNumber
-            // 
-            s1AlarmNumber.HeaderText = "Number";
-            s1AlarmNumber.Name = "s1AlarmNumber";
-            // 
-            // s1AlarmText
-            // 
-            s1AlarmText.HeaderText = "Text";
-            s1AlarmText.Name = "s1AlarmText";
+            grpBoxMotionsS1.Controls.Add(tvStation1);
+            grpBoxMotionsS1.Controls.Add(dgvStation1);
+            grpBoxMotionsS1.Location = new Point(6, 121);
+            grpBoxMotionsS1.Name = "grpBoxMotionsS1";
+            grpBoxMotionsS1.Size = new Size(447, 376);
+            grpBoxMotionsS1.TabIndex = 9;
+            grpBoxMotionsS1.TabStop = false;
+            grpBoxMotionsS1.Text = "Motions S1";
             // 
             // dgvStation1
             // 
             dgvStation1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStation1.Columns.AddRange(new DataGridViewColumn[] { clmNumber1, clmText1 });
-            dgvStation1.Location = new Point(6, 310);
+            dgvStation1.Location = new Point(19, 205);
             dgvStation1.Name = "dgvStation1";
             dgvStation1.Size = new Size(405, 158);
             dgvStation1.TabIndex = 3;
             // 
             // clmNumber1
             // 
+            clmNumber1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             clmNumber1.HeaderText = "Number";
             clmNumber1.Name = "clmNumber1";
+            clmNumber1.Width = 76;
             // 
             // clmText1
             // 
+            clmText1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             clmText1.HeaderText = "Text";
             clmText1.Name = "clmText1";
+            clmText1.Width = 53;
             // 
             // grpBoxAutoAlarmS1
             // 
             grpBoxAutoAlarmS1.Controls.Add(btnExporttoAlarmS1);
+            grpBoxAutoAlarmS1.Controls.Add(dgvStation1Alarms);
             grpBoxAutoAlarmS1.Controls.Add(btnApplyAlarmsS1);
             grpBoxAutoAlarmS1.Controls.Add(tvStation1Alarms);
             grpBoxAutoAlarmS1.Controls.Add(lblStation1AlarmsFilePath);
-            grpBoxAutoAlarmS1.Location = new Point(453, 151);
+            grpBoxAutoAlarmS1.Location = new Point(459, 121);
             grpBoxAutoAlarmS1.Name = "grpBoxAutoAlarmS1";
-            grpBoxAutoAlarmS1.Size = new Size(450, 361);
+            grpBoxAutoAlarmS1.Size = new Size(461, 376);
             grpBoxAutoAlarmS1.TabIndex = 8;
             grpBoxAutoAlarmS1.TabStop = false;
             grpBoxAutoAlarmS1.Text = "Auto Alarms S1";
@@ -222,6 +219,25 @@
             btnExporttoAlarmS1.Text = "Export";
             btnExporttoAlarmS1.UseVisualStyleBackColor = true;
             btnExporttoAlarmS1.Click += btnExporttoAlarmS1_Click;
+            // 
+            // dgvStation1Alarms
+            // 
+            dgvStation1Alarms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStation1Alarms.Columns.AddRange(new DataGridViewColumn[] { s1AlarmNumber, s1AlarmText });
+            dgvStation1Alarms.Location = new Point(12, 197);
+            dgvStation1Alarms.Name = "dgvStation1Alarms";
+            dgvStation1Alarms.Size = new Size(432, 120);
+            dgvStation1Alarms.TabIndex = 6;
+            // 
+            // s1AlarmNumber
+            // 
+            s1AlarmNumber.HeaderText = "Number";
+            s1AlarmNumber.Name = "s1AlarmNumber";
+            // 
+            // s1AlarmText
+            // 
+            s1AlarmText.HeaderText = "Text";
+            s1AlarmText.Name = "s1AlarmText";
             // 
             // btnApplyAlarmsS1
             // 
@@ -507,9 +523,10 @@
             Text = "Sx_01_Motion_xx.TcPOU-2-MotionRowText.TcTLO Importer";
             tabStations.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).EndInit();
+            grpBoxMotionsS1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
             grpBoxAutoAlarmS1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvStation1Alarms).EndInit();
             tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
             tabPage3.ResumeLayout(false);
@@ -554,8 +571,6 @@
         private DataGridView dgvStation5;
         private DataGridView dgvStation6;
         private Button btnExport;
-        private DataGridViewTextBoxColumn clmNumber1;
-        private DataGridViewTextBoxColumn clmText1;
         private DataGridViewTextBoxColumn clmNumber2;
         private DataGridViewTextBoxColumn clmText2;
         private DataGridViewTextBoxColumn clmNumber3;
@@ -574,5 +589,8 @@
         private GroupBox grpBoxAutoAlarmS1;
         private Button btnExporttoAlarmS1;
         private Button btnApplyAlarmsS1;
+        private GroupBox grpBoxMotionsS1;
+        private DataGridViewTextBoxColumn clmNumber1;
+        private DataGridViewTextBoxColumn clmText1;
     }
 }
