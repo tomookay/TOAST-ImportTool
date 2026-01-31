@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>204, 17</value>
+  </metadata>
   <metadata name="OpenTOASTprojectDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -195,4 +198,22 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAICAgAAAAP8AAP8AAAD//wD/AAAA/wD/AP//
+        AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AJkRAAAAAAAAAAAAAAAAAAmXcRAAB/9wAAAAAAAAAACZeZkQAH939wAAAAAAAAAJl5mZkAD//38AAAAA
+        AAAAmXmZmZDw//9/AAAAAAAACZeZmZmQAH//9wAAAAAAAJl5mZmZB3AH/3AAAAAAAAmXmZmZkAd3AAAA
+        AAAAAACZeZmZmQgPd3AAAAAAAAAJl5mZmZCHgPd3AAAAAAAAmXmZmZkAB4APcHAAAAAACZeZmZmQAA9w
+        APcHAAAAAAl5+fmZAAAAeAAPcHAAAAAHmZ+ZkAAAAPcAAPd3AAAACZn5+QAAAAAHgAAPd3AAAAmZmZAA
+        AAAAD3AAAI9wAAgJmZkAAAAAAAB4AACAAAAA8JmQd3d3dwAA9wAAAAAAAAgAAAAAAAAAAAeAAAAAAAAA
+        AAAAAAAAAAAPcAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD////////////8P///+B4f//AMD//g
+        CAf/wAAH/4AAB/8AAAf+AAAP/AAAH/gAAP/wAAB/4AEAP8ACCB/AB4QPwA8GB8AfwwPAP4ODgADhw4AA
+        Qf+AAHD//3/g//9P+P//L/D//9P////L////9P////L////+/////3///////w==
+</value>
+  </data>
 </root>

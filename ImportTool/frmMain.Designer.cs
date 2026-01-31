@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             btnLoadProject = new Button();
             lblProjectPath = new Label();
             OpenTOASTprojectDialog = new OpenFileDialog();
             tvStation1 = new TreeView();
             lstbxStation1Files = new ListBox();
-            dgvStationAlarms4 = new TabControl();
+            tabb = new TabControl();
             tabPage1 = new TabPage();
             grpBoxMotionsS1 = new GroupBox();
             dgvStation1 = new DataGridView();
@@ -89,7 +91,7 @@
             grpBoxAutoAlarmS4 = new GroupBox();
             cbProcessAlarmsS4 = new CheckBox();
             btnExporttoAlarmS4 = new Button();
-            dataGridView6 = new DataGridView();
+            dgvStationAlarms4 = new DataGridView();
             dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
             btnApplyAlarmsS4 = new Button();
@@ -129,7 +131,8 @@
             lblStation6AlarmsFilePath = new Label();
             lstbxStation6Files = new ListBox();
             btnExport = new Button();
-            dgvStationAlarms4.SuspendLayout();
+            toolTip1 = new ToolTip(components);
+            tabb.SuspendLayout();
             tabPage1.SuspendLayout();
             grpBoxMotionsS1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation1).BeginInit();
@@ -149,7 +152,7 @@
             grpBoxMotionsS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation4).BeginInit();
             grpBoxAutoAlarmS4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationAlarms4).BeginInit();
             tabPage5.SuspendLayout();
             grpBoxMotionsS5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation5).BeginInit();
@@ -169,6 +172,7 @@
             btnLoadProject.Size = new Size(90, 30);
             btnLoadProject.TabIndex = 0;
             btnLoadProject.Text = "Load Project";
+            toolTip1.SetToolTip(btnLoadProject, "Click to load a TOAST project...");
             btnLoadProject.UseVisualStyleBackColor = true;
             btnLoadProject.Click += btnLoadProject_Click;
             // 
@@ -201,19 +205,19 @@
             lstbxStation1Files.Size = new Size(909, 109);
             lstbxStation1Files.TabIndex = 1;
             // 
-            // dgvStationAlarms4
+            // tabb
             // 
-            dgvStationAlarms4.Controls.Add(tabPage1);
-            dgvStationAlarms4.Controls.Add(tabPage2);
-            dgvStationAlarms4.Controls.Add(tabPage3);
-            dgvStationAlarms4.Controls.Add(tabPage4);
-            dgvStationAlarms4.Controls.Add(tabPage5);
-            dgvStationAlarms4.Controls.Add(tabPage6);
-            dgvStationAlarms4.Location = new Point(12, 48);
-            dgvStationAlarms4.Name = "dgvStationAlarms4";
-            dgvStationAlarms4.SelectedIndex = 0;
-            dgvStationAlarms4.Size = new Size(929, 538);
-            dgvStationAlarms4.TabIndex = 3;
+            tabb.Controls.Add(tabPage1);
+            tabb.Controls.Add(tabPage2);
+            tabb.Controls.Add(tabPage3);
+            tabb.Controls.Add(tabPage4);
+            tabb.Controls.Add(tabPage5);
+            tabb.Controls.Add(tabPage6);
+            tabb.Location = new Point(12, 48);
+            tabb.Name = "tabb";
+            tabb.SelectedIndex = 0;
+            tabb.Size = new Size(929, 538);
+            tabb.TabIndex = 3;
             // 
             // tabPage1
             // 
@@ -286,6 +290,7 @@
             cbProcessAlarmsS1.Size = new Size(61, 19);
             cbProcessAlarmsS1.TabIndex = 10;
             cbProcessAlarmsS1.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessAlarmsS1, "Not Yet Implemented...");
             cbProcessAlarmsS1.UseVisualStyleBackColor = true;
             // 
             // btnExporttoAlarmS1
@@ -295,6 +300,7 @@
             btnExporttoAlarmS1.Size = new Size(127, 23);
             btnExporttoAlarmS1.TabIndex = 9;
             btnExporttoAlarmS1.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoAlarmS1, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoAlarmS1.UseVisualStyleBackColor = true;
             btnExporttoAlarmS1.Click += btnExporttoAlarmS1_Click;
             // 
@@ -327,6 +333,7 @@
             btnApplyAlarmsS1.Size = new Size(125, 23);
             btnApplyAlarmsS1.TabIndex = 8;
             btnApplyAlarmsS1.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyAlarmsS1, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyAlarmsS1.UseVisualStyleBackColor = true;
             btnApplyAlarmsS1.Click += btnApplyAlarmsS1_Click;
             // 
@@ -434,6 +441,7 @@
             btnExporttoAlarmS2.TabIndex = 9;
             btnExporttoAlarmS2.Text = "Export";
             btnExporttoAlarmS2.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS2.Click += btnExporttoAlarmS2_Click;
             // 
             // dgvStationAlarms2
             // 
@@ -465,6 +473,7 @@
             btnApplyAlarmsS2.TabIndex = 8;
             btnApplyAlarmsS2.Text = "Insert Motion Text";
             btnApplyAlarmsS2.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS2.Click += btnApplyAlarmsS2_Click;
             // 
             // tvStationAlarms2
             // 
@@ -578,6 +587,7 @@
             btnExporttoAlarmS3.TabIndex = 9;
             btnExporttoAlarmS3.Text = "Export";
             btnExporttoAlarmS3.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS3.Click += btnExporttoAlarmS3_Click;
             // 
             // dgvStationAlarms3
             // 
@@ -609,6 +619,7 @@
             btnApplyAlarmsS3.TabIndex = 8;
             btnApplyAlarmsS3.Text = "Insert Motion Text";
             btnApplyAlarmsS3.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS3.Click += btnApplyAlarmsS3_Click;
             // 
             // tvStationAlarms3
             // 
@@ -691,7 +702,7 @@
             // 
             grpBoxAutoAlarmS4.Controls.Add(cbProcessAlarmsS4);
             grpBoxAutoAlarmS4.Controls.Add(btnExporttoAlarmS4);
-            grpBoxAutoAlarmS4.Controls.Add(dataGridView6);
+            grpBoxAutoAlarmS4.Controls.Add(dgvStationAlarms4);
             grpBoxAutoAlarmS4.Controls.Add(btnApplyAlarmsS4);
             grpBoxAutoAlarmS4.Controls.Add(tvStationAlarms4);
             grpBoxAutoAlarmS4.Controls.Add(lblStation4AlarmsFilePath);
@@ -722,15 +733,16 @@
             btnExporttoAlarmS4.TabIndex = 9;
             btnExporttoAlarmS4.Text = "Export";
             btnExporttoAlarmS4.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS4.Click += btnExporttoAlarmS4_Click;
             // 
-            // dataGridView6
+            // dgvStationAlarms4
             // 
-            dataGridView6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView6.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12 });
-            dataGridView6.Location = new Point(12, 205);
-            dataGridView6.Name = "dataGridView6";
-            dataGridView6.Size = new Size(432, 129);
-            dataGridView6.TabIndex = 6;
+            dgvStationAlarms4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationAlarms4.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12 });
+            dgvStationAlarms4.Location = new Point(12, 205);
+            dgvStationAlarms4.Name = "dgvStationAlarms4";
+            dgvStationAlarms4.Size = new Size(432, 129);
+            dgvStationAlarms4.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn11
             // 
@@ -753,6 +765,7 @@
             btnApplyAlarmsS4.TabIndex = 8;
             btnApplyAlarmsS4.Text = "Insert Motion Text";
             btnApplyAlarmsS4.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS4.Click += btnApplyAlarmsS4_Click;
             // 
             // tvStationAlarms4
             // 
@@ -866,6 +879,7 @@
             btnExporttoAlarmS5.TabIndex = 9;
             btnExporttoAlarmS5.Text = "Export";
             btnExporttoAlarmS5.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS5.Click += btnExporttoAlarmS5_Click;
             // 
             // dgvStationAlarms5
             // 
@@ -897,6 +911,7 @@
             btnApplyAlarmsS5.TabIndex = 8;
             btnApplyAlarmsS5.Text = "Insert Motion Text";
             btnApplyAlarmsS5.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS5.Click += btnApplyAlarmsS5_Click;
             // 
             // tvStationAlarms5
             // 
@@ -1010,6 +1025,7 @@
             btnExporttoAlarmS6.TabIndex = 9;
             btnExporttoAlarmS6.Text = "Export";
             btnExporttoAlarmS6.UseVisualStyleBackColor = true;
+            btnExporttoAlarmS6.Click += btnExporttoAlarmS6_Click;
             // 
             // dgvStationAlarms6
             // 
@@ -1041,6 +1057,7 @@
             btnApplyAlarmsS6.TabIndex = 8;
             btnApplyAlarmsS6.Text = "Insert Motion Text";
             btnApplyAlarmsS6.UseVisualStyleBackColor = true;
+            btnApplyAlarmsS6.Click += btnApplyAlarmsS6_Click;
             // 
             // tvStationAlarms6
             // 
@@ -1073,6 +1090,7 @@
             btnExport.Size = new Size(202, 30);
             btnExport.TabIndex = 4;
             btnExport.Text = "Export to MotionRowText.TcTLO";
+            toolTip1.SetToolTip(btnExport, "Click to export the Motion row text data for station 1-6");
             btnExport.UseVisualStyleBackColor = true;
             btnExport.Click += btnExport_Click;
             // 
@@ -1082,12 +1100,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(952, 634);
             Controls.Add(btnExport);
-            Controls.Add(dgvStationAlarms4);
+            Controls.Add(tabb);
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(968, 673);
+            MinimumSize = new Size(968, 673);
             Name = "frmMain";
             Text = "Sx_01_Motion_xx.TcPOU-2-MotionRowText.TcTLO Importer";
-            dgvStationAlarms4.ResumeLayout(false);
+            tabb.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             grpBoxMotionsS1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation1).EndInit();
@@ -1111,7 +1132,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvStation4).EndInit();
             grpBoxAutoAlarmS4.ResumeLayout(false);
             grpBoxAutoAlarmS4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationAlarms4).EndInit();
             tabPage5.ResumeLayout(false);
             grpBoxMotionsS5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation5).EndInit();
@@ -1134,7 +1155,7 @@
         private OpenFileDialog OpenTOASTprojectDialog;
         private ListBox lstbxStation1Files;
         private TreeView tvStation1;
-        private TabControl dgvStationAlarms4;
+        private TabControl tabb;
         private TabPage tabPage1;
         private TabPage tabPage2;
         private ListBox lstbxStation2Files;
@@ -1196,7 +1217,7 @@
         private GroupBox grpBoxAutoAlarmS4;
         private CheckBox cbProcessAlarmsS4;
         private Button btnExporttoAlarmS4;
-        private DataGridView dataGridView6;
+        private DataGridView dgvStationAlarms4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private Button btnApplyAlarmsS4;
@@ -1230,5 +1251,6 @@
         private Button btnApplyAlarmsS6;
         private TreeView tvStationAlarms6;
         private Label lblStation6AlarmsFilePath;
+        private ToolTip toolTip1;
     }
 }

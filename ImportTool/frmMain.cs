@@ -1,7 +1,3 @@
-using System;
-using System.Security.Claims;
-using System.Text;
-
 namespace ImportTool
 {
     public partial class frmMain : Form
@@ -22,7 +18,6 @@ namespace ImportTool
                 lblProjectPath.Text = projectPath;
             }
 
-
             // Prepare cancellation and progress UI
             var cts = new System.Threading.CancellationTokenSource();
             using var progressDlg = new frmProgress(cts);
@@ -40,6 +35,7 @@ namespace ImportTool
                 string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
                 if (projectDirectory != null)
                 {
+                    //sort by natural sort, not alphabetical which gives 1,2,3,4,5,6,7,8,9,90,91 etc
                     string[] foundFiles = NaturalSort.GetFilesNaturalSort(projectDirectory, searchPattern, SearchOption.AllDirectories);
                     ListBox targetListBox = stationNumber switch
                     {
@@ -61,8 +57,11 @@ namespace ImportTool
                     }
                 }
             }
+
+            // Now parse each file in the lstbxStation1Files, lstbxStation2Files, etc
             for (int stationNumber = 1; stationNumber <= 6; stationNumber++)
             {
+                //select the file box
                 ListBox targetListBox = stationNumber switch
                 {
                     1 => lstbxStation1Files,
@@ -73,7 +72,7 @@ namespace ImportTool
                     6 => lstbxStation6Files,
                     _ => null
                 };
-
+                //...and select the tree view
                 TreeView targetTreeView = stationNumber switch
                 {
                     1 => tvStation1,
@@ -97,13 +96,14 @@ namespace ImportTool
 
                     try
                     {
+                        //get the data from the xml file and use custom logic to extract the required elements
                         string fileContent = File.ReadAllText(filePath);
                         // Replace encoded tags
                         string xmlContent = fileContent.Replace("&lt;", "<").Replace("&gt;", ">");
                         var xmlDoc = new System.Xml.XmlDocument();
                         xmlDoc.LoadXml(xmlContent);
 
-                        // Extract elements (use safe null-coalescing to avoid null refs)
+                        // like all this shit going on here
                         string rowNumber = xmlDoc.SelectSingleNode("//RowNumber")?.InnerText ?? "Unknown";
                         string advanceCoilTextSym = xmlDoc.SelectSingleNode("//Advance/AdvanceCoilTextSym")?.InnerText ?? "";
                         string advanceDepthTextSym = xmlDoc.SelectSingleNode("//Advance/AdvanceDepthTextSym")?.InnerText ?? "";
@@ -121,7 +121,7 @@ namespace ImportTool
                         string motionNameAbs = xmlDoc.SelectSingleNode("//Motion/NameAbs")?.InnerText ?? "";
 
                         // Build and add the TreeNode
-                       // TreeNode rootNode = new TreeNode($"{rowNumber}");
+                        // TreeNode rootNode = new TreeNode($"{rowNumber}");
                         TreeNode rootNode = new TreeNode($"Row {rowNumber}");
                         TreeNode advanceNode = new TreeNode("Advance");
                         advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextSym}"));
@@ -166,7 +166,7 @@ namespace ImportTool
                     3 => dgvStation3,
                     4 => dgvStation4,
                     5 => dgvStation5,
-                    6 => dgvStation5,
+                    6 => dgvStation6,
                     _ => null
                 };
 
@@ -216,76 +216,127 @@ namespace ImportTool
                     targetDataGridView.ResumeLayout();
 
                     //reorder the dgvStation1 with the row number in neumerical order
-                   targetDataGridView.Sort(targetDataGridView.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
+                    targetDataGridView.Sort(targetDataGridView.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
 
                 }
 
-                //enable code if checkbox cbProcessAlarmsS1 is checked
-                if (cbProcessAlarmsS1.Checked)
-                {
-                //serach for the station 1 path for the alarms file S1_Alarms.TcTLO and put the path in lblStation1AlarmsFilePath
-                string station1AlarmsFile = Directory.GetFiles(Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty, "S1_Alarms.TcTLO", SearchOption.AllDirectories).FirstOrDefault();
-                lblStation1AlarmsFilePath.Text = station1AlarmsFile ?? "Alarms file not found.";
+                // Process stations 1 through 6
+                for (int stationNumberexp = 1; stationNumberexp <= 6; stationNumberexp++)
+                    ProcessStationAlarms(stationNumberexp);
 
-                //find the following xml in the lblStation1AlarmsFilePath file and populate into tvStation1Alarms
-                //v n = "TextID" > "0" </ v >
-                // <v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v>
-                tvStationAlarms1.Nodes.Clear();
-                if (File.Exists(station1AlarmsFile))
-                {
-                    string[] alarmFileLines = File.ReadAllLines(station1AlarmsFile);
-                    TreeNode rootAlarmNode = new TreeNode("Alarms");
-                    for (int i = 0; i < alarmFileLines.Length; i++)
-                    {
-                        string line = alarmFileLines[i];
-                        if (line.Contains("<v n=\"TextID\">"))
-                        {
-                            int gt = line.IndexOf('>');
-                            int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
-                            if (gt >= 0 && lt > gt)
-                            {
-                                string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
-                                string textID = inner.Trim().Trim('"');
-                                // Look ahead for TextDefault
-                                string textDefault = "";
-                                if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
-                                {
-                                    string nextLine = alarmFileLines[i + 1];
-                                    int gtDef = nextLine.IndexOf('>');
-                                    int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
-                                    if (gtDef >= 0 && ltDef > gtDef)
-                                    {
-                                        string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1); // e.g. "\"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default\""
-                                        textDefault = innerDef.Trim().Trim('"');
-                                    }
-                                }
-                                TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
-                                rootAlarmNode.Nodes.Add(alarmNode);
-                            }
-                        }
-                    }
-                    tvStationAlarms1.Nodes.Add(rootAlarmNode);
-                    tvStationAlarms1.ExpandAll();
-
-                    //populate dgvStation1Alarms with elements from tvStation1Alarms into the colums s1AlarmNumber and s1AlarmText
-                    foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
-                    {
-                        string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
-                        if (parts.Length == 2)
-                        {
-                            string alarmNumber = parts[0];
-                            string alarmText = parts[1];
-                            dgvStationAlarms1.Rows.Add(alarmNumber, alarmText);
-                        }
-                    }
-
-               }
-
-                }
                 progressDlg.SetProgress(100, "Finished");
                 progressDlg.Close();
             }
         }
+
+        void ProcessStationAlarms(int stationNumber)
+        {
+            string projectDir = Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty;
+            string searchPattern = $"S{stationNumber}_Alarms.TcTLO";
+            string stationAlarmsFile = Directory.GetFiles(projectDir, searchPattern, SearchOption.AllDirectories).FirstOrDefault();
+
+            // Map controls for the station
+            Label lblStationAlarmsPath = stationNumber switch
+            {
+                1 => lblStation1AlarmsFilePath,
+                2 => lblStation2AlarmsFilePath,
+                3 => lblStation3AlarmsFilePath,
+                4 => lblStation4AlarmsFilePath,
+                5 => lblStation5AlarmsFilePath,
+                6 => lblStation6AlarmsFilePath,
+                _ => null
+            };
+
+            TreeView tvStationAlarms = stationNumber switch
+            {
+                1 => tvStationAlarms1,
+                2 => tvStationAlarms2,
+                3 => tvStationAlarms3,
+                4 => tvStationAlarms4,
+                5 => tvStationAlarms5,
+                6 => tvStationAlarms6,
+                _ => null
+            };
+
+            DataGridView dgvStationAlarms = stationNumber switch
+            {
+                1 => dgvStationAlarms1,
+                2 => dgvStationAlarms2,
+                3 => dgvStationAlarms3,
+                4 => dgvStationAlarms4,
+                5 => dgvStationAlarms5,
+                6 => dgvStationAlarms6,
+                _ => null
+            };
+
+            if (lblStationAlarmsPath != null)
+                lblStationAlarmsPath.Text = stationAlarmsFile ?? "Alarms file not found.";
+
+            tvStationAlarms?.Nodes.Clear();
+
+            if (string.IsNullOrEmpty(stationAlarmsFile) || !File.Exists(stationAlarmsFile))
+            {
+                // No file - leave empty tree/grid
+                return;
+            }
+
+            string[] alarmFileLines = File.ReadAllLines(stationAlarmsFile);
+            TreeNode rootAlarmNode = new TreeNode("Alarms");
+
+            for (int i = 0; i < alarmFileLines.Length; i++)
+            {
+                string line = alarmFileLines[i];
+                if (!line.Contains("<v n=\"TextID\">"))
+                    continue;
+
+                int gt = line.IndexOf('>');
+                int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                if (!(gt >= 0 && lt > gt))
+                    continue;
+
+                string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                string textID = inner.Trim().Trim('"');
+
+                // Look ahead for TextDefault
+                string textDefault = string.Empty;
+                if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                {
+                    string nextLine = alarmFileLines[i + 1];
+                    int gtDef = nextLine.IndexOf('>');
+                    int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
+                    if (gtDef >= 0 && ltDef > gtDef)
+                    {
+                        string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1);
+                        textDefault = innerDef.Trim().Trim('"');
+                    }
+                }
+
+                TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
+                rootAlarmNode.Nodes.Add(alarmNode);
+            }
+
+            if (tvStationAlarms != null)
+            {
+                tvStationAlarms.Nodes.Add(rootAlarmNode);
+                tvStationAlarms.ExpandAll();
+            }
+
+            if (dgvStationAlarms != null)
+            {
+                dgvStationAlarms.Rows.Clear();
+                foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
+                {
+                    string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        string alarmNumber = parts[0];
+                        string alarmText = parts[1];
+                        dgvStationAlarms.Rows.Add(alarmNumber, alarmText);
+                    }
+                }
+            }
+        }
+
 
         private void btnExport_Click(object sender, EventArgs e)
         {
@@ -355,7 +406,7 @@ namespace ImportTool
                         3 => dgvStation3,
                         4 => dgvStation4,
                         5 => dgvStation5,
-                        6 => dgvStation5,
+                        6 => dgvStation6,
                         _ => null
                     };
                     if (dgv == null) continue;
@@ -517,20 +568,51 @@ namespace ImportTool
             }
         }
 
-        private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
+        // Extracted reusable function to generate alarms for any station (1..6).
+        private void ApplyAlarmsForStation(int stationNumber)
         {
-            dgvStationAlarms1.Rows.Clear();
+            DataGridView dgvSource = stationNumber switch
+            {
+                1 => dgvStation1,
+                2 => dgvStation2,
+                3 => dgvStation3,
+                4 => dgvStation4,
+                5 => dgvStation5,
+                6 => dgvStation6,
+                _ => null
+            };
+
+            DataGridView dgvAlarms = stationNumber switch
+            {
+                1 => dgvStationAlarms1,
+                2 => dgvStationAlarms2,
+                3 => dgvStationAlarms3,
+                4 => dgvStationAlarms4,
+                5 => dgvStationAlarms5,
+                6 => dgvStationAlarms6,
+                _ => null
+            };
+
+            if (dgvSource == null || dgvAlarms == null)
+            {
+                MessageBox.Show($"Invalid station number {stationNumber}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            dgvAlarms.Rows.Clear();
 
             // Prevent UI re-layout while we bulk-add rows and disable automatic column sorting
-            dgvStationAlarms1.SuspendLayout();
-            foreach (DataGridViewColumn col in dgvStationAlarms1.Columns)
+            dgvAlarms.SuspendLayout();
+            foreach (DataGridViewColumn col in dgvAlarms.Columns)
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
 
-            // Build id -> text map from dgvStation1
+            // Build id -> text map from dgvSource
             var map = new Dictionary<int, string>();
-            bool hasNamedCols = dgvStation1.Columns.Contains("clmNumber1") && dgvStation1.Columns.Contains("clmText1");
+            string clmNumberName = $"clmNumber{stationNumber}";
+            string clmTextName = $"clmText{stationNumber}";
+            bool hasNamedCols = dgvSource.Columns.Contains(clmNumberName) && dgvSource.Columns.Contains(clmTextName);
 
-            foreach (DataGridViewRow row in dgvStation1.Rows)
+            foreach (DataGridViewRow row in dgvSource.Rows)
             {
                 if (row == null || row.IsNewRow) continue;
 
@@ -539,8 +621,8 @@ namespace ImportTool
 
                 if (hasNamedCols)
                 {
-                    idObj = row.Cells["clmNumber1"].Value;
-                    textObj = row.Cells["clmText1"].Value;
+                    idObj = row.Cells[clmNumberName].Value;
+                    textObj = row.Cells[clmTextName].Value;
                 }
                 else
                 {
@@ -565,13 +647,13 @@ namespace ImportTool
             var processedBases = new HashSet<int>();
 
             // For each motion row generate 10 alarms based on id arithmetic and lookup
-            foreach (DataGridViewRow motionRow in dgvStation1.Rows)
+            foreach (DataGridViewRow motionRow in dgvSource.Rows)
             {
                 if (motionRow == null || motionRow.IsNewRow) continue;
 
                 object numberObj = null;
                 if (hasNamedCols)
-                    numberObj = motionRow.Cells["clmNumber1"].Value;
+                    numberObj = motionRow.Cells[clmNumberName].Value;
                 else if (motionRow.Cells.Count > 0)
                     numberObj = motionRow.Cells[0].Value;
 
@@ -613,43 +695,78 @@ namespace ImportTool
                     int actualId = baseNumber + i;
 
                     // Use the actual numeric alarm id as the displayed id so rows remain synchronized with the source IDs.
-                    int newRowIndex = dgvStationAlarms1.Rows.Add(actualId, alarmText);
-                    dgvStationAlarms1.Rows[newRowIndex].Tag = actualId;
+                    int newRowIndex = dgvAlarms.Rows.Add(actualId, alarmText);
+                    dgvAlarms.Rows[newRowIndex].Tag = actualId;
                 }
             }
 
-            dgvStationAlarms1.ResumeLayout();
+            dgvAlarms.ResumeLayout();
 
-            //in dgvStation1Alarms, rename the numbers in the s1AlarmNumber column to go from 0 to 999
-            for (int i = 0; i < dgvStationAlarms1.Rows.Count; i++)
+            // In dgvStationNAlarms, rename the numbers in the sNAlarmNumber column to go from 0 to N
+            string alarmNumberColumnName = $"s{stationNumber}AlarmNumber";
+            for (int i = 0; i < dgvAlarms.Rows.Count; i++)
             {
-                DataGridViewRow row = dgvStationAlarms1.Rows[i];
+                DataGridViewRow row = dgvAlarms.Rows[i];
                 if (row == null || row.IsNewRow) continue;
-                row.Cells["s1AlarmNumber"].Value = i;
-               }
+
+                if (dgvAlarms.Columns.Contains(alarmNumberColumnName))
+                {
+                    row.Cells[alarmNumberColumnName].Value = i;
+                }
+                else if (row.Cells.Count > 0)
+                {
+                    row.Cells[0].Value = i;
+                }
+            }
+        }
+
+        private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(1);
         }
 
         private void btnExporttoAlarmS1_Click(object sender, EventArgs e)
         {
-            //open the file in the lblStation1AlarmsFilePath and insert the following xml elements
-            //for each row in dgvStation1Alarms
-            //< v n = "TextID" > "0" </ v > with the s1AlarmNumber number from dgvStation1Alarms ("<v n=\"TextID\">)
-            //the line below it
-            //<v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v> with the s1AlarmText from dgvStation1Alarms
-            //keep the rest of the file text lines, only change the value in quote marks " "
-            //
-            string alarmsFilePath = lblStation1AlarmsFilePath.Text;
-            if (!File.Exists(alarmsFilePath))
+            ExportAlarmsToFile(1, lblStation1AlarmsFilePath.Text);
+        }
+
+        private void ExportAlarmsToFile(int stationNumber, string filepath)
+        {
+            DataGridView dgvStationAlarms = stationNumber switch
+            {
+                1 => dgvStationAlarms1,
+                2 => dgvStationAlarms2,
+                3 => dgvStationAlarms3,
+                4 => dgvStationAlarms4,
+                5 => dgvStationAlarms5,
+                6 => dgvStationAlarms6,
+                _ => null
+            };
+
+            if (filepath == null || dgvStationAlarms == null)
+            {
+                MessageBox.Show($"Invalid station number {stationNumber}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string alarmsFilePath = filepath;
+            if (string.IsNullOrWhiteSpace(alarmsFilePath) || !File.Exists(alarmsFilePath))
             {
                 MessageBox.Show("Alarms file path is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             List<string> fileLines = File.ReadAllLines(alarmsFilePath).ToList();
             List<string> newLines = new List<string>();
+
+            string alarmNumberColumnName = $"s{stationNumber}AlarmNumber";
+            string alarmTextColumnName = $"s{stationNumber}AlarmText";
+
             for (int i = 0; i < fileLines.Count; i++)
             {
                 string line = fileLines[i];
                 bool matched = false;
+
                 if (line.Contains("<v n=\"TextID\">"))
                 {
                     int gt = line.IndexOf('>');
@@ -660,35 +777,34 @@ namespace ImportTool
                         string idStr = inner.Trim().Trim('"');
                         if (int.TryParse(idStr, out int id))
                         {
-                            // Find corresponding row in dgvStation1Alarms
-                            foreach (DataGridViewRow alarmRow in dgvStationAlarms1.Rows)
+                            // Find corresponding row in the station's alarms grid
+                            foreach (DataGridViewRow alarmRow in dgvStationAlarms.Rows)
                             {
                                 if (alarmRow == null || alarmRow.IsNewRow) continue;
 
-                                // Prefer matching against the displayed s1AlarmNumber cell value (renumbered 0..N).
+                                // Prefer matching against the displayed sNAlarmNumber cell value (renumbered 0..N).
                                 int displayedNumber = int.MinValue;
                                 object displayedObj = null;
-                                if (dgvStationAlarms1.Columns.Contains("s1AlarmNumber"))
-                                    displayedObj = alarmRow.Cells["s1AlarmNumber"].Value;
+
+                                if (dgvStationAlarms.Columns.Contains(alarmNumberColumnName))
+                                    displayedObj = alarmRow.Cells[alarmNumberColumnName].Value;
                                 else if (alarmRow.Cells.Count > 0)
                                     displayedObj = alarmRow.Cells[0].Value;
 
                                 if (displayedObj != null && int.TryParse(displayedObj.ToString(), out int parsedDisplayed))
-                                {
                                     displayedNumber = parsedDisplayed;
-                                }
 
                                 bool isMatch = (displayedNumber != int.MinValue && displayedNumber == id);
 
-                                // Fallback: if displayed number didn't match, check Tag (older code used Tag for the actual id)
+                                // Fallback: check Tag if previously stored there
                                 if (!isMatch && alarmRow.Tag is int tagId && tagId == id)
                                     isMatch = true;
 
                                 if (isMatch)
                                 {
                                     string alarmText = null;
-                                    if (dgvStationAlarms1.Columns.Contains("s1AlarmText"))
-                                        alarmText = alarmRow.Cells["s1AlarmText"].Value?.ToString();
+                                    if (dgvStationAlarms.Columns.Contains(alarmTextColumnName))
+                                        alarmText = alarmRow.Cells[alarmTextColumnName].Value?.ToString();
                                     else if (alarmRow.Cells.Count > 1)
                                         alarmText = alarmRow.Cells[1].Value?.ToString();
 
@@ -707,9 +823,7 @@ namespace ImportTool
 
                                     // Skip any immediate following original TextDefault lines
                                     while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
-                                    {
                                         i++;
-                                    }
 
                                     matched = true;
                                     break;
@@ -718,15 +832,64 @@ namespace ImportTool
                         }
                     }
                 }
-                if (!matched)
-                {
-                    newLines.Add(line);
-                }
-            }
-            File.WriteAllLines(alarmsFilePath, newLines);
-            MessageBox.Show("Alarms exported successfully to S1_Alarms.TcTLO.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                if (!matched)
+                    newLines.Add(line);
+            }
+
+            File.WriteAllLines(alarmsFilePath, newLines);
+            MessageBox.Show($"Alarms exported successfully to {Path.GetFileName(alarmsFilePath)}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnApplyAlarmsS2_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(2);
+        }
+
+        private void btnExporttoAlarmS2_Click(object sender, EventArgs e)
+        {
+            ExportAlarmsToFile(2, lblStation2AlarmsFilePath.Text);
+        }
+
+        private void btnExporttoAlarmS3_Click(object sender, EventArgs e)
+        {
+            ExportAlarmsToFile(3, lblStation3AlarmsFilePath.Text);
+        }
+
+        private void btnExporttoAlarmS4_Click(object sender, EventArgs e)
+        {
+            ExportAlarmsToFile(4, lblStation4AlarmsFilePath.Text);
+        }
+
+        private void btnExporttoAlarmS5_Click(object sender, EventArgs e)
+        {
+            ExportAlarmsToFile(5, lblStation5AlarmsFilePath.Text);
+        }
+
+        private void btnExporttoAlarmS6_Click(object sender, EventArgs e)
+        {
+            ExportAlarmsToFile(6, lblStation6AlarmsFilePath.Text);
+        }
+
+        private void btnApplyAlarmsS3_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(3);
+        }
+
+        private void btnApplyAlarmsS4_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(4);
+        }
+
+        private void btnApplyAlarmsS5_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(5);
+        }
+
+        private void btnApplyAlarmsS6_Click(object sender, EventArgs e)
+        {
+            ApplyAlarmsForStation(6);
         }
     }
-          
+
 }
