@@ -12,3 +12,10 @@ The reason for this tool is to allow PLC/automation software development to go, 
 
 <img width="954" height="666" alt="image" src="https://github.com/user-attachments/assets/15437ba6-9408-4e67-ab17-498314af77bd" />
 
+
+
+# Crude image from MS Paint explaining the process of the TOAST-ImportTool
+<img width="1552" height="1796" alt="image" src="https://github.com/user-attachments/assets/23dbf01e-bb5b-4415-9688-37fb246bc6ee" />
+
+
+
