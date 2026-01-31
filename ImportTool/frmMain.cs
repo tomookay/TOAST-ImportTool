@@ -166,7 +166,7 @@ namespace ImportTool
                     3 => dgvStation3,
                     4 => dgvStation4,
                     5 => dgvStation5,
-                    6 => dgvStation6,
+                    6 => dgvStation5,
                     _ => null
                 };
 
@@ -220,7 +220,9 @@ namespace ImportTool
 
                 }
 
-
+                //enable code if checkbox cbProcessAlarmsS1 is checked
+                if (cbProcessAlarmsS1.Checked)
+                {
                 //serach for the station 1 path for the alarms file S1_Alarms.TcTLO and put the path in lblStation1AlarmsFilePath
                 string station1AlarmsFile = Directory.GetFiles(Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty, "S1_Alarms.TcTLO", SearchOption.AllDirectories).FirstOrDefault();
                 lblStation1AlarmsFilePath.Text = station1AlarmsFile ?? "Alarms file not found.";
@@ -228,7 +230,7 @@ namespace ImportTool
                 //find the following xml in the lblStation1AlarmsFilePath file and populate into tvStation1Alarms
                 //v n = "TextID" > "0" </ v >
                 // <v n="TextDefault">"S1 0 Row 1 Failed To Advance.. Check Qxxx.x Default"</v>
-                tvStation1Alarms.Nodes.Clear();
+                tvStationAlarms1.Nodes.Clear();
                 if (File.Exists(station1AlarmsFile))
                 {
                     string[] alarmFileLines = File.ReadAllLines(station1AlarmsFile);
@@ -262,8 +264,8 @@ namespace ImportTool
                             }
                         }
                     }
-                    tvStation1Alarms.Nodes.Add(rootAlarmNode);
-                    tvStation1Alarms.ExpandAll();
+                    tvStationAlarms1.Nodes.Add(rootAlarmNode);
+                    tvStationAlarms1.ExpandAll();
 
                     //populate dgvStation1Alarms with elements from tvStation1Alarms into the colums s1AlarmNumber and s1AlarmText
                     foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
@@ -273,11 +275,13 @@ namespace ImportTool
                         {
                             string alarmNumber = parts[0];
                             string alarmText = parts[1];
-                            dgvStation1Alarms.Rows.Add(alarmNumber, alarmText);
+                            dgvStationAlarms1.Rows.Add(alarmNumber, alarmText);
                         }
                     }
 
                }
+
+                }
                 progressDlg.SetProgress(100, "Finished");
                 progressDlg.Close();
             }
@@ -351,7 +355,7 @@ namespace ImportTool
                         3 => dgvStation3,
                         4 => dgvStation4,
                         5 => dgvStation5,
-                        6 => dgvStation6,
+                        6 => dgvStation5,
                         _ => null
                     };
                     if (dgv == null) continue;
@@ -515,11 +519,11 @@ namespace ImportTool
 
         private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
         {
-            dgvStation1Alarms.Rows.Clear();
+            dgvStationAlarms1.Rows.Clear();
 
             // Prevent UI re-layout while we bulk-add rows and disable automatic column sorting
-            dgvStation1Alarms.SuspendLayout();
-            foreach (DataGridViewColumn col in dgvStation1Alarms.Columns)
+            dgvStationAlarms1.SuspendLayout();
+            foreach (DataGridViewColumn col in dgvStationAlarms1.Columns)
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             // Build id -> text map from dgvStation1
@@ -609,17 +613,17 @@ namespace ImportTool
                     int actualId = baseNumber + i;
 
                     // Use the actual numeric alarm id as the displayed id so rows remain synchronized with the source IDs.
-                    int newRowIndex = dgvStation1Alarms.Rows.Add(actualId, alarmText);
-                    dgvStation1Alarms.Rows[newRowIndex].Tag = actualId;
+                    int newRowIndex = dgvStationAlarms1.Rows.Add(actualId, alarmText);
+                    dgvStationAlarms1.Rows[newRowIndex].Tag = actualId;
                 }
             }
 
-            dgvStation1Alarms.ResumeLayout();
+            dgvStationAlarms1.ResumeLayout();
 
             //in dgvStation1Alarms, rename the numbers in the s1AlarmNumber column to go from 0 to 999
-            for (int i = 0; i < dgvStation1Alarms.Rows.Count; i++)
+            for (int i = 0; i < dgvStationAlarms1.Rows.Count; i++)
             {
-                DataGridViewRow row = dgvStation1Alarms.Rows[i];
+                DataGridViewRow row = dgvStationAlarms1.Rows[i];
                 if (row == null || row.IsNewRow) continue;
                 row.Cells["s1AlarmNumber"].Value = i;
                }
@@ -657,14 +661,14 @@ namespace ImportTool
                         if (int.TryParse(idStr, out int id))
                         {
                             // Find corresponding row in dgvStation1Alarms
-                            foreach (DataGridViewRow alarmRow in dgvStation1Alarms.Rows)
+                            foreach (DataGridViewRow alarmRow in dgvStationAlarms1.Rows)
                             {
                                 if (alarmRow == null || alarmRow.IsNewRow) continue;
 
                                 // Prefer matching against the displayed s1AlarmNumber cell value (renumbered 0..N).
                                 int displayedNumber = int.MinValue;
                                 object displayedObj = null;
-                                if (dgvStation1Alarms.Columns.Contains("s1AlarmNumber"))
+                                if (dgvStationAlarms1.Columns.Contains("s1AlarmNumber"))
                                     displayedObj = alarmRow.Cells["s1AlarmNumber"].Value;
                                 else if (alarmRow.Cells.Count > 0)
                                     displayedObj = alarmRow.Cells[0].Value;
@@ -683,7 +687,7 @@ namespace ImportTool
                                 if (isMatch)
                                 {
                                     string alarmText = null;
-                                    if (dgvStation1Alarms.Columns.Contains("s1AlarmText"))
+                                    if (dgvStationAlarms1.Columns.Contains("s1AlarmText"))
                                         alarmText = alarmRow.Cells["s1AlarmText"].Value?.ToString();
                                     else if (alarmRow.Cells.Count > 1)
                                         alarmText = alarmRow.Cells[1].Value?.ToString();
