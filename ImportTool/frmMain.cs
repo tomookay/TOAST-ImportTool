@@ -938,19 +938,19 @@ namespace ImportTool
                     switch (i)
                     {
                         case 0:
-                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 3)}...";
+                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
                             break;
                         case 1:
-                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 6)}... Check {GetText(baseNumber + 9)}...";
+                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
                             break;
-                     //   case 2:
-                      //      alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
-                   //         break;
-                  //      case 3:
-                    ///        alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
+                            //   case 2:
+                            //      alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
+                            //         break;
+                            //      case 3:
+                            ///        alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
                             break;
-                  //      case 4:
-                   //         alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 3)}, {GetText(baseNumber + 9)}...";
+                            //      case 4:
+                            //         alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 3)}, {GetText(baseNumber + 9)}...";
                             break;
                         default:
                             alarmText = "Spare";
@@ -1109,6 +1109,119 @@ namespace ImportTool
             MessageBox.Show($"Alarms exported successfully to {Path.GetFileName(alarmsFilePath)}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void ExportPromptsToFile(int stationNumber, string filepath)
+        {
+            // Similar to ExportAlarmsToFile but for prompts - can be implemented if needed
+            DataGridView dgvStationPrompts = stationNumber switch
+            {
+                1 => dgvStationPrompts1,
+                2 => dgvStationPrompts2,
+                3 => dgvStationPrompts3,
+                4 => dgvStationPrompts4,
+                5 => dgvStationPrompts5,
+                6 => dgvStationPrompts6,
+                _ => null
+            };
+
+            if (filepath == null || dgvStationPrompts == null)
+            {
+                MessageBox.Show($"Invalid station number {stationNumber}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string promptsFilePath = filepath;
+            if (string.IsNullOrWhiteSpace(promptsFilePath) || !File.Exists(promptsFilePath))
+            {
+                MessageBox.Show("Prompts file path is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            List<string> fileLines = File.ReadAllLines(promptsFilePath).ToList();
+            List<string> newLines = new List<string>();
+
+            string promptNumberColumnName = $"s{stationNumber}PromptNumber";
+            string promptTextColumnName = $"s{stationNumber}PromptText";
+
+            for (int i = 0; i < fileLines.Count; i++)
+            {
+                string line = fileLines[i];
+                bool matched = false;
+
+                if (line.Contains("<v n=\"TextID\">"))
+                {
+                    int gt = line.IndexOf('>');
+                    int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                    if (gt >= 0 && lt > gt)
+                    {
+                        string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                        string idStr = inner.Trim().Trim('"');
+                        if (int.TryParse(idStr, out int id))
+                        {
+                            // Find corresponding row in the station's alarms grid
+                            foreach (DataGridViewRow promptRow in dgvStationPrompts.Rows)
+                            {
+                                if (promptRow == null || promptRow.IsNewRow) continue;
+
+                                // Prefer matching against the displayed sNAlarmNumber cell value (renumbered 0..N).
+                                int displayedNumber = int.MinValue;
+                                object displayedObj = null;
+
+                                if (dgvStationPrompts.Columns.Contains(promptNumberColumnName))
+                                    displayedObj = promptRow.Cells[promptNumberColumnName].Value;
+                                else if (promptRow.Cells.Count > 0)
+                                    displayedObj = promptRow.Cells[0].Value;
+
+                                if (displayedObj != null && int.TryParse(displayedObj.ToString(), out int parsedDisplayed))
+                                    displayedNumber = parsedDisplayed;
+
+                                bool isMatch = (displayedNumber != int.MinValue && displayedNumber == id);
+
+                                // Fallback: check Tag if previously stored there
+                                if (!isMatch && promptRow.Tag is int tagId && tagId == id)
+                                    isMatch = true;
+
+                                if (isMatch)
+                                {
+                                    string promptText = null;
+                                    if (dgvStationPrompts.Columns.Contains(promptTextColumnName))
+                                        promptText = promptRow.Cells[promptTextColumnName].Value?.ToString();
+                                    else if (promptRow.Cells.Count > 1)
+                                        promptText = promptRow.Cells[1].Value?.ToString();
+
+                                    promptText = promptText ?? string.Empty;
+
+                                    // Append the TextID line
+                                    newLines.Add(line);
+
+                                    // Determine indentation from the current line (leading whitespace)
+                                    int indentLen = 0;
+                                    while (indentLen < line.Length && char.IsWhiteSpace(line[indentLen])) indentLen++;
+                                    string indent = line.Substring(0, indentLen);
+
+                                    // Append the new TextDefault line with same indentation
+                                    newLines.Add(indent + $"<v n=\"TextDefault\">\"{promptText}\"</v>");
+
+                                    // Skip any immediate following original TextDefault lines
+                                    while (i + 1 < fileLines.Count && fileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                                        i++;
+
+                                    matched = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (!matched)
+                    newLines.Add(line);
+            }
+
+            File.WriteAllLines(promptsFilePath, newLines);
+            MessageBox.Show($"Alarms exported successfully to {Path.GetFileName(promptsFilePath)}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
         private void btnApplyAlarmsS2_Click(object sender, EventArgs e)
         {
             ApplyAlarmsForStation(2);
@@ -1167,6 +1280,64 @@ namespace ImportTool
 
         private void btnExporttoPromptsS1_Click(object sender, EventArgs e)
         {
+            ExportPromptsToFile(1, lblStation1PromptsFilePath.Text);
+
+        }
+
+        private void btnApplyPromptsS2_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(2);
+        }
+
+        private void btnExporttoPromptsS2_Click(object sender, EventArgs e)
+        {
+            ExportPromptsToFile(2, lblStation2PromptsFilePath.Text);
+
+        }
+
+        private void button4btnApplyPromptsS3_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(3);
+        }
+
+        private void btnExporttoPromptsS3_Click(object sender, EventArgs e)
+        {
+            ExportPromptsToFile(3, lblStation3PromptsFilePath.Text);
+
+        }
+
+        private void btnApplyPromptsS4_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(4);
+
+        }
+
+        private void btnExporttoPromptsS4_Click(object sender, EventArgs e)
+        {
+            ExportPromptsToFile(4, lblStation4PromptsFilePath.Text);
+
+        }
+
+        private void btnApplyPromptsS5_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(5);
+
+        }
+
+        private void btnExporttoPromptsS5_Click(object sender, EventArgs e)
+        {
+            ExportPromptsToFile(5, lblStation5PromptsFilePath.Text);
+
+        }
+
+        private void btnApplyPromptsS6_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(6);
+        }
+
+        private void btnExporttoPromptsS6_Click(object sender, EventArgs e)
+        {
+            ExportPromptsToFile(6, lblStation6PromptsFilePath.Text);
 
         }
     }

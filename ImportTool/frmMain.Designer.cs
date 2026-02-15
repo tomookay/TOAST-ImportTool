@@ -91,7 +91,7 @@
             dgvStationPrompts3 = new DataGridView();
             dataGridViewTextBoxColumn25 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn26 = new DataGridViewTextBoxColumn();
-            button4btnApplyPromptsS3 = new Button();
+            btnApplyPromptsS3 = new Button();
             tvStationPrompts3 = new TreeView();
             lblStation3PromptsFilePath = new Label();
             grpBoxMotionsS3 = new GroupBox();
@@ -559,6 +559,7 @@
             btnExporttoPromptsS2.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS2, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS2.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS2.Click += btnExporttoPromptsS2_Click;
             // 
             // dgvStationPrompts2
             // 
@@ -591,6 +592,7 @@
             btnApplyPromptsS2.Text = "Insert Motion Text";
             toolTip1.SetToolTip(btnApplyPromptsS2, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyPromptsS2.UseVisualStyleBackColor = true;
+            btnApplyPromptsS2.Click += btnApplyPromptsS2_Click;
             // 
             // tvStationPrompts2
             // 
@@ -760,7 +762,7 @@
             grpBoxAutoPrompsS3.Controls.Add(cbProcessPromptsS3);
             grpBoxAutoPrompsS3.Controls.Add(btnExporttoPromptsS3);
             grpBoxAutoPrompsS3.Controls.Add(dgvStationPrompts3);
-            grpBoxAutoPrompsS3.Controls.Add(button4btnApplyPromptsS3);
+            grpBoxAutoPrompsS3.Controls.Add(btnApplyPromptsS3);
             grpBoxAutoPrompsS3.Controls.Add(tvStationPrompts3);
             grpBoxAutoPrompsS3.Controls.Add(lblStation3PromptsFilePath);
             grpBoxAutoPrompsS3.Location = new Point(918, 121);
@@ -792,6 +794,7 @@
             btnExporttoPromptsS3.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS3, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS3.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS3.Click += btnExporttoPromptsS3_Click;
             // 
             // dgvStationPrompts3
             // 
@@ -815,15 +818,16 @@
             dataGridViewTextBoxColumn26.HeaderText = "Text";
             dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
             // 
-            // button4btnApplyPromptsS3
+            // btnApplyPromptsS3
             // 
-            button4btnApplyPromptsS3.Location = new Point(6, 340);
-            button4btnApplyPromptsS3.Name = "button4btnApplyPromptsS3";
-            button4btnApplyPromptsS3.Size = new Size(125, 23);
-            button4btnApplyPromptsS3.TabIndex = 8;
-            button4btnApplyPromptsS3.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button4btnApplyPromptsS3, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button4btnApplyPromptsS3.UseVisualStyleBackColor = true;
+            btnApplyPromptsS3.Location = new Point(6, 340);
+            btnApplyPromptsS3.Name = "btnApplyPromptsS3";
+            btnApplyPromptsS3.Size = new Size(125, 23);
+            btnApplyPromptsS3.TabIndex = 8;
+            btnApplyPromptsS3.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyPromptsS3, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            btnApplyPromptsS3.UseVisualStyleBackColor = true;
+            btnApplyPromptsS3.Click += button4btnApplyPromptsS3_Click;
             // 
             // tvStationPrompts3
             // 
@@ -1025,6 +1029,7 @@
             btnExporttoPromptsS4.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS4, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS4.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS4.Click += btnExporttoPromptsS4_Click;
             // 
             // dgvStationPrompts4
             // 
@@ -1057,6 +1062,7 @@
             btnApplyPromptsS4.Text = "Insert Motion Text";
             toolTip1.SetToolTip(btnApplyPromptsS4, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyPromptsS4.UseVisualStyleBackColor = true;
+            btnApplyPromptsS4.Click += btnApplyPromptsS4_Click;
             // 
             // tvStationPrompts4
             // 
@@ -1258,6 +1264,7 @@
             btnExporttoPromptsS5.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS5, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS5.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS5.Click += btnExporttoPromptsS5_Click;
             // 
             // dgvStationPrompts5
             // 
@@ -1290,6 +1297,7 @@
             btnApplyPromptsS5.Text = "Insert Motion Text";
             toolTip1.SetToolTip(btnApplyPromptsS5, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyPromptsS5.UseVisualStyleBackColor = true;
+            btnApplyPromptsS5.Click += btnApplyPromptsS5_Click;
             // 
             // tvStationPrompts5
             // 
@@ -1491,6 +1499,7 @@
             btnExporttoPromptsS6.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS6, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS6.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS6.Click += btnExporttoPromptsS6_Click;
             // 
             // dgvStationPrompts6
             // 
@@ -1523,6 +1532,7 @@
             btnApplyPromptsS6.Text = "Insert Motion Text";
             toolTip1.SetToolTip(btnApplyPromptsS6, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyPromptsS6.UseVisualStyleBackColor = true;
+            btnApplyPromptsS6.Click += btnApplyPromptsS6_Click;
             // 
             // tvStationPrompts6
             // 
@@ -1883,7 +1893,7 @@
         private DataGridView dgvStationPrompts3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
-        private Button button4btnApplyPromptsS3;
+        private Button btnApplyPromptsS3;
         private TreeView tvStationPrompts3;
         private Label lblStation3PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS4;
