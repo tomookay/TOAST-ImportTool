@@ -62,12 +62,12 @@
             tabPage2 = new TabPage();
             grpBoxAutoPrompsS2 = new GroupBox();
             cbProcessPromptsS2 = new CheckBox();
-            button1 = new Button();
-            dataGridView1 = new DataGridView();
+            btnExporttoPromptsS2 = new Button();
+            dgvStationPrompts2 = new DataGridView();
             dataGridViewTextBoxColumn23 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn24 = new DataGridViewTextBoxColumn();
-            button2 = new Button();
-            treeView1 = new TreeView();
+            btnApplyPromptsS2 = new Button();
+            tvStationPrompts2 = new TreeView();
             lblStation2PromptsFilePath = new Label();
             grpBoxMotionsS2 = new GroupBox();
             tvStation2 = new TreeView();
@@ -87,12 +87,12 @@
             tabPage3 = new TabPage();
             grpBoxAutoPrompsS3 = new GroupBox();
             cbProcessPromptsS3 = new CheckBox();
-            button3 = new Button();
-            dataGridView2 = new DataGridView();
+            btnExporttoPromptsS3 = new Button();
+            dgvStationPrompts3 = new DataGridView();
             dataGridViewTextBoxColumn25 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn26 = new DataGridViewTextBoxColumn();
-            button4 = new Button();
-            treeView2 = new TreeView();
+            button4btnApplyPromptsS3 = new Button();
+            tvStationPrompts3 = new TreeView();
             lblStation3PromptsFilePath = new Label();
             grpBoxMotionsS3 = new GroupBox();
             tvStation3 = new TreeView();
@@ -112,12 +112,12 @@
             tabPage4 = new TabPage();
             grpBoxAutoPrompsS4 = new GroupBox();
             cbProcessPromptsS4 = new CheckBox();
-            button5 = new Button();
-            dataGridView3 = new DataGridView();
+            btnExporttoPromptsS4 = new Button();
+            dgvStationPrompts4 = new DataGridView();
             dataGridViewTextBoxColumn27 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn28 = new DataGridViewTextBoxColumn();
-            button6 = new Button();
-            treeView3 = new TreeView();
+            btnApplyPromptsS4 = new Button();
+            tvStationPrompts4 = new TreeView();
             lblStation4PromptsFilePath = new Label();
             grpBoxMotionsS4 = new GroupBox();
             tvStation4 = new TreeView();
@@ -137,12 +137,12 @@
             tabPage5 = new TabPage();
             grpBoxAutoPrompsS5 = new GroupBox();
             cbProcessPromptsS5 = new CheckBox();
-            button7 = new Button();
-            dataGridView4 = new DataGridView();
+            btnExporttoPromptsS5 = new Button();
+            dgvStationPrompts5 = new DataGridView();
             dataGridViewTextBoxColumn29 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn30 = new DataGridViewTextBoxColumn();
-            button8 = new Button();
-            treeView4 = new TreeView();
+            btnApplyPromptsS5 = new Button();
+            tvStationPrompts5 = new TreeView();
             lblStation5PromptsFilePath = new Label();
             grpBoxMotionsS5 = new GroupBox();
             tvStation5 = new TreeView();
@@ -162,12 +162,12 @@
             tabPage6 = new TabPage();
             grpBoxAutoPrompsS6 = new GroupBox();
             cbProcessPromptsS6 = new CheckBox();
-            button9 = new Button();
-            dataGridView5 = new DataGridView();
+            btnExporttoPromptsS6 = new Button();
+            dgvStationPrompts6 = new DataGridView();
             dataGridViewTextBoxColumn31 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn32 = new DataGridViewTextBoxColumn();
-            button10 = new Button();
-            treeView5 = new TreeView();
+            btnApplyPromptsS6 = new Button();
+            tvStationPrompts6 = new TreeView();
             lblStation6PromptsFilePath = new Label();
             grpBoxMotionsS6 = new GroupBox();
             tvStation6 = new TreeView();
@@ -196,35 +196,35 @@
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms1).BeginInit();
             tabPage2.SuspendLayout();
             grpBoxAutoPrompsS2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts2).BeginInit();
             grpBoxMotionsS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
             grpBoxAutoAlarmS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms2).BeginInit();
             tabPage3.SuspendLayout();
             grpBoxAutoPrompsS3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts3).BeginInit();
             grpBoxMotionsS3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation3).BeginInit();
             grpBoxAutoAlarmS3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms3).BeginInit();
             tabPage4.SuspendLayout();
             grpBoxAutoPrompsS4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts4).BeginInit();
             grpBoxMotionsS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation4).BeginInit();
             grpBoxAutoAlarmS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms4).BeginInit();
             tabPage5.SuspendLayout();
             grpBoxAutoPrompsS5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts5).BeginInit();
             grpBoxMotionsS5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation5).BeginInit();
             grpBoxAutoAlarmS5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms5).BeginInit();
             tabPage6.SuspendLayout();
             grpBoxAutoPrompsS6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts6).BeginInit();
             grpBoxMotionsS6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation6).BeginInit();
             grpBoxAutoAlarmS6.SuspendLayout();
@@ -523,10 +523,10 @@
             // grpBoxAutoPrompsS2
             // 
             grpBoxAutoPrompsS2.Controls.Add(cbProcessPromptsS2);
-            grpBoxAutoPrompsS2.Controls.Add(button1);
-            grpBoxAutoPrompsS2.Controls.Add(dataGridView1);
-            grpBoxAutoPrompsS2.Controls.Add(button2);
-            grpBoxAutoPrompsS2.Controls.Add(treeView1);
+            grpBoxAutoPrompsS2.Controls.Add(btnExporttoPromptsS2);
+            grpBoxAutoPrompsS2.Controls.Add(dgvStationPrompts2);
+            grpBoxAutoPrompsS2.Controls.Add(btnApplyPromptsS2);
+            grpBoxAutoPrompsS2.Controls.Add(tvStationPrompts2);
             grpBoxAutoPrompsS2.Controls.Add(lblStation2PromptsFilePath);
             grpBoxAutoPrompsS2.Location = new Point(918, 121);
             grpBoxAutoPrompsS2.Name = "grpBoxAutoPrompsS2";
@@ -548,24 +548,24 @@
             toolTip1.SetToolTip(cbProcessPromptsS2, "Not Yet Implemented...");
             cbProcessPromptsS2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnExporttoPromptsS2
             // 
-            button1.Location = new Point(317, 340);
-            button1.Name = "button1";
-            button1.Size = new Size(127, 23);
-            button1.TabIndex = 9;
-            button1.Text = "Export";
-            toolTip1.SetToolTip(button1, "Click to Export the alarms to the stations alarm's text list...");
-            button1.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS2.Location = new Point(317, 340);
+            btnExporttoPromptsS2.Name = "btnExporttoPromptsS2";
+            btnExporttoPromptsS2.Size = new Size(127, 23);
+            btnExporttoPromptsS2.TabIndex = 9;
+            btnExporttoPromptsS2.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoPromptsS2, "Click to Export the alarms to the stations alarm's text list...");
+            btnExporttoPromptsS2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvStationPrompts2
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn23, dataGridViewTextBoxColumn24 });
-            dataGridView1.Location = new Point(12, 205);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(432, 129);
-            dataGridView1.TabIndex = 6;
+            dgvStationPrompts2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationPrompts2.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn23, dataGridViewTextBoxColumn24 });
+            dgvStationPrompts2.Location = new Point(12, 205);
+            dgvStationPrompts2.Name = "dgvStationPrompts2";
+            dgvStationPrompts2.Size = new Size(432, 129);
+            dgvStationPrompts2.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn23
             // 
@@ -580,22 +580,22 @@
             dataGridViewTextBoxColumn24.HeaderText = "Text";
             dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
             // 
-            // button2
+            // btnApplyPromptsS2
             // 
-            button2.Location = new Point(6, 340);
-            button2.Name = "button2";
-            button2.Size = new Size(125, 23);
-            button2.TabIndex = 8;
-            button2.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button2, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button2.UseVisualStyleBackColor = true;
+            btnApplyPromptsS2.Location = new Point(6, 340);
+            btnApplyPromptsS2.Name = "btnApplyPromptsS2";
+            btnApplyPromptsS2.Size = new Size(125, 23);
+            btnApplyPromptsS2.TabIndex = 8;
+            btnApplyPromptsS2.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyPromptsS2, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            btnApplyPromptsS2.UseVisualStyleBackColor = true;
             // 
-            // treeView1
+            // tvStationPrompts2
             // 
-            treeView1.Location = new Point(6, 49);
-            treeView1.Name = "treeView1";
-            treeView1.Size = new Size(438, 140);
-            treeView1.TabIndex = 7;
+            tvStationPrompts2.Location = new Point(6, 49);
+            tvStationPrompts2.Name = "tvStationPrompts2";
+            tvStationPrompts2.Size = new Size(438, 140);
+            tvStationPrompts2.TabIndex = 7;
             // 
             // lblStation2PromptsFilePath
             // 
@@ -756,10 +756,10 @@
             // grpBoxAutoPrompsS3
             // 
             grpBoxAutoPrompsS3.Controls.Add(cbProcessPromptsS3);
-            grpBoxAutoPrompsS3.Controls.Add(button3);
-            grpBoxAutoPrompsS3.Controls.Add(dataGridView2);
-            grpBoxAutoPrompsS3.Controls.Add(button4);
-            grpBoxAutoPrompsS3.Controls.Add(treeView2);
+            grpBoxAutoPrompsS3.Controls.Add(btnExporttoPromptsS3);
+            grpBoxAutoPrompsS3.Controls.Add(dgvStationPrompts3);
+            grpBoxAutoPrompsS3.Controls.Add(button4btnApplyPromptsS3);
+            grpBoxAutoPrompsS3.Controls.Add(tvStationPrompts3);
             grpBoxAutoPrompsS3.Controls.Add(lblStation3PromptsFilePath);
             grpBoxAutoPrompsS3.Location = new Point(918, 121);
             grpBoxAutoPrompsS3.Name = "grpBoxAutoPrompsS3";
@@ -781,24 +781,24 @@
             toolTip1.SetToolTip(cbProcessPromptsS3, "Not Yet Implemented...");
             cbProcessPromptsS3.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnExporttoPromptsS3
             // 
-            button3.Location = new Point(317, 340);
-            button3.Name = "button3";
-            button3.Size = new Size(127, 23);
-            button3.TabIndex = 9;
-            button3.Text = "Export";
-            toolTip1.SetToolTip(button3, "Click to Export the alarms to the stations alarm's text list...");
-            button3.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS3.Location = new Point(317, 340);
+            btnExporttoPromptsS3.Name = "btnExporttoPromptsS3";
+            btnExporttoPromptsS3.Size = new Size(127, 23);
+            btnExporttoPromptsS3.TabIndex = 9;
+            btnExporttoPromptsS3.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoPromptsS3, "Click to Export the alarms to the stations alarm's text list...");
+            btnExporttoPromptsS3.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // dgvStationPrompts3
             // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn25, dataGridViewTextBoxColumn26 });
-            dataGridView2.Location = new Point(12, 205);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new Size(432, 129);
-            dataGridView2.TabIndex = 6;
+            dgvStationPrompts3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationPrompts3.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn25, dataGridViewTextBoxColumn26 });
+            dgvStationPrompts3.Location = new Point(12, 205);
+            dgvStationPrompts3.Name = "dgvStationPrompts3";
+            dgvStationPrompts3.Size = new Size(432, 129);
+            dgvStationPrompts3.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn25
             // 
@@ -813,22 +813,22 @@
             dataGridViewTextBoxColumn26.HeaderText = "Text";
             dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
             // 
-            // button4
+            // button4btnApplyPromptsS3
             // 
-            button4.Location = new Point(6, 340);
-            button4.Name = "button4";
-            button4.Size = new Size(125, 23);
-            button4.TabIndex = 8;
-            button4.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button4, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button4.UseVisualStyleBackColor = true;
+            button4btnApplyPromptsS3.Location = new Point(6, 340);
+            button4btnApplyPromptsS3.Name = "button4btnApplyPromptsS3";
+            button4btnApplyPromptsS3.Size = new Size(125, 23);
+            button4btnApplyPromptsS3.TabIndex = 8;
+            button4btnApplyPromptsS3.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(button4btnApplyPromptsS3, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            button4btnApplyPromptsS3.UseVisualStyleBackColor = true;
             // 
-            // treeView2
+            // tvStationPrompts3
             // 
-            treeView2.Location = new Point(6, 49);
-            treeView2.Name = "treeView2";
-            treeView2.Size = new Size(438, 140);
-            treeView2.TabIndex = 7;
+            tvStationPrompts3.Location = new Point(6, 49);
+            tvStationPrompts3.Name = "tvStationPrompts3";
+            tvStationPrompts3.Size = new Size(438, 140);
+            tvStationPrompts3.TabIndex = 7;
             // 
             // lblStation3PromptsFilePath
             // 
@@ -989,10 +989,10 @@
             // grpBoxAutoPrompsS4
             // 
             grpBoxAutoPrompsS4.Controls.Add(cbProcessPromptsS4);
-            grpBoxAutoPrompsS4.Controls.Add(button5);
-            grpBoxAutoPrompsS4.Controls.Add(dataGridView3);
-            grpBoxAutoPrompsS4.Controls.Add(button6);
-            grpBoxAutoPrompsS4.Controls.Add(treeView3);
+            grpBoxAutoPrompsS4.Controls.Add(btnExporttoPromptsS4);
+            grpBoxAutoPrompsS4.Controls.Add(dgvStationPrompts4);
+            grpBoxAutoPrompsS4.Controls.Add(btnApplyPromptsS4);
+            grpBoxAutoPrompsS4.Controls.Add(tvStationPrompts4);
             grpBoxAutoPrompsS4.Controls.Add(lblStation4PromptsFilePath);
             grpBoxAutoPrompsS4.Location = new Point(918, 121);
             grpBoxAutoPrompsS4.Name = "grpBoxAutoPrompsS4";
@@ -1014,24 +1014,24 @@
             toolTip1.SetToolTip(cbProcessPromptsS4, "Not Yet Implemented...");
             cbProcessPromptsS4.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnExporttoPromptsS4
             // 
-            button5.Location = new Point(317, 340);
-            button5.Name = "button5";
-            button5.Size = new Size(127, 23);
-            button5.TabIndex = 9;
-            button5.Text = "Export";
-            toolTip1.SetToolTip(button5, "Click to Export the alarms to the stations alarm's text list...");
-            button5.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS4.Location = new Point(317, 340);
+            btnExporttoPromptsS4.Name = "btnExporttoPromptsS4";
+            btnExporttoPromptsS4.Size = new Size(127, 23);
+            btnExporttoPromptsS4.TabIndex = 9;
+            btnExporttoPromptsS4.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoPromptsS4, "Click to Export the alarms to the stations alarm's text list...");
+            btnExporttoPromptsS4.UseVisualStyleBackColor = true;
             // 
-            // dataGridView3
+            // dgvStationPrompts4
             // 
-            dataGridView3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView3.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn27, dataGridViewTextBoxColumn28 });
-            dataGridView3.Location = new Point(12, 205);
-            dataGridView3.Name = "dataGridView3";
-            dataGridView3.Size = new Size(432, 129);
-            dataGridView3.TabIndex = 6;
+            dgvStationPrompts4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationPrompts4.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn27, dataGridViewTextBoxColumn28 });
+            dgvStationPrompts4.Location = new Point(12, 205);
+            dgvStationPrompts4.Name = "dgvStationPrompts4";
+            dgvStationPrompts4.Size = new Size(432, 129);
+            dgvStationPrompts4.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn27
             // 
@@ -1046,22 +1046,22 @@
             dataGridViewTextBoxColumn28.HeaderText = "Text";
             dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
             // 
-            // button6
+            // btnApplyPromptsS4
             // 
-            button6.Location = new Point(6, 340);
-            button6.Name = "button6";
-            button6.Size = new Size(125, 23);
-            button6.TabIndex = 8;
-            button6.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button6, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button6.UseVisualStyleBackColor = true;
+            btnApplyPromptsS4.Location = new Point(6, 340);
+            btnApplyPromptsS4.Name = "btnApplyPromptsS4";
+            btnApplyPromptsS4.Size = new Size(125, 23);
+            btnApplyPromptsS4.TabIndex = 8;
+            btnApplyPromptsS4.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyPromptsS4, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            btnApplyPromptsS4.UseVisualStyleBackColor = true;
             // 
-            // treeView3
+            // tvStationPrompts4
             // 
-            treeView3.Location = new Point(6, 49);
-            treeView3.Name = "treeView3";
-            treeView3.Size = new Size(438, 140);
-            treeView3.TabIndex = 7;
+            tvStationPrompts4.Location = new Point(6, 49);
+            tvStationPrompts4.Name = "tvStationPrompts4";
+            tvStationPrompts4.Size = new Size(438, 140);
+            tvStationPrompts4.TabIndex = 7;
             // 
             // lblStation4PromptsFilePath
             // 
@@ -1222,10 +1222,10 @@
             // grpBoxAutoPrompsS5
             // 
             grpBoxAutoPrompsS5.Controls.Add(cbProcessPromptsS5);
-            grpBoxAutoPrompsS5.Controls.Add(button7);
-            grpBoxAutoPrompsS5.Controls.Add(dataGridView4);
-            grpBoxAutoPrompsS5.Controls.Add(button8);
-            grpBoxAutoPrompsS5.Controls.Add(treeView4);
+            grpBoxAutoPrompsS5.Controls.Add(btnExporttoPromptsS5);
+            grpBoxAutoPrompsS5.Controls.Add(dgvStationPrompts5);
+            grpBoxAutoPrompsS5.Controls.Add(btnApplyPromptsS5);
+            grpBoxAutoPrompsS5.Controls.Add(tvStationPrompts5);
             grpBoxAutoPrompsS5.Controls.Add(lblStation5PromptsFilePath);
             grpBoxAutoPrompsS5.Location = new Point(918, 121);
             grpBoxAutoPrompsS5.Name = "grpBoxAutoPrompsS5";
@@ -1247,24 +1247,24 @@
             toolTip1.SetToolTip(cbProcessPromptsS5, "Not Yet Implemented...");
             cbProcessPromptsS5.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // btnExporttoPromptsS5
             // 
-            button7.Location = new Point(317, 340);
-            button7.Name = "button7";
-            button7.Size = new Size(127, 23);
-            button7.TabIndex = 9;
-            button7.Text = "Export";
-            toolTip1.SetToolTip(button7, "Click to Export the alarms to the stations alarm's text list...");
-            button7.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS5.Location = new Point(317, 340);
+            btnExporttoPromptsS5.Name = "btnExporttoPromptsS5";
+            btnExporttoPromptsS5.Size = new Size(127, 23);
+            btnExporttoPromptsS5.TabIndex = 9;
+            btnExporttoPromptsS5.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoPromptsS5, "Click to Export the alarms to the stations alarm's text list...");
+            btnExporttoPromptsS5.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
+            // dgvStationPrompts5
             // 
-            dataGridView4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView4.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn29, dataGridViewTextBoxColumn30 });
-            dataGridView4.Location = new Point(12, 205);
-            dataGridView4.Name = "dataGridView4";
-            dataGridView4.Size = new Size(432, 129);
-            dataGridView4.TabIndex = 6;
+            dgvStationPrompts5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationPrompts5.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn29, dataGridViewTextBoxColumn30 });
+            dgvStationPrompts5.Location = new Point(12, 205);
+            dgvStationPrompts5.Name = "dgvStationPrompts5";
+            dgvStationPrompts5.Size = new Size(432, 129);
+            dgvStationPrompts5.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn29
             // 
@@ -1279,22 +1279,22 @@
             dataGridViewTextBoxColumn30.HeaderText = "Text";
             dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
             // 
-            // button8
+            // btnApplyPromptsS5
             // 
-            button8.Location = new Point(6, 340);
-            button8.Name = "button8";
-            button8.Size = new Size(125, 23);
-            button8.TabIndex = 8;
-            button8.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button8, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button8.UseVisualStyleBackColor = true;
+            btnApplyPromptsS5.Location = new Point(6, 340);
+            btnApplyPromptsS5.Name = "btnApplyPromptsS5";
+            btnApplyPromptsS5.Size = new Size(125, 23);
+            btnApplyPromptsS5.TabIndex = 8;
+            btnApplyPromptsS5.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyPromptsS5, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            btnApplyPromptsS5.UseVisualStyleBackColor = true;
             // 
-            // treeView4
+            // tvStationPrompts5
             // 
-            treeView4.Location = new Point(6, 49);
-            treeView4.Name = "treeView4";
-            treeView4.Size = new Size(438, 140);
-            treeView4.TabIndex = 7;
+            tvStationPrompts5.Location = new Point(6, 49);
+            tvStationPrompts5.Name = "tvStationPrompts5";
+            tvStationPrompts5.Size = new Size(438, 140);
+            tvStationPrompts5.TabIndex = 7;
             // 
             // lblStation5PromptsFilePath
             // 
@@ -1455,10 +1455,10 @@
             // grpBoxAutoPrompsS6
             // 
             grpBoxAutoPrompsS6.Controls.Add(cbProcessPromptsS6);
-            grpBoxAutoPrompsS6.Controls.Add(button9);
-            grpBoxAutoPrompsS6.Controls.Add(dataGridView5);
-            grpBoxAutoPrompsS6.Controls.Add(button10);
-            grpBoxAutoPrompsS6.Controls.Add(treeView5);
+            grpBoxAutoPrompsS6.Controls.Add(btnExporttoPromptsS6);
+            grpBoxAutoPrompsS6.Controls.Add(dgvStationPrompts6);
+            grpBoxAutoPrompsS6.Controls.Add(btnApplyPromptsS6);
+            grpBoxAutoPrompsS6.Controls.Add(tvStationPrompts6);
             grpBoxAutoPrompsS6.Controls.Add(lblStation6PromptsFilePath);
             grpBoxAutoPrompsS6.Location = new Point(918, 121);
             grpBoxAutoPrompsS6.Name = "grpBoxAutoPrompsS6";
@@ -1480,24 +1480,24 @@
             toolTip1.SetToolTip(cbProcessPromptsS6, "Not Yet Implemented...");
             cbProcessPromptsS6.UseVisualStyleBackColor = true;
             // 
-            // button9
+            // btnExporttoPromptsS6
             // 
-            button9.Location = new Point(317, 340);
-            button9.Name = "button9";
-            button9.Size = new Size(127, 23);
-            button9.TabIndex = 9;
-            button9.Text = "Export";
-            toolTip1.SetToolTip(button9, "Click to Export the alarms to the stations alarm's text list...");
-            button9.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS6.Location = new Point(317, 340);
+            btnExporttoPromptsS6.Name = "btnExporttoPromptsS6";
+            btnExporttoPromptsS6.Size = new Size(127, 23);
+            btnExporttoPromptsS6.TabIndex = 9;
+            btnExporttoPromptsS6.Text = "Export";
+            toolTip1.SetToolTip(btnExporttoPromptsS6, "Click to Export the alarms to the stations alarm's text list...");
+            btnExporttoPromptsS6.UseVisualStyleBackColor = true;
             // 
-            // dataGridView5
+            // dgvStationPrompts6
             // 
-            dataGridView5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView5.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn31, dataGridViewTextBoxColumn32 });
-            dataGridView5.Location = new Point(12, 205);
-            dataGridView5.Name = "dataGridView5";
-            dataGridView5.Size = new Size(432, 129);
-            dataGridView5.TabIndex = 6;
+            dgvStationPrompts6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStationPrompts6.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn31, dataGridViewTextBoxColumn32 });
+            dgvStationPrompts6.Location = new Point(12, 205);
+            dgvStationPrompts6.Name = "dgvStationPrompts6";
+            dgvStationPrompts6.Size = new Size(432, 129);
+            dgvStationPrompts6.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn31
             // 
@@ -1512,22 +1512,22 @@
             dataGridViewTextBoxColumn32.HeaderText = "Text";
             dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
             // 
-            // button10
+            // btnApplyPromptsS6
             // 
-            button10.Location = new Point(6, 340);
-            button10.Name = "button10";
-            button10.Size = new Size(125, 23);
-            button10.TabIndex = 8;
-            button10.Text = "Insert Motion Text";
-            toolTip1.SetToolTip(button10, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
-            button10.UseVisualStyleBackColor = true;
+            btnApplyPromptsS6.Location = new Point(6, 340);
+            btnApplyPromptsS6.Name = "btnApplyPromptsS6";
+            btnApplyPromptsS6.Size = new Size(125, 23);
+            btnApplyPromptsS6.TabIndex = 8;
+            btnApplyPromptsS6.Text = "Insert Motion Text";
+            toolTip1.SetToolTip(btnApplyPromptsS6, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
+            btnApplyPromptsS6.UseVisualStyleBackColor = true;
             // 
-            // treeView5
+            // tvStationPrompts6
             // 
-            treeView5.Location = new Point(6, 49);
-            treeView5.Name = "treeView5";
-            treeView5.Size = new Size(438, 140);
-            treeView5.TabIndex = 7;
+            tvStationPrompts6.Location = new Point(6, 49);
+            tvStationPrompts6.Name = "tvStationPrompts6";
+            tvStationPrompts6.Size = new Size(438, 140);
+            tvStationPrompts6.TabIndex = 7;
             // 
             // lblStation6PromptsFilePath
             // 
@@ -1708,7 +1708,7 @@
             tabPage2.ResumeLayout(false);
             grpBoxAutoPrompsS2.ResumeLayout(false);
             grpBoxAutoPrompsS2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts2).EndInit();
             grpBoxMotionsS2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
             grpBoxAutoAlarmS2.ResumeLayout(false);
@@ -1717,7 +1717,7 @@
             tabPage3.ResumeLayout(false);
             grpBoxAutoPrompsS3.ResumeLayout(false);
             grpBoxAutoPrompsS3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts3).EndInit();
             grpBoxMotionsS3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation3).EndInit();
             grpBoxAutoAlarmS3.ResumeLayout(false);
@@ -1726,7 +1726,7 @@
             tabPage4.ResumeLayout(false);
             grpBoxAutoPrompsS4.ResumeLayout(false);
             grpBoxAutoPrompsS4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts4).EndInit();
             grpBoxMotionsS4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation4).EndInit();
             grpBoxAutoAlarmS4.ResumeLayout(false);
@@ -1735,7 +1735,7 @@
             tabPage5.ResumeLayout(false);
             grpBoxAutoPrompsS5.ResumeLayout(false);
             grpBoxAutoPrompsS5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts5).EndInit();
             grpBoxMotionsS5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation5).EndInit();
             grpBoxAutoAlarmS5.ResumeLayout(false);
@@ -1744,7 +1744,7 @@
             tabPage6.ResumeLayout(false);
             grpBoxAutoPrompsS6.ResumeLayout(false);
             grpBoxAutoPrompsS6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStationPrompts6).EndInit();
             grpBoxMotionsS6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation6).EndInit();
             grpBoxAutoAlarmS6.ResumeLayout(false);
@@ -1868,48 +1868,48 @@
         private Label lblStation1PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS2;
         private CheckBox cbProcessPromptsS2;
-        private Button button1;
-        private DataGridView dataGridView1;
+        private Button btnExporttoPromptsS2;
+        private DataGridView dgvStationPrompts2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
-        private Button button2;
-        private TreeView treeView1;
+        private Button btnApplyPromptsS2;
+        private TreeView tvStationPrompts2;
         private Label lblStation2PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS3;
         private CheckBox cbProcessPromptsS3;
-        private Button button3;
-        private DataGridView dataGridView2;
+        private Button btnExporttoPromptsS3;
+        private DataGridView dgvStationPrompts3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
-        private Button button4;
-        private TreeView treeView2;
+        private Button button4btnApplyPromptsS3;
+        private TreeView tvStationPrompts3;
         private Label lblStation3PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS4;
         private CheckBox cbProcessPromptsS4;
-        private Button button5;
-        private DataGridView dataGridView3;
+        private Button btnExporttoPromptsS4;
+        private DataGridView dgvStationPrompts4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
-        private Button button6;
-        private TreeView treeView3;
+        private Button btnApplyPromptsS4;
+        private TreeView tvStationPrompts4;
         private Label lblStation4PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS5;
         private CheckBox cbProcessPromptsS5;
-        private Button button7;
-        private DataGridView dataGridView4;
+        private Button btnExporttoPromptsS5;
+        private DataGridView dgvStationPrompts5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
-        private Button button8;
-        private TreeView treeView4;
+        private Button btnApplyPromptsS5;
+        private TreeView tvStationPrompts5;
         private Label lblStation5PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS6;
         private CheckBox cbProcessPromptsS6;
-        private Button button9;
-        private DataGridView dataGridView5;
+        private Button btnExporttoPromptsS6;
+        private DataGridView dgvStationPrompts6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
-        private Button button10;
-        private TreeView treeView5;
+        private Button btnApplyPromptsS6;
+        private TreeView tvStationPrompts6;
         private Label lblStation6PromptsFilePath;
     }
 }
