@@ -35,7 +35,7 @@
             OpenTOASTprojectDialog = new OpenFileDialog();
             tvStation1 = new TreeView();
             lstbxStation1Files = new ListBox();
-            tabb = new TabControl();
+            tcStation = new TabControl();
             tabPage1 = new TabPage();
             grpBoxAutoPrompsS1 = new GroupBox();
             cbProcessPromptsS1 = new CheckBox();
@@ -60,15 +60,15 @@
             tvStationAlarms1 = new TreeView();
             lblStation1AlarmsFilePath = new Label();
             tabPage2 = new TabPage();
-            groupBox1 = new GroupBox();
-            checkBox1 = new CheckBox();
+            grpBoxAutoPrompsS2 = new GroupBox();
+            cbProcessPromptsS2 = new CheckBox();
             button1 = new Button();
             dataGridView1 = new DataGridView();
             dataGridViewTextBoxColumn23 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn24 = new DataGridViewTextBoxColumn();
             button2 = new Button();
             treeView1 = new TreeView();
-            label1 = new Label();
+            lblStation2PromptsFilePath = new Label();
             grpBoxMotionsS2 = new GroupBox();
             tvStation2 = new TreeView();
             dgvStation2 = new DataGridView();
@@ -85,15 +85,15 @@
             lblStation2AlarmsFilePath = new Label();
             lstbxStation2Files = new ListBox();
             tabPage3 = new TabPage();
-            groupBox2 = new GroupBox();
-            checkBox2 = new CheckBox();
+            grpBoxAutoPrompsS3 = new GroupBox();
+            cbProcessPromptsS3 = new CheckBox();
             button3 = new Button();
             dataGridView2 = new DataGridView();
             dataGridViewTextBoxColumn25 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn26 = new DataGridViewTextBoxColumn();
             button4 = new Button();
             treeView2 = new TreeView();
-            label2 = new Label();
+            lblStation3PromptsFilePath = new Label();
             grpBoxMotionsS3 = new GroupBox();
             tvStation3 = new TreeView();
             dgvStation3 = new DataGridView();
@@ -110,15 +110,15 @@
             lblStation3AlarmsFilePath = new Label();
             lstbxStation3Files = new ListBox();
             tabPage4 = new TabPage();
-            groupBox3 = new GroupBox();
-            checkBox3 = new CheckBox();
+            grpBoxAutoPrompsS4 = new GroupBox();
+            cbProcessPromptsS4 = new CheckBox();
             button5 = new Button();
             dataGridView3 = new DataGridView();
             dataGridViewTextBoxColumn27 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn28 = new DataGridViewTextBoxColumn();
             button6 = new Button();
             treeView3 = new TreeView();
-            label3 = new Label();
+            lblStation4PromptsFilePath = new Label();
             grpBoxMotionsS4 = new GroupBox();
             tvStation4 = new TreeView();
             dgvStation4 = new DataGridView();
@@ -135,15 +135,15 @@
             lblStation4AlarmsFilePath = new Label();
             lstbxStation4Files = new ListBox();
             tabPage5 = new TabPage();
-            groupBox4 = new GroupBox();
-            checkBox4 = new CheckBox();
+            grpBoxAutoPrompsS5 = new GroupBox();
+            cbProcessPromptsS5 = new CheckBox();
             button7 = new Button();
             dataGridView4 = new DataGridView();
             dataGridViewTextBoxColumn29 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn30 = new DataGridViewTextBoxColumn();
             button8 = new Button();
             treeView4 = new TreeView();
-            label4 = new Label();
+            lblStation5PromptsFilePath = new Label();
             grpBoxMotionsS5 = new GroupBox();
             tvStation5 = new TreeView();
             dgvStation5 = new DataGridView();
@@ -161,14 +161,14 @@
             lstbxStation5Files = new ListBox();
             tabPage6 = new TabPage();
             grpBoxAutoPrompsS6 = new GroupBox();
-            checkBox5 = new CheckBox();
+            cbProcessPromptsS6 = new CheckBox();
             button9 = new Button();
             dataGridView5 = new DataGridView();
             dataGridViewTextBoxColumn31 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn32 = new DataGridViewTextBoxColumn();
             button10 = new Button();
             treeView5 = new TreeView();
-            label5 = new Label();
+            lblStation6PromptsFilePath = new Label();
             grpBoxMotionsS6 = new GroupBox();
             tvStation6 = new TreeView();
             dgvStation6 = new DataGridView();
@@ -186,7 +186,7 @@
             lstbxStation6Files = new ListBox();
             btnExport = new Button();
             toolTip1 = new ToolTip(components);
-            tabb.SuspendLayout();
+            tcStation.SuspendLayout();
             tabPage1.SuspendLayout();
             grpBoxAutoPrompsS1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationPrompts1).BeginInit();
@@ -195,28 +195,28 @@
             grpBoxAutoAlarmS1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms1).BeginInit();
             tabPage2.SuspendLayout();
-            groupBox1.SuspendLayout();
+            grpBoxAutoPrompsS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             grpBoxMotionsS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation2).BeginInit();
             grpBoxAutoAlarmS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms2).BeginInit();
             tabPage3.SuspendLayout();
-            groupBox2.SuspendLayout();
+            grpBoxAutoPrompsS3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             grpBoxMotionsS3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation3).BeginInit();
             grpBoxAutoAlarmS3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms3).BeginInit();
             tabPage4.SuspendLayout();
-            groupBox3.SuspendLayout();
+            grpBoxAutoPrompsS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             grpBoxMotionsS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation4).BeginInit();
             grpBoxAutoAlarmS4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms4).BeginInit();
             tabPage5.SuspendLayout();
-            groupBox4.SuspendLayout();
+            grpBoxAutoPrompsS5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView4).BeginInit();
             grpBoxMotionsS5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStation5).BeginInit();
@@ -271,19 +271,19 @@
             lstbxStation1Files.Size = new Size(1368, 109);
             lstbxStation1Files.TabIndex = 1;
             // 
-            // tabb
+            // tcStation
             // 
-            tabb.Controls.Add(tabPage1);
-            tabb.Controls.Add(tabPage2);
-            tabb.Controls.Add(tabPage3);
-            tabb.Controls.Add(tabPage4);
-            tabb.Controls.Add(tabPage5);
-            tabb.Controls.Add(tabPage6);
-            tabb.Location = new Point(3, 38);
-            tabb.Name = "tabb";
-            tabb.SelectedIndex = 0;
-            tabb.Size = new Size(1388, 545);
-            tabb.TabIndex = 3;
+            tcStation.Controls.Add(tabPage1);
+            tcStation.Controls.Add(tabPage2);
+            tcStation.Controls.Add(tabPage3);
+            tcStation.Controls.Add(tabPage4);
+            tcStation.Controls.Add(tabPage5);
+            tcStation.Controls.Add(tabPage6);
+            tcStation.Location = new Point(3, 38);
+            tcStation.Name = "tcStation";
+            tcStation.SelectedIndex = 0;
+            tcStation.Size = new Size(1388, 545);
+            tcStation.TabIndex = 3;
             // 
             // tabPage1
             // 
@@ -508,7 +508,7 @@
             // 
             // tabPage2
             // 
-            tabPage2.Controls.Add(groupBox1);
+            tabPage2.Controls.Add(grpBoxAutoPrompsS2);
             tabPage2.Controls.Add(grpBoxMotionsS2);
             tabPage2.Controls.Add(grpBoxAutoAlarmS2);
             tabPage2.Controls.Add(lstbxStation2Files);
@@ -520,33 +520,33 @@
             tabPage2.Text = "Station 2";
             tabPage2.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpBoxAutoPrompsS2
             // 
-            groupBox1.Controls.Add(checkBox1);
-            groupBox1.Controls.Add(button1);
-            groupBox1.Controls.Add(dataGridView1);
-            groupBox1.Controls.Add(button2);
-            groupBox1.Controls.Add(treeView1);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(918, 121);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(450, 375);
-            groupBox1.TabIndex = 12;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Auto Prompts S1";
+            grpBoxAutoPrompsS2.Controls.Add(cbProcessPromptsS2);
+            grpBoxAutoPrompsS2.Controls.Add(button1);
+            grpBoxAutoPrompsS2.Controls.Add(dataGridView1);
+            grpBoxAutoPrompsS2.Controls.Add(button2);
+            grpBoxAutoPrompsS2.Controls.Add(treeView1);
+            grpBoxAutoPrompsS2.Controls.Add(lblStation2PromptsFilePath);
+            grpBoxAutoPrompsS2.Location = new Point(918, 121);
+            grpBoxAutoPrompsS2.Name = "grpBoxAutoPrompsS2";
+            grpBoxAutoPrompsS2.Size = new Size(450, 375);
+            grpBoxAutoPrompsS2.TabIndex = 12;
+            grpBoxAutoPrompsS2.TabStop = false;
+            grpBoxAutoPrompsS2.Text = "Auto Prompts S2";
             // 
-            // checkBox1
+            // cbProcessPromptsS2
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Checked = true;
-            checkBox1.CheckState = CheckState.Checked;
-            checkBox1.Location = new Point(6, 24);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(61, 19);
-            checkBox1.TabIndex = 10;
-            checkBox1.Text = "Enable";
-            toolTip1.SetToolTip(checkBox1, "Not Yet Implemented...");
-            checkBox1.UseVisualStyleBackColor = true;
+            cbProcessPromptsS2.AutoSize = true;
+            cbProcessPromptsS2.Checked = true;
+            cbProcessPromptsS2.CheckState = CheckState.Checked;
+            cbProcessPromptsS2.Location = new Point(6, 24);
+            cbProcessPromptsS2.Name = "cbProcessPromptsS2";
+            cbProcessPromptsS2.Size = new Size(61, 19);
+            cbProcessPromptsS2.TabIndex = 10;
+            cbProcessPromptsS2.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessPromptsS2, "Not Yet Implemented...");
+            cbProcessPromptsS2.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -597,14 +597,14 @@
             treeView1.Size = new Size(438, 140);
             treeView1.TabIndex = 7;
             // 
-            // label1
+            // lblStation2PromptsFilePath
             // 
-            label1.Location = new Point(101, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(343, 27);
-            label1.TabIndex = 5;
-            label1.Text = "No Station 1 Prompts Path Found...";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            lblStation2PromptsFilePath.Location = new Point(101, 19);
+            lblStation2PromptsFilePath.Name = "lblStation2PromptsFilePath";
+            lblStation2PromptsFilePath.Size = new Size(343, 27);
+            lblStation2PromptsFilePath.TabIndex = 5;
+            lblStation2PromptsFilePath.Text = "No Station 2 Prompts Path Found...";
+            lblStation2PromptsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpBoxMotionsS2
             // 
@@ -741,7 +741,7 @@
             // 
             // tabPage3
             // 
-            tabPage3.Controls.Add(groupBox2);
+            tabPage3.Controls.Add(grpBoxAutoPrompsS3);
             tabPage3.Controls.Add(grpBoxMotionsS3);
             tabPage3.Controls.Add(grpBoxAutoAlarmS3);
             tabPage3.Controls.Add(lstbxStation3Files);
@@ -753,33 +753,33 @@
             tabPage3.Text = "Station 3";
             tabPage3.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // grpBoxAutoPrompsS3
             // 
-            groupBox2.Controls.Add(checkBox2);
-            groupBox2.Controls.Add(button3);
-            groupBox2.Controls.Add(dataGridView2);
-            groupBox2.Controls.Add(button4);
-            groupBox2.Controls.Add(treeView2);
-            groupBox2.Controls.Add(label2);
-            groupBox2.Location = new Point(918, 121);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(450, 375);
-            groupBox2.TabIndex = 14;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Auto Prompts S1";
+            grpBoxAutoPrompsS3.Controls.Add(cbProcessPromptsS3);
+            grpBoxAutoPrompsS3.Controls.Add(button3);
+            grpBoxAutoPrompsS3.Controls.Add(dataGridView2);
+            grpBoxAutoPrompsS3.Controls.Add(button4);
+            grpBoxAutoPrompsS3.Controls.Add(treeView2);
+            grpBoxAutoPrompsS3.Controls.Add(lblStation3PromptsFilePath);
+            grpBoxAutoPrompsS3.Location = new Point(918, 121);
+            grpBoxAutoPrompsS3.Name = "grpBoxAutoPrompsS3";
+            grpBoxAutoPrompsS3.Size = new Size(450, 375);
+            grpBoxAutoPrompsS3.TabIndex = 14;
+            grpBoxAutoPrompsS3.TabStop = false;
+            grpBoxAutoPrompsS3.Text = "Auto Prompts S3";
             // 
-            // checkBox2
+            // cbProcessPromptsS3
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Checked = true;
-            checkBox2.CheckState = CheckState.Checked;
-            checkBox2.Location = new Point(6, 24);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(61, 19);
-            checkBox2.TabIndex = 10;
-            checkBox2.Text = "Enable";
-            toolTip1.SetToolTip(checkBox2, "Not Yet Implemented...");
-            checkBox2.UseVisualStyleBackColor = true;
+            cbProcessPromptsS3.AutoSize = true;
+            cbProcessPromptsS3.Checked = true;
+            cbProcessPromptsS3.CheckState = CheckState.Checked;
+            cbProcessPromptsS3.Location = new Point(6, 24);
+            cbProcessPromptsS3.Name = "cbProcessPromptsS3";
+            cbProcessPromptsS3.Size = new Size(61, 19);
+            cbProcessPromptsS3.TabIndex = 10;
+            cbProcessPromptsS3.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessPromptsS3, "Not Yet Implemented...");
+            cbProcessPromptsS3.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -830,14 +830,14 @@
             treeView2.Size = new Size(438, 140);
             treeView2.TabIndex = 7;
             // 
-            // label2
+            // lblStation3PromptsFilePath
             // 
-            label2.Location = new Point(101, 19);
-            label2.Name = "label2";
-            label2.Size = new Size(343, 27);
-            label2.TabIndex = 5;
-            label2.Text = "No Station 1 Prompts Path Found...";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            lblStation3PromptsFilePath.Location = new Point(101, 19);
+            lblStation3PromptsFilePath.Name = "lblStation3PromptsFilePath";
+            lblStation3PromptsFilePath.Size = new Size(343, 27);
+            lblStation3PromptsFilePath.TabIndex = 5;
+            lblStation3PromptsFilePath.Text = "No Station 3 Prompts Path Found...";
+            lblStation3PromptsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpBoxMotionsS3
             // 
@@ -974,7 +974,7 @@
             // 
             // tabPage4
             // 
-            tabPage4.Controls.Add(groupBox3);
+            tabPage4.Controls.Add(grpBoxAutoPrompsS4);
             tabPage4.Controls.Add(grpBoxMotionsS4);
             tabPage4.Controls.Add(grpBoxAutoAlarmS4);
             tabPage4.Controls.Add(lstbxStation4Files);
@@ -986,33 +986,33 @@
             tabPage4.Text = "Station 4";
             tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // grpBoxAutoPrompsS4
             // 
-            groupBox3.Controls.Add(checkBox3);
-            groupBox3.Controls.Add(button5);
-            groupBox3.Controls.Add(dataGridView3);
-            groupBox3.Controls.Add(button6);
-            groupBox3.Controls.Add(treeView3);
-            groupBox3.Controls.Add(label3);
-            groupBox3.Location = new Point(918, 121);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(450, 375);
-            groupBox3.TabIndex = 16;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Auto Prompts S1";
+            grpBoxAutoPrompsS4.Controls.Add(cbProcessPromptsS4);
+            grpBoxAutoPrompsS4.Controls.Add(button5);
+            grpBoxAutoPrompsS4.Controls.Add(dataGridView3);
+            grpBoxAutoPrompsS4.Controls.Add(button6);
+            grpBoxAutoPrompsS4.Controls.Add(treeView3);
+            grpBoxAutoPrompsS4.Controls.Add(lblStation4PromptsFilePath);
+            grpBoxAutoPrompsS4.Location = new Point(918, 121);
+            grpBoxAutoPrompsS4.Name = "grpBoxAutoPrompsS4";
+            grpBoxAutoPrompsS4.Size = new Size(450, 375);
+            grpBoxAutoPrompsS4.TabIndex = 16;
+            grpBoxAutoPrompsS4.TabStop = false;
+            grpBoxAutoPrompsS4.Text = "Auto Prompts S4";
             // 
-            // checkBox3
+            // cbProcessPromptsS4
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Checked = true;
-            checkBox3.CheckState = CheckState.Checked;
-            checkBox3.Location = new Point(6, 24);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(61, 19);
-            checkBox3.TabIndex = 10;
-            checkBox3.Text = "Enable";
-            toolTip1.SetToolTip(checkBox3, "Not Yet Implemented...");
-            checkBox3.UseVisualStyleBackColor = true;
+            cbProcessPromptsS4.AutoSize = true;
+            cbProcessPromptsS4.Checked = true;
+            cbProcessPromptsS4.CheckState = CheckState.Checked;
+            cbProcessPromptsS4.Location = new Point(6, 24);
+            cbProcessPromptsS4.Name = "cbProcessPromptsS4";
+            cbProcessPromptsS4.Size = new Size(61, 19);
+            cbProcessPromptsS4.TabIndex = 10;
+            cbProcessPromptsS4.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessPromptsS4, "Not Yet Implemented...");
+            cbProcessPromptsS4.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -1063,14 +1063,14 @@
             treeView3.Size = new Size(438, 140);
             treeView3.TabIndex = 7;
             // 
-            // label3
+            // lblStation4PromptsFilePath
             // 
-            label3.Location = new Point(101, 19);
-            label3.Name = "label3";
-            label3.Size = new Size(343, 27);
-            label3.TabIndex = 5;
-            label3.Text = "No Station 1 Prompts Path Found...";
-            label3.TextAlign = ContentAlignment.MiddleCenter;
+            lblStation4PromptsFilePath.Location = new Point(101, 19);
+            lblStation4PromptsFilePath.Name = "lblStation4PromptsFilePath";
+            lblStation4PromptsFilePath.Size = new Size(343, 27);
+            lblStation4PromptsFilePath.TabIndex = 5;
+            lblStation4PromptsFilePath.Text = "No Station 4 Prompts Path Found...";
+            lblStation4PromptsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpBoxMotionsS4
             // 
@@ -1207,7 +1207,7 @@
             // 
             // tabPage5
             // 
-            tabPage5.Controls.Add(groupBox4);
+            tabPage5.Controls.Add(grpBoxAutoPrompsS5);
             tabPage5.Controls.Add(grpBoxMotionsS5);
             tabPage5.Controls.Add(grpBoxAutoAlarmS5);
             tabPage5.Controls.Add(lstbxStation5Files);
@@ -1219,33 +1219,33 @@
             tabPage5.Text = "Station 5";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // grpBoxAutoPrompsS5
             // 
-            groupBox4.Controls.Add(checkBox4);
-            groupBox4.Controls.Add(button7);
-            groupBox4.Controls.Add(dataGridView4);
-            groupBox4.Controls.Add(button8);
-            groupBox4.Controls.Add(treeView4);
-            groupBox4.Controls.Add(label4);
-            groupBox4.Location = new Point(918, 121);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(450, 375);
-            groupBox4.TabIndex = 18;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "Auto Prompts S1";
+            grpBoxAutoPrompsS5.Controls.Add(cbProcessPromptsS5);
+            grpBoxAutoPrompsS5.Controls.Add(button7);
+            grpBoxAutoPrompsS5.Controls.Add(dataGridView4);
+            grpBoxAutoPrompsS5.Controls.Add(button8);
+            grpBoxAutoPrompsS5.Controls.Add(treeView4);
+            grpBoxAutoPrompsS5.Controls.Add(lblStation5PromptsFilePath);
+            grpBoxAutoPrompsS5.Location = new Point(918, 121);
+            grpBoxAutoPrompsS5.Name = "grpBoxAutoPrompsS5";
+            grpBoxAutoPrompsS5.Size = new Size(450, 375);
+            grpBoxAutoPrompsS5.TabIndex = 18;
+            grpBoxAutoPrompsS5.TabStop = false;
+            grpBoxAutoPrompsS5.Text = "Auto Prompts S5";
             // 
-            // checkBox4
+            // cbProcessPromptsS5
             // 
-            checkBox4.AutoSize = true;
-            checkBox4.Checked = true;
-            checkBox4.CheckState = CheckState.Checked;
-            checkBox4.Location = new Point(6, 24);
-            checkBox4.Name = "checkBox4";
-            checkBox4.Size = new Size(61, 19);
-            checkBox4.TabIndex = 10;
-            checkBox4.Text = "Enable";
-            toolTip1.SetToolTip(checkBox4, "Not Yet Implemented...");
-            checkBox4.UseVisualStyleBackColor = true;
+            cbProcessPromptsS5.AutoSize = true;
+            cbProcessPromptsS5.Checked = true;
+            cbProcessPromptsS5.CheckState = CheckState.Checked;
+            cbProcessPromptsS5.Location = new Point(6, 24);
+            cbProcessPromptsS5.Name = "cbProcessPromptsS5";
+            cbProcessPromptsS5.Size = new Size(61, 19);
+            cbProcessPromptsS5.TabIndex = 10;
+            cbProcessPromptsS5.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessPromptsS5, "Not Yet Implemented...");
+            cbProcessPromptsS5.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
@@ -1296,14 +1296,14 @@
             treeView4.Size = new Size(438, 140);
             treeView4.TabIndex = 7;
             // 
-            // label4
+            // lblStation5PromptsFilePath
             // 
-            label4.Location = new Point(101, 19);
-            label4.Name = "label4";
-            label4.Size = new Size(343, 27);
-            label4.TabIndex = 5;
-            label4.Text = "No Station 1 Prompts Path Found...";
-            label4.TextAlign = ContentAlignment.MiddleCenter;
+            lblStation5PromptsFilePath.Location = new Point(101, 19);
+            lblStation5PromptsFilePath.Name = "lblStation5PromptsFilePath";
+            lblStation5PromptsFilePath.Size = new Size(343, 27);
+            lblStation5PromptsFilePath.TabIndex = 5;
+            lblStation5PromptsFilePath.Text = "No Station 5 Prompts Path Found...";
+            lblStation5PromptsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpBoxMotionsS5
             // 
@@ -1454,31 +1454,31 @@
             // 
             // grpBoxAutoPrompsS6
             // 
-            grpBoxAutoPrompsS6.Controls.Add(checkBox5);
+            grpBoxAutoPrompsS6.Controls.Add(cbProcessPromptsS6);
             grpBoxAutoPrompsS6.Controls.Add(button9);
             grpBoxAutoPrompsS6.Controls.Add(dataGridView5);
             grpBoxAutoPrompsS6.Controls.Add(button10);
             grpBoxAutoPrompsS6.Controls.Add(treeView5);
-            grpBoxAutoPrompsS6.Controls.Add(label5);
+            grpBoxAutoPrompsS6.Controls.Add(lblStation6PromptsFilePath);
             grpBoxAutoPrompsS6.Location = new Point(918, 121);
             grpBoxAutoPrompsS6.Name = "grpBoxAutoPrompsS6";
             grpBoxAutoPrompsS6.Size = new Size(450, 375);
             grpBoxAutoPrompsS6.TabIndex = 20;
             grpBoxAutoPrompsS6.TabStop = false;
-            grpBoxAutoPrompsS6.Text = "Auto Prompts S1";
+            grpBoxAutoPrompsS6.Text = "Auto Prompts S6";
             // 
-            // checkBox5
+            // cbProcessPromptsS6
             // 
-            checkBox5.AutoSize = true;
-            checkBox5.Checked = true;
-            checkBox5.CheckState = CheckState.Checked;
-            checkBox5.Location = new Point(6, 24);
-            checkBox5.Name = "checkBox5";
-            checkBox5.Size = new Size(61, 19);
-            checkBox5.TabIndex = 10;
-            checkBox5.Text = "Enable";
-            toolTip1.SetToolTip(checkBox5, "Not Yet Implemented...");
-            checkBox5.UseVisualStyleBackColor = true;
+            cbProcessPromptsS6.AutoSize = true;
+            cbProcessPromptsS6.Checked = true;
+            cbProcessPromptsS6.CheckState = CheckState.Checked;
+            cbProcessPromptsS6.Location = new Point(6, 24);
+            cbProcessPromptsS6.Name = "cbProcessPromptsS6";
+            cbProcessPromptsS6.Size = new Size(61, 19);
+            cbProcessPromptsS6.TabIndex = 10;
+            cbProcessPromptsS6.Text = "Enable";
+            toolTip1.SetToolTip(cbProcessPromptsS6, "Not Yet Implemented...");
+            cbProcessPromptsS6.UseVisualStyleBackColor = true;
             // 
             // button9
             // 
@@ -1529,14 +1529,14 @@
             treeView5.Size = new Size(438, 140);
             treeView5.TabIndex = 7;
             // 
-            // label5
+            // lblStation6PromptsFilePath
             // 
-            label5.Location = new Point(101, 19);
-            label5.Name = "label5";
-            label5.Size = new Size(343, 27);
-            label5.TabIndex = 5;
-            label5.Text = "No Station 1 Prompts Path Found...";
-            label5.TextAlign = ContentAlignment.MiddleCenter;
+            lblStation6PromptsFilePath.Location = new Point(101, 19);
+            lblStation6PromptsFilePath.Name = "lblStation6PromptsFilePath";
+            lblStation6PromptsFilePath.Size = new Size(343, 27);
+            lblStation6PromptsFilePath.TabIndex = 5;
+            lblStation6PromptsFilePath.Text = "No Station 6 Prompts Path Found...";
+            lblStation6PromptsFilePath.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpBoxMotionsS6
             // 
@@ -1688,14 +1688,14 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1398, 634);
             Controls.Add(btnExport);
-            Controls.Add(tabb);
+            Controls.Add(tcStation);
             Controls.Add(lblProjectPath);
             Controls.Add(btnLoadProject);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(968, 673);
             Name = "frmMain";
             Text = "Sx_01_Motion_xx.TcPOU-2-MotionRowText.TcTLO Importer";
-            tabb.ResumeLayout(false);
+            tcStation.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             grpBoxAutoPrompsS1.ResumeLayout(false);
             grpBoxAutoPrompsS1.PerformLayout();
@@ -1706,8 +1706,8 @@
             grpBoxAutoAlarmS1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms1).EndInit();
             tabPage2.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            grpBoxAutoPrompsS2.ResumeLayout(false);
+            grpBoxAutoPrompsS2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             grpBoxMotionsS2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation2).EndInit();
@@ -1715,8 +1715,8 @@
             grpBoxAutoAlarmS2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms2).EndInit();
             tabPage3.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            grpBoxAutoPrompsS3.ResumeLayout(false);
+            grpBoxAutoPrompsS3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             grpBoxMotionsS3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation3).EndInit();
@@ -1724,8 +1724,8 @@
             grpBoxAutoAlarmS3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms3).EndInit();
             tabPage4.ResumeLayout(false);
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
+            grpBoxAutoPrompsS4.ResumeLayout(false);
+            grpBoxAutoPrompsS4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             grpBoxMotionsS4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation4).EndInit();
@@ -1733,8 +1733,8 @@
             grpBoxAutoAlarmS4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStationAlarms4).EndInit();
             tabPage5.ResumeLayout(false);
-            groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
+            grpBoxAutoPrompsS5.ResumeLayout(false);
+            grpBoxAutoPrompsS5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView4).EndInit();
             grpBoxMotionsS5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStation5).EndInit();
@@ -1760,7 +1760,7 @@
         private OpenFileDialog OpenTOASTprojectDialog;
         private ListBox lstbxStation1Files;
         private TreeView tvStation1;
-        private TabControl tabb;
+        private TabControl tcStation;
         private TabPage tabPage1;
         private TabPage tabPage2;
         private ListBox lstbxStation2Files;
@@ -1866,50 +1866,50 @@
         private Button btnApplyPromptsS1;
         private TreeView tvStationPrompts1;
         private Label lblStation1PromptsFilePath;
-        private GroupBox groupBox1;
-        private CheckBox checkBox1;
+        private GroupBox grpBoxAutoPrompsS2;
+        private CheckBox cbProcessPromptsS2;
         private Button button1;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
         private Button button2;
         private TreeView treeView1;
-        private Label label1;
-        private GroupBox groupBox2;
-        private CheckBox checkBox2;
+        private Label lblStation2PromptsFilePath;
+        private GroupBox grpBoxAutoPrompsS3;
+        private CheckBox cbProcessPromptsS3;
         private Button button3;
         private DataGridView dataGridView2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private Button button4;
         private TreeView treeView2;
-        private Label label2;
-        private GroupBox groupBox3;
-        private CheckBox checkBox3;
+        private Label lblStation3PromptsFilePath;
+        private GroupBox grpBoxAutoPrompsS4;
+        private CheckBox cbProcessPromptsS4;
         private Button button5;
         private DataGridView dataGridView3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
         private Button button6;
         private TreeView treeView3;
-        private Label label3;
-        private GroupBox groupBox4;
-        private CheckBox checkBox4;
+        private Label lblStation4PromptsFilePath;
+        private GroupBox grpBoxAutoPrompsS5;
+        private CheckBox cbProcessPromptsS5;
         private Button button7;
         private DataGridView dataGridView4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
         private Button button8;
         private TreeView treeView4;
-        private Label label4;
+        private Label lblStation5PromptsFilePath;
         private GroupBox grpBoxAutoPrompsS6;
-        private CheckBox checkBox5;
+        private CheckBox cbProcessPromptsS6;
         private Button button9;
         private DataGridView dataGridView5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
         private Button button10;
         private TreeView treeView5;
-        private Label label5;
+        private Label lblStation6PromptsFilePath;
     }
 }
