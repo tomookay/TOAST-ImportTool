@@ -3,7 +3,7 @@
 
 An import tool to convert XML headers at start of motion blocks to textlists for motionrows, so that the MotionRow's text can be imported at design time. This mean the programmer does not have to fill in every field of the text list to produce a motion row.
 
-The tool can import a TwinCAT3 TOAST project, extract the xml from the motions and inserts them into the MotionRow text list for use in the program automaticly. This saves time when using TOAST for TwinCAT3 as no HMI programming is required for any ammount of motions within the limits of TOAST. (6 stations, 99 MotionRows per station).
+The tool can import a TwinCAT3 TOAST project, extract the xml from the motions and inserts them into the MotionRow text list for use in the program automatically. This saves time when using TOAST for TwinCAT3 as no HMI programming is required for any ammount of motions within the limits of TOAST. (6 stations, 99 MotionRows per station).
 
 The tool also can export the names of the motion and assemble the logical message for the 5 fault messages for each station
  - Failed to Advance
