@@ -15,7 +15,8 @@ The tool also can export the names of the motion and assemble the logical messag
 
 The reason for this tool is to allow PLC/automation software development to go, as i call it "real-fuckin' fast". It should take <10mins to program a basic function for manual mode. It them automates the workflow between manual motions, texts and alarms, and hopefully more things in future.
 
-(Future) export to the prompt list of the station
+~~(Future) export to the prompt list of the station~~
+The TOAST-ImportTool now supports prompt exports
 - Waiting for Clamp Cylinder A1 to Advance...
 - Waiting for Clamp Cylinder A1 to Return...
 
