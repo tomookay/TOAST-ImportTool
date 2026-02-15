@@ -224,6 +224,11 @@ namespace ImportTool
                 for (int stationNumberexp = 1; stationNumberexp <= 6; stationNumberexp++)
                     ProcessStationAlarms(stationNumberexp);
 
+                //process station 1 through 6 prompts
+                for (int stationNumberexp = 1; stationNumberexp <= 6; stationNumberexp++)
+                    ProcessStationPrompts(stationNumberexp);
+
+
                 progressDlg.SetProgress(100, "Finished");
                 progressDlg.Close();
             }
@@ -337,7 +342,114 @@ namespace ImportTool
             }
         }
 
+        void ProcessStationPrompts(int stationNumber)
+        {
+            // Similar to ProcessStationAlarms but for prompts - can be implemented if needed   
+            string projectDir = Path.GetDirectoryName(lblProjectPath.Text) ?? string.Empty;
+            string searchPattern = $"S{stationNumber}_Prompts.TcTLO";
+            string stationAlarmsFile = Directory.GetFiles(projectDir, searchPattern, SearchOption.AllDirectories).FirstOrDefault();
 
+            // Map controls for the station
+            Label lblStationPromptsPath = stationNumber switch
+            {
+                1 => lblStation1PromptsFilePath,
+                2 => lblStation2PromptsFilePath,
+                3 => lblStation3PromptsFilePath,
+                4 => lblStation4PromptsFilePath,
+                5 => lblStation5PromptsFilePath,
+                6 => lblStation6PromptsFilePath,
+                _ => null
+            };
+
+            TreeView tvStationPrompts = stationNumber switch
+            {
+                1 => tvStationPrompts1,
+                2 => tvStationPrompts2,
+                3 => tvStationPrompts3,
+                4 => tvStationPrompts4,
+                5 => tvStationPrompts5,
+                6 => tvStationPrompts6,
+                _ => null
+            };
+
+            DataGridView dgvStationAlarms = stationNumber switch
+            {
+                1 => dgvStationAlarms1,
+                2 => dgvStationAlarms2,
+                3 => dgvStationAlarms3,
+                4 => dgvStationAlarms4,
+                5 => dgvStationAlarms5,
+                6 => dgvStationAlarms6,
+                _ => null
+            };
+
+            if (lblStationPromptsPath != null)
+                lblStationPromptsPath.Text = stationAlarmsFile ?? "Prompts file not found.";
+                tvStationPrompts?.Nodes.Clear();
+                if (string.IsNullOrEmpty(stationAlarmsFile) || !File.Exists(stationAlarmsFile))
+                {
+                    // No file - leave empty tree/grid
+                    return;
+            }
+            // Similar parsing logic to ProcessStationAlarms can be implemented here to populate the prompts tree/grid
+            string[] alarmFileLines = File.ReadAllLines(stationAlarmsFile);
+            TreeNode rootAlarmNode = new TreeNode("Prompts");
+
+            for (int i = 0; i < alarmFileLines.Length; i++)
+            {
+                string line = alarmFileLines[i];
+                if (!line.Contains("<v n=\"TextID\">"))
+                    continue;
+
+                int gt = line.IndexOf('>');
+                int lt = (gt >= 0) ? line.IndexOf('<', gt + 1) : -1;
+                if (!(gt >= 0 && lt > gt))
+                    continue;
+
+                string inner = line.Substring(gt + 1, lt - gt - 1); // e.g. "\"0\""
+                string textID = inner.Trim().Trim('"');
+
+                // Look ahead for TextDefault
+                string textDefault = string.Empty;
+                if (i + 1 < alarmFileLines.Length && alarmFileLines[i + 1].Contains("<v n=\"TextDefault\">"))
+                {
+                    string nextLine = alarmFileLines[i + 1];
+                    int gtDef = nextLine.IndexOf('>');
+                    int ltDef = (gtDef >= 0) ? nextLine.IndexOf('<', gtDef + 1) : -1;
+                    if (gtDef >= 0 && ltDef > gtDef)
+                    {
+                        string innerDef = nextLine.Substring(gtDef + 1, ltDef - gtDef - 1);
+                        textDefault = innerDef.Trim().Trim('"');
+                    }
+                }
+
+                TreeNode alarmNode = new TreeNode($"{textID} - {textDefault}");
+                rootAlarmNode.Nodes.Add(alarmNode);
+            }
+
+            if (tvStationPrompts != null)
+            {
+                tvStationPrompts.Nodes.Add(rootAlarmNode);
+                tvStationPrompts.ExpandAll();
+            }
+
+            if (dgvStationAlarms != null)
+            {
+                dgvStationAlarms.Rows.Clear();
+                foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
+                {
+                    string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        string alarmNumber = parts[0];
+                        string alarmText = parts[1];
+                        dgvStationAlarms.Rows.Add(alarmNumber, alarmText);
+                    }
+                }
+            }
+
+
+        }
         private void btnExport_Click(object sender, EventArgs e)
         {
             /*
