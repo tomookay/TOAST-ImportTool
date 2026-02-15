@@ -372,24 +372,24 @@ namespace ImportTool
                 _ => null
             };
 
-            DataGridView dgvStationAlarms = stationNumber switch
+            DataGridView dgvStationPrompts = stationNumber switch
             {
-                1 => dgvStationAlarms1,
-                2 => dgvStationAlarms2,
-                3 => dgvStationAlarms3,
-                4 => dgvStationAlarms4,
-                5 => dgvStationAlarms5,
-                6 => dgvStationAlarms6,
+                1 => dgvStationPrompts1,
+                2 => dgvStationPrompts2,
+                3 => dgvStationPrompts3,
+                4 => dgvStationPrompts4,
+                5 => dgvStationPrompts5,
+                6 => dgvStationPrompts6,
                 _ => null
             };
 
             if (lblStationPromptsPath != null)
                 lblStationPromptsPath.Text = stationAlarmsFile ?? "Prompts file not found.";
-                tvStationPrompts?.Nodes.Clear();
-                if (string.IsNullOrEmpty(stationAlarmsFile) || !File.Exists(stationAlarmsFile))
-                {
-                    // No file - leave empty tree/grid
-                    return;
+            tvStationPrompts?.Nodes.Clear();
+            if (string.IsNullOrEmpty(stationAlarmsFile) || !File.Exists(stationAlarmsFile))
+            {
+                // No file - leave empty tree/grid
+                return;
             }
             // Similar parsing logic to ProcessStationAlarms can be implemented here to populate the prompts tree/grid
             string[] alarmFileLines = File.ReadAllLines(stationAlarmsFile);
@@ -433,9 +433,9 @@ namespace ImportTool
                 tvStationPrompts.ExpandAll();
             }
 
-            if (dgvStationAlarms != null)
+            if (dgvStationPrompts != null)
             {
-                dgvStationAlarms.Rows.Clear();
+                dgvStationPrompts.Rows.Clear();
                 foreach (TreeNode alarmNode in rootAlarmNode.Nodes)
                 {
                     string[] parts = alarmNode.Text.Split(new string[] { " - " }, StringSplitOptions.None);
@@ -443,7 +443,7 @@ namespace ImportTool
                     {
                         string alarmNumber = parts[0];
                         string alarmText = parts[1];
-                        dgvStationAlarms.Rows.Add(alarmNumber, alarmText);
+                        dgvStationPrompts.Rows.Add(alarmNumber, alarmText);
                     }
                 }
             }
@@ -680,7 +680,7 @@ namespace ImportTool
             }
         }
 
-        // Extracted reusable function to generate alarms for any station (1..6).
+        // Extracted reusable function to generate alarms for any station (1..6)
         private void ApplyAlarmsForStation(int stationNumber)
         {
             DataGridView dgvSource = stationNumber switch
@@ -831,6 +831,162 @@ namespace ImportTool
                 }
             }
         }
+
+        //extracted reusable function to export prompts for any station (1..6) back to the station's S{N}_Alarms.TcTLO file
+        private void ApplyPromptsForStation(int stationNumber)
+        {
+            // Similar to ApplyAlarmsForStation but for prompts - can be implemented if needed
+            DataGridView dgvSource = stationNumber switch
+            {
+                1 => dgvStation1,
+                2 => dgvStation2,
+                3 => dgvStation3,
+                4 => dgvStation4,
+                5 => dgvStation5,
+                6 => dgvStation6,
+                _ => null
+            };
+
+            DataGridView dgvPrompts = stationNumber switch
+            {
+                1 => dgvStationPrompts1,
+                2 => dgvStationPrompts2,
+                3 => dgvStationPrompts3,
+                4 => dgvStationPrompts4,
+                5 => dgvStationPrompts5,
+                6 => dgvStationPrompts6,
+                _ => null
+            };
+
+            if (dgvSource == null || dgvPrompts == null)
+            {
+                MessageBox.Show($"Invalid station number {stationNumber}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            dgvPrompts.Rows.Clear();
+
+            // Prevent UI re-layout while we bulk-add rows and disable automatic column sorting
+            dgvPrompts.SuspendLayout();
+            foreach (DataGridViewColumn col in dgvPrompts.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            // Build id -> text map from dgvSource
+            var map = new Dictionary<int, string>();
+            string clmNumberName = $"clmNumber{stationNumber}";
+            string clmTextName = $"clmText{stationNumber}";
+            bool hasNamedCols = dgvSource.Columns.Contains(clmNumberName) && dgvSource.Columns.Contains(clmTextName);
+
+            foreach (DataGridViewRow row in dgvSource.Rows)
+            {
+                if (row == null || row.IsNewRow) continue;
+
+                object idObj = null;
+                object textObj = null;
+
+                if (hasNamedCols)
+                {
+                    idObj = row.Cells[clmNumberName].Value;
+                    textObj = row.Cells[clmTextName].Value;
+                }
+                else
+                {
+                    if (row.Cells.Count > 0) idObj = row.Cells[0].Value;
+                    if (row.Cells.Count > 1) textObj = row.Cells[1].Value;
+                }
+
+                if (idObj == null) continue;
+                if (!int.TryParse(idObj.ToString(), out int id)) continue;
+
+                string text = textObj?.ToString() ?? string.Empty;
+                map[id] = text;
+            }
+
+            // Helper to get text for an id (falls back to "<id>" if missing)
+            string GetText(int id)
+            {
+                return map.TryGetValue(id, out var t) && !string.IsNullOrEmpty(t) ? t : $"<{id}>";
+            }
+
+            // Track which motion bases we've already processed so we only create alarms once per motion block
+            var processedBases = new HashSet<int>();
+
+            // For each motion row generate 10 alarms based on id arithmetic and lookup
+            foreach (DataGridViewRow motionRow in dgvSource.Rows)
+            {
+                if (motionRow == null || motionRow.IsNewRow) continue;
+
+                object numberObj = null;
+                if (hasNamedCols)
+                    numberObj = motionRow.Cells[clmNumberName].Value;
+                else if (motionRow.Cells.Count > 0)
+                    numberObj = motionRow.Cells[0].Value;
+
+                if (numberObj == null) continue;
+                if (!int.TryParse(numberObj.ToString(), out int rowNumber)) continue;
+
+                // Compute block base (start of the 20-entry motion block)
+                int baseNumber = rowNumber - (rowNumber % 20);
+                if (processedBases.Contains(baseNumber))
+                    continue; // already created alarms for this motion
+
+                processedBases.Add(baseNumber);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    string alarmText;
+                    switch (i)
+                    {
+                        case 0:
+                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 3)}...";
+                            break;
+                        case 1:
+                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 6)}... Check {GetText(baseNumber + 9)}...";
+                            break;
+                     //   case 2:
+                      //      alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
+                   //         break;
+                  //      case 3:
+                    ///        alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
+                            break;
+                  //      case 4:
+                   //         alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 3)}, {GetText(baseNumber + 9)}...";
+                            break;
+                        default:
+                            alarmText = "Spare";
+                            break;
+                    }
+
+                    int actualId = baseNumber + i;
+
+                    // Use the actual numeric alarm id as the displayed id so rows remain synchronized with the source IDs.
+                    int newRowIndex = dgvPrompts.Rows.Add(actualId, alarmText);
+                    dgvPrompts.Rows[newRowIndex].Tag = actualId;
+                }
+            }
+
+            dgvPrompts.ResumeLayout();
+
+            // In dgvStationNAlarms, rename the numbers in the sNAlarmNumber column to go from 0 to N
+            string alarmNumberColumnName = $"s{stationNumber}AlarmNumber";
+            for (int i = 0; i < dgvPrompts.Rows.Count; i++)
+            {
+                DataGridViewRow row = dgvPrompts.Rows[i];
+                if (row == null || row.IsNewRow) continue;
+
+                if (dgvPrompts.Columns.Contains(alarmNumberColumnName))
+                {
+                    row.Cells[alarmNumberColumnName].Value = i;
+                }
+                else if (row.Cells.Count > 0)
+                {
+                    row.Cells[0].Value = i;
+                }
+            }
+
+        }
+
+
 
         private void btnApplyAlarmsS1_Click(object sender, EventArgs e)
         {
@@ -1001,6 +1157,17 @@ namespace ImportTool
         private void btnApplyAlarmsS6_Click(object sender, EventArgs e)
         {
             ApplyAlarmsForStation(6);
+        }
+
+        private void btnApplyPromptsS1_Click(object sender, EventArgs e)
+        {
+            ApplyPromptsForStation(1);
+
+        }
+
+        private void btnExporttoPromptsS1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

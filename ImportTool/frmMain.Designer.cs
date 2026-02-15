@@ -336,6 +336,7 @@
             btnExporttoPromptsS1.Text = "Export";
             toolTip1.SetToolTip(btnExporttoPromptsS1, "Click to Export the alarms to the stations alarm's text list...");
             btnExporttoPromptsS1.UseVisualStyleBackColor = true;
+            btnExporttoPromptsS1.Click += btnExporttoPromptsS1_Click;
             // 
             // dgvStationPrompts1
             // 
@@ -368,6 +369,7 @@
             btnApplyPromptsS1.Text = "Insert Motion Text";
             toolTip1.SetToolTip(btnApplyPromptsS1, "Insert the Motion row text into a logical format for the alarms (motion faults...)");
             btnApplyPromptsS1.UseVisualStyleBackColor = true;
+            btnApplyPromptsS1.Click += btnApplyPromptsS1_Click;
             // 
             // tvStationPrompts1
             // 
