@@ -123,27 +123,73 @@ namespace ImportTool
                         // Build and add the TreeNode
                         // TreeNode rootNode = new TreeNode($"{rowNumber}");
                         TreeNode rootNode = new TreeNode($"Row {rowNumber}");
-                        TreeNode advanceNode = new TreeNode("Advance");
+                        
+                        TreeNode advanceNode = new TreeNode("Advance-sym");
+                        
+                        //0
                         advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextSym}"));
+
+                        //1
                         advanceNode.Nodes.Add(new TreeNode($"{advanceDepthTextSym}"));
-                        advanceNode.Nodes.Add(new TreeNode($"{advanceCoilTextAbs}"));
-                        advanceNode.Nodes.Add(new TreeNode($"{advanceDepthTextAbs}"));
+
+                        //2
                         advanceNode.Nodes.Add(new TreeNode($"{advanceManSeq}"));
-
-                        TreeNode returnNode = new TreeNode("Return");
+                        TreeNode returnNode = new TreeNode("Return-sym");
+                        
+                        //3
                         returnNode.Nodes.Add(new TreeNode($"{returnCoilTextSym}"));
+                        
+                        //4
                         returnNode.Nodes.Add(new TreeNode($"{returnDepthTextSym}"));
-                        returnNode.Nodes.Add(new TreeNode($"{returnCoilTextAbs}"));
-                        returnNode.Nodes.Add(new TreeNode($"{returnDepthTextAbs}"));
+                        //5
                         returnNode.Nodes.Add(new TreeNode($"{returnManSeq}"));
-
-                        TreeNode motionNode = new TreeNode("Motion");
+                        TreeNode spacernode = new TreeNode("spacer-1");
+                        
+                       // spacernode.Nodes.Add(new TreeNode($"spacer-5"));
+                        TreeNode motionNode = new TreeNode("Motion-sym");
+                        //6
                         motionNode.Nodes.Add(new TreeNode($"{motionNameSym}"));
-                        motionNode.Nodes.Add(new TreeNode($"{motionNameAbs}"));
+                        TreeNode spacernode2 = new TreeNode("spacer-2");
+                        //7
+                        spacernode2.Nodes.Add(new TreeNode($"spacer-2-1"));
+                        //8
+                        spacernode2.Nodes.Add(new TreeNode($"spacer-2-2"));
+                        //9
+                        spacernode2.Nodes.Add(new TreeNode($"spacer-2-3"));
+                        //--------------------------------------------------
+                        TreeNode advanceNode2 = new TreeNode("Advance-abs");
+                        //10
+                        advanceNode2.Nodes.Add(new TreeNode($"{advanceCoilTextAbs}"));
+                        //11
+                        advanceNode2.Nodes.Add(new TreeNode($"{advanceDepthTextAbs}"));
+                        //12
+                        advanceNode2.Nodes.Add(new TreeNode($"{advanceManSeq}"));
+                        //13
+                        TreeNode returnNode2 = new TreeNode("Return-sym");
+                        returnNode2.Nodes.Add(new TreeNode($"{returnCoilTextAbs}"));
+                        //14
+                        returnNode2.Nodes.Add(new TreeNode($"{returnDepthTextAbs}"));
+                        //15
+                        returnNode2.Nodes.Add(new TreeNode($"{returnManSeq}"));
+
+                        TreeNode spacernode3 = new TreeNode("spacer-3");
+                        //17
+                       // spacernode3.Nodes.Add(new TreeNode($"spacer-7"));
+
+                        //18
+                        TreeNode motionNode2 = new TreeNode("Motion-abs");
+                        motionNode2.Nodes.Add(new TreeNode($"{motionNameAbs}"));
 
                         rootNode.Nodes.Add(advanceNode);
                         rootNode.Nodes.Add(returnNode);
+                        rootNode.Nodes.Add(spacernode);
                         rootNode.Nodes.Add(motionNode);
+                        rootNode.Nodes.Add(spacernode2);
+                        rootNode.Nodes.Add(advanceNode2);
+                        rootNode.Nodes.Add(returnNode2);
+                        rootNode.Nodes.Add(spacernode3);
+                        rootNode.Nodes.Add(motionNode2);
+
 
                         targetTreeView.Nodes.Add(rootNode);
 
@@ -197,9 +243,9 @@ namespace ImportTool
                             }
 
                             // Add one spare after each child-group to keep fields in predictable positions
-                            int spareId = baseNumber + rowOffset;
-                            targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
-                            rowOffset++;
+                         //   int spareId = baseNumber + rowOffset;
+                         //  targetDataGridView.Rows.Add(spareId, $"spare ({spareId})");
+                          //  rowOffset++;
                         }
 
                         // Pad the block to exactly 20 entries
