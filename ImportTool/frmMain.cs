@@ -845,6 +845,15 @@ namespace ImportTool
                         case 4:
                             alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Switch Fault... Check {GetText(baseNumber + 10)}, {GetText(baseNumber + 13)}...";
                             break;
+
+                        case 5:
+                            alarmText = $"Waiting for {GetText(baseNumber + 6)} {GetText(baseNumber + 16)} {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 10)}...";
+                            break;
+                        case 6:
+                            alarmText = $"Waiting for {GetText(baseNumber + 6)} {GetText(baseNumber + 16)} {GetText(baseNumber + 4)}... Check {GetText(baseNumber + 13)}...";
+                            break;
+
+
                         default:
                             alarmText = "Spare";
                             break;
