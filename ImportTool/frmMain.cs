@@ -831,19 +831,19 @@ namespace ImportTool
                     switch (i)
                     {
                         case 0:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Failed to {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 2)}...";
+                            alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Failed to {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 11)}...";
                             break;
                         case 1:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Failed to {GetText(baseNumber + 6)}... Check {GetText(baseNumber + 8)}...";
+                            alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Failed to {GetText(baseNumber + 3)}... Check {GetText(baseNumber + 14)}...";
                             break;
                         case 2:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
+                            alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 10)}...";
                             break;
                         case 3:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
+                            alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Lost {GetText(baseNumber + 4)}... Check {GetText(baseNumber + 13)}...";
                             break;
                         case 4:
-                            alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Switch Fault... Check {GetText(baseNumber + 3)}, {GetText(baseNumber + 9)}...";
+                            alarmText = $"{GetText(baseNumber + 6)} {GetText(baseNumber + 16)} Switch Fault... Check {GetText(baseNumber + 10)}, {GetText(baseNumber + 13)}...";
                             break;
                         default:
                             alarmText = "Spare";
@@ -984,10 +984,10 @@ namespace ImportTool
                     switch (i)
                     {
                         case 0:
-                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
+                            alarmText = $"Waiting for {GetText(baseNumber + 6)} {GetText(baseNumber + 16)} {GetText(baseNumber + 0)}... Check {GetText(baseNumber + 10)}...";
                             break;
                         case 1:
-                            alarmText = $"Waiting for {GetText(baseNumber + 12)} {GetText(baseNumber + 13)} {GetText(baseNumber + 7)}... Check {GetText(baseNumber + 9)}...";
+                            alarmText = $"Waiting for {GetText(baseNumber + 6)} {GetText(baseNumber + 16)} {GetText(baseNumber + 3)}... Check {GetText(baseNumber + 13)}...";
                             break;
                             //   case 2:
                             //      alarmText = $"{GetText(baseNumber + 12)} {GetText(baseNumber + 13)} Lost {GetText(baseNumber + 1)}... Check {GetText(baseNumber + 3)}...";
