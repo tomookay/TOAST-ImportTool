@@ -20,9 +20,7 @@ The TOAST-ImportTool now supports prompt exports
 - Waiting for Clamp Cylinder A1 to Advance...
 - Waiting for Clamp Cylinder A1 to Return...
 
-
-<img width="954" height="666" alt="image" src="https://github.com/user-attachments/assets/15437ba6-9408-4e67-ab17-498314af77bd" />
-
+<img width="1404" height="667" alt="image" src="https://github.com/user-attachments/assets/82ffba4e-f95a-45c9-8f41-9beca0e5afe3" />
 
 
 # Crude image from MS Paint explaining the process of the TOAST-ImportTool
