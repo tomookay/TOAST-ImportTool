@@ -31,12 +31,34 @@ namespace ImportTool
             //were S1 is the station number from 1 to 6 and put each file found in a lstbxStation1Files, lstbxStation2Files
             for (int stationNumber = 1; stationNumber <= 6; stationNumber++)
             {
-                string searchPattern = $"S{stationNumber}_01_Motion_*.TcPOU";
+                // Allow any free text in place of "Motion" by using a wildcard after the "01_" prefix.
+                string searchPattern = $"S{stationNumber}_01_*.TcPOU";
                 string projectDirectory = Path.GetDirectoryName(lblProjectPath.Text);
                 if (projectDirectory != null)
                 {
-                    //sort by natural sort, not alphabetical which gives 1,2,3,4,5,6,7,8,9,90,91 etc
+                    // sort by natural sort, not alphabetical which gives 1,2,3,4,5,6,7,8,9,90,91 etc
                     string[] foundFiles = NaturalSort.GetFilesNaturalSort(projectDirectory, searchPattern, SearchOption.AllDirectories);
+
+                    //sort by the last number in the file path, between "_" and ".TcPOU"
+                    string[] foundFilesOrdered = foundFiles.OrderBy(f =>
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(f);
+                        string[] parts = fileName.Split('_');
+                        if (parts.Length >= 3)
+                        {
+                            string lastPart = parts.Last();
+                            if (int.TryParse(lastPart, out int num))
+                            {
+                                return num;
+                            }
+                        }
+                        return int.MaxValue; // If parsing fails, put it at the end
+                    }).ToArray();
+
+
+
+
+
                     ListBox targetListBox = stationNumber switch
                     {
                         1 => lstbxStation1Files,
@@ -50,7 +72,7 @@ namespace ImportTool
                     if (targetListBox != null)
                     {
                         targetListBox.Items.Clear();
-                        foreach (string file in foundFiles)
+                        foreach (string file in foundFilesOrdered)
                         {
                             targetListBox.Items.Add(file);
                         }
@@ -202,7 +224,25 @@ namespace ImportTool
                     }
 
 
+                    //each rootNode contains "Row {rowNumber}" as the header
+                    //reorder each top level elemenmt in targetTreeView so the Row 1,2,3,4,5 are in order
+              
+
+
+
+
+
+
+
+
                 }
+
+
+
+
+
+
+
                 //populate the dgvStation1 with the extracted data from the xml files
                 //the values are from clmNumber, and the text is from the other extracted elements into clmText
                 DataGridView targetDataGridView = stationNumber switch
